@@ -1,41 +1,26 @@
 ---@class Colors
 ---@field black string,
 ---@field black2 string,
----@field blue string,
 ---@field darker_black string,
----@field green string,
 ---@field one_bg string,
----@field one_bg3 string,
----@field red string,
+---@field one_bg2 string,
 ---@field white string,
+---@field blue string,
+---@field green string,
+---@field red string,
 ---@field yellow string,
 
 ---@class M
----@field style "bordered" | "borderless"
-local M = {
-  style = "borderless",
+---@field border boolean
+local Telescope = {
+  border = false,
 }
 
 ---@param colors Colors
-function M.telescope_style(colors)
+function Telescope.style(colors)
   local hlgroups = {
 
-    TelescopePromptPrefix = {
-      fg = colors.red,
-      bg = colors.black2,
-    },
-
-    TelescopeNormal = { bg = colors.darker_black },
-
-    TelescopePreviewTitle = {
-      fg = colors.black,
-      bg = colors.green,
-    },
-
-    TelescopePromptTitle = {
-      fg = colors.black,
-      bg = colors.red,
-    },
+    TelescopePromptTitle = { fg = colors.black, bg = colors.red },
 
     TelescopeSelection = { bg = colors.black2, fg = colors.white },
     TelescopeResultsDiffAdd = { fg = colors.green },
@@ -53,22 +38,24 @@ function M.telescope_style(colors)
       TelescopePreviewBorder = { bg = colors.darker_black, fg = colors.darker_black },
       TelescopePromptNormal = { fg = colors.white, bg = colors.black2 },
       TelescopeResultsTitle = { fg = colors.darker_black, bg = colors.darker_black },
+      TelescopePreviewTitle = { fg = colors.black, bg = colors.green },
       TelescopePromptPrefix = { fg = colors.red, bg = colors.black2 },
+      TelescopeNormal = { bg = colors.darker_black },
     },
 
     bordered = {
-      TelescopeBorder = { fg = colors.one_bg3 },
-      TelescopePromptBorder = { fg = colors.one_bg3 },
-      TelescopeResultsBorder = { fg = colors.one_bg3 },
-      TelescopePreviewBorder = { fg = colors.one_bg3 },
+      TelescopeBorder = { fg = colors.one_bg2 },
+      TelescopePromptBorder = { fg = colors.one_bg2 },
+      TelescopeResultsBorder = { fg = colors.one_bg2 },
+      TelescopePreviewBorder = { fg = colors.one_bg2 },
+      TelescopePromptNormal = { bg = colors.black },
       TelescopeResultsTitle = { fg = colors.black, bg = colors.green },
       TelescopePreviewTitle = { fg = colors.black, bg = colors.blue },
       TelescopePromptPrefix = { fg = colors.red, bg = colors.black },
       TelescopeNormal = { bg = colors.black },
-      TelescopePromptNormal = { bg = colors.black },
     },
   }
-  return { hlgroups = hlgroups, styles = styles[M.style] }
+  return { hlgroups = hlgroups, styles = styles[Telescope.border and "bordered" or "borderless"] }
 end
 
 return {
@@ -78,16 +65,16 @@ return {
     opts = function()
       local colors = require("gruvbox").palette
 
-      local telescope_style = M.telescope_style({
+      local telescope_style = Telescope.style({
+        darker_black = colors.dark0_hard,
         black = colors.dark0,
         black2 = colors.dark0_soft,
-        blue = colors.neutral_blue,
-        darker_black = colors.dark0_hard,
-        green = colors.bright_green,
         one_bg = colors.dark1,
-        one_bg3 = colors.dark2,
-        red = colors.bright_red,
+        one_bg2 = colors.dark2,
         white = colors.light1,
+        blue = colors.neutral_blue,
+        green = colors.bright_green,
+        red = colors.bright_red,
         yellow = colors.neutral_yellow,
       })
 

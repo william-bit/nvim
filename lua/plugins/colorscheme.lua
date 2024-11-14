@@ -78,8 +78,34 @@ return {
         yellow = colors.neutral_yellow,
       })
 
+      local tree_sitter_style = {
+        ["@tag"] = { fg = colors.bright_blue },
+        ["@tag.builtin"] = { fg = colors.light2 },
+        ["@tag.attribute"] = { fg = colors.bright_yellow },
+        ["@variable.parameter"] = { fg = colors.light2 },
+        ["@type"] = { fg = colors.bright_yellow },
+        ["@keyword.return"] = { fg = colors.bright_red },
+        ["@keyword.function"] = { fg = colors.bright_purple },
+        ["@function.call"] = { fg = colors.bright_blue },
+        ["@function.method.call"] = { fg = colors.bright_blue },
+        ["@function.method"] = { fg = colors.light2 },
+        ["@function"] = { fg = colors.light2 },
+      }
+
+      local lsp_style = {
+        ["@lsp.type.parameter"] = { fg = colors.light2 },
+        ["@lsp.type.interface"] = { fg = colors.bright_yellow },
+        ["@lsp.type.type"] = { fg = colors.bright_yellow },
+      }
+
       require("gruvbox").setup({
-        overrides = vim.tbl_deep_extend("force", telescope_style.hlgroups, telescope_style.styles),
+        overrides = vim.tbl_deep_extend(
+          "force",
+          telescope_style.hlgroups,
+          telescope_style.styles,
+          lsp_style,
+          tree_sitter_style
+        ),
       })
     end,
   },

@@ -9,3 +9,8 @@ vim.opt.spell = false
 
 -- Remove h and l from 'whichwrap'
 vim.cmd([[ set whichwrap=h,l ]])
+
+-- Vscode snippets
+vim.g.vscode_snippets_path = {
+  "~/AppData/Local/nvim/snippet/phpstorm-snippets-for-vscode",
+}

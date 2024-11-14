@@ -2,9 +2,11 @@ return {
   {
     "L3MON4D3/LuaSnip",
     opts = function()
-      vim.g.vscode_snippets_path = {
-        "~/AppData/Local/nvim/snippet/phpstorm-snippets-for-vscode",
-      }
+      require("luasnip.loaders.from_vscode").lazy_load({
+        paths = {
+          "~/AppData/Local/nvim/snippet/phpstorm-snippets-for-vscode",
+        },
+      })
       local list_snips = function()
         local ft_list = require("luasnip").available()[vim.o.filetype]
         local ft_snips = {}

@@ -22,7 +22,6 @@ return {
         "sqlfluff",
         "stylua",
         "tailwindcss-language-server",
-        "typescript-language-server",
         "vtsls",
       },
     },

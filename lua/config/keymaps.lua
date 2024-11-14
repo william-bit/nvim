@@ -19,7 +19,7 @@ map.set("n", "<A-n>", "<cmd>enew <CR>")
 map.set("n", "<A-o>", "<cmd>Outline<CR>", { desc = "Toggle Outline" })
 
 map.set("n", "<A-i>", function()
-  LazyVim.lazygit({ cwd = LazyVim.root.git() })
+  Snacks.lazygit({ cwd = LazyVim.root.git() })
 end, { desc = "Lazygit (Root Dir)" })
 
 map.set("n", "gr", "<Plug>ReplaceWithRegisterOperator")

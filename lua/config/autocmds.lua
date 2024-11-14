@@ -61,6 +61,13 @@ vim.api.nvim_create_user_command("QB", function()
   M.close_buffer()
 end, { nargs = 0, desc = "Quit Buffer First Then Exit" })
 
+vim.api.nvim_create_user_command("Notification", function()
+  require("snacks").notifier.show_history(opts)
+end, { nargs = 0, desc = "Show notifications history" })
+
 vim.cmd([[
     cabbrev q QB
 ]])
+
+-- disable inlay hints
+vim.lsp.inlay_hint.enable(false)

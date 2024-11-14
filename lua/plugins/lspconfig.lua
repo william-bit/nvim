@@ -4,7 +4,8 @@ vim.diagnostic.config({
 })
 
 -- Show line diagnostics automatically in hover window
-vim.o.updatetime = 250
+vim.o.updatetime = 500
+
 vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
   group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
   callback = function()
@@ -21,6 +22,7 @@ return {
       end
       local Keys = require("lazyvim.plugins.lsp.keymaps").get()
       Keys[#Keys + 1] = { "gr", false }
+      Keys[#Keys + 1] = { "<a-n>", false }
       vim.list_extend(Keys, {
         {
           "gd",

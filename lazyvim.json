@@ -1,6 +1,7 @@
 {
   "extras": [
     "lazyvim.plugins.extras.ai.codeium",
+    "lazyvim.plugins.extras.ai.supermaven",
     "lazyvim.plugins.extras.coding.luasnip",
     "lazyvim.plugins.extras.coding.neogen",
     "lazyvim.plugins.extras.coding.yanky",
@@ -19,7 +20,7 @@
     "lazyvim.plugins.extras.util.dot"
   ],
   "news": {
-    "NEWS.md": "7107"
+    "NEWS.md": "7429"
   },
   "version": 7
 }

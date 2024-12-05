@@ -4,7 +4,10 @@ return {
     opts = {
       extensions = {
         frecency = {
+          db_safe_mode = false,
           matcher = "fuzzy",
+          show_scores = false,
+          show_filter_column = false,
         },
         ["ui-select"] = {
           require("telescope.themes").get_dropdown(),

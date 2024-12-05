@@ -11,13 +11,11 @@
 ---@field yellow string,
 
 ---@class M
----@field border boolean
-local Telescope = {
-  border = false,
-}
+local Telescope = {}
 
 ---@param colors Colors
-function Telescope.style(colors)
+---@param border boolean
+function Telescope.style(border, colors)
   local hlgroups = {
 
     TelescopePromptTitle = { fg = colors.black, bg = colors.red },
@@ -55,7 +53,7 @@ function Telescope.style(colors)
       TelescopeNormal = { bg = colors.black },
     },
   }
-  return { hlgroups = hlgroups, styles = styles[Telescope.border and "bordered" or "borderless"] }
+  return { hlgroups = hlgroups, styles = styles[border and "bordered" or "borderless"] }
 end
 
 return {
@@ -64,8 +62,7 @@ return {
     "ellisonleao/gruvbox.nvim",
     opts = function()
       local colors = require("gruvbox").palette
-
-      local telescope_style = Telescope.style({
+      local telescope_style = Telescope.style(false, {
         darker_black = colors.dark0_hard,
         black = colors.dark0,
         black2 = colors.dark0_soft,

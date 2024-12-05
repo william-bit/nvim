@@ -7,7 +7,7 @@ vim.cmd("if argc() == 1 && isdirectory(argv(0)) | cd `=argv(0)` | endif")
 
 -- set up powershell
 vim.cmd([[
-  let &shell = executable('pwsh') ? 'pwsh' : 'powershell -NoLogo'
+  let &shell = executable('pwsh') ? 'pwsh -NoLogo' : 'powershell -NoLogo'
   let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
   let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
   let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'

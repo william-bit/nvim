@@ -64,4 +64,6 @@ return {
       require("telescope").load_extension("frecency")
     end,
   },
+  -- Fzf can't be installed
+  { "nvim-telescope/telescope-fzf-native.nvim", build = "make", enabled = false },
 }

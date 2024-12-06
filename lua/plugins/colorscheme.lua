@@ -3,7 +3,9 @@
 ---@field black2 string,
 ---@field darker_black string,
 ---@field one_bg string,
+---@field purple string,
 ---@field one_bg2 string,
+---@field one_bg3 string,
 ---@field white string,
 ---@field blue string,
 ---@field green string,
@@ -11,11 +13,11 @@
 ---@field yellow string,
 
 ---@class M
-local Telescope = {}
+local Style = {}
 
 ---@param colors Colors
 ---@param border boolean
-function Telescope.style(border, colors)
+function Style.Telescope(border, colors)
   local hlgroups = {
 
     TelescopePromptTitle = { fg = colors.black, bg = colors.red },
@@ -56,24 +58,80 @@ function Telescope.style(border, colors)
   return { hlgroups = hlgroups, styles = styles[border and "bordered" or "borderless"] }
 end
 
+---@param colors Colors
+function Style.NvimTree(colors)
+  return {
+    NvimTreeNormal = { bg = colors.black },
+    NvimTreeNormalNC = { bg = colors.black },
+
+    NvimTreeEmptyFolderName = { fg = colors.green },
+    NvimTreeEndOfBuffer = { fg = colors.darker_black },
+    NvimTreeFolderIcon = { fg = colors.white },
+    NvimTreeFolderName = { fg = colors.green },
+    NvimTreeFolderArrowOpen = { fg = colors.green },
+    NvimTreeFolderArrowClosed = { fg = colors.white },
+    NvimTreeIndentMarker = { fg = colors.one_bg2 },
+    NvimTreeOpenedFolderName = { fg = colors.green },
+
+    NvimTreeGitNew = { fg = colors.yellow },
+    NvimTreeGitDeleted = { fg = colors.red },
+    NvimTreeGitDirty = { fg = colors.red },
+    NvimTreeGitIgnored = { fg = colors.white },
+
+    NvimTreeGitFileDirtyHL = { fg = colors.yellow },
+    NvimTreeGitFileIgnoredHL = { fg = colors.one_bg3 },
+    NvimTreeGitFileMergeHL = { fg = colors.purple },
+    NvimTreeGitFileNewHL = { fg = colors.red },
+    NvimTreeGitFileDeletedHL = { fg = colors.red },
+    NvimTreeGitFileStagedHL = { fg = colors.blue },
+
+    NvimTreeWinSeparator = {
+      fg = colors.one_bg3,
+      bg = colors.black,
+    },
+
+    NvimTreeWindowPicker = {
+      fg = colors.red,
+      bg = colors.black2,
+    },
+
+    NvimTreeCursorLine = {
+      bg = colors.black,
+    },
+
+    NvimTreeSpecialFile = {
+      fg = colors.yellow,
+      bold = true,
+    },
+
+    NvimTreeRootFolder = {
+      fg = colors.red,
+      bold = true,
+    },
+  }
+end
+
 return {
   -- add gruvbox
   {
     "ellisonleao/gruvbox.nvim",
     opts = function()
-      local colors = require("gruvbox").palette
-      local telescope_style = Telescope.style(false, {
-        darker_black = colors.dark0_hard,
-        black = colors.dark0,
-        black2 = colors.dark0_soft,
-        one_bg = colors.dark1,
-        one_bg2 = colors.dark2,
-        white = colors.light1,
-        blue = colors.neutral_blue,
-        green = colors.bright_green,
-        red = colors.bright_red,
-        yellow = colors.neutral_yellow,
-      })
+      local palatte = require("gruvbox").palette
+      local colors = {
+        darker_black = palatte.dark0_hard,
+        black = palatte.dark0,
+        black2 = palatte.dark0_soft,
+        one_bg = palatte.dark1,
+        one_bg2 = palatte.dark2,
+        one_bg3 = palatte.dark3,
+        white = palatte.light1,
+        blue = palatte.neutral_blue,
+        purple = palatte.bright_purple,
+        green = palatte.bright_green,
+        red = palatte.bright_red,
+        yellow = palatte.neutral_yellow,
+      }
+      local telescope_style = Style.Telescope(false, colors)
 
       local tree_sitter_style = {
         ["@tag"] = { fg = colors.bright_blue },
@@ -100,6 +158,7 @@ return {
           "force",
           telescope_style.hlgroups,
           telescope_style.styles,
+          Style.NvimTree(colors),
           lsp_style,
           tree_sitter_style
         ),

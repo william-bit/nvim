@@ -13,6 +13,9 @@ return {
           above = "▄",
           below = "▀",
         },
+        code = {
+          enabled = false,
+        },
       })
     end,
     dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite

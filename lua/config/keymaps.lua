@@ -14,7 +14,8 @@ map.set("n", "(", "<c-w><")
 map.set("n", ")", "<c-w>>")
 map.set("n", "<c-n>", "<c-v>")
 
-map.set("n", "<A-b>", "<cmd>Neotree toggle <CR>")
+-- map.set("n", "<A-b>", "<cmd>Neotree toggle <CR>")
+map.set("n", "<A-b>", require("nvim-tree.api").tree.toggle)
 map.set("n", "<A-n>", "<cmd>enew <CR>")
 map.set("n", "<A-o>", "<cmd>Outline<CR>", { desc = "Toggle Outline" })
 

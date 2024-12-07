@@ -1,7 +1,7 @@
 local Style = require("config.colorscheme")
 
 ---@type "catppuccin_latte" | "catppuccin_mocha" | "catppuccin_macchiato" | "catppuccin_frappe" | "gruvbox" | 'tokyonight-night' | 'tokyonight-storm' | 'tokyonight-day' | 'tokyonight-moon'
-local colorscheme = "tokyonight-day"
+local colorscheme = "gruvbox"
 
 local function proses_colorscheme()
   local catppuccin = {
@@ -21,7 +21,6 @@ return {
   -- setting catppuccin
   {
     "catppuccin/nvim",
-    enabled = "catppuccin" == proses_colorscheme(),
     opts = function()
       local palettes = {}
       local flavour = "macchiato"
@@ -73,7 +72,6 @@ return {
   -- add gruvbox
   {
     "ellisonleao/gruvbox.nvim",
-    enabled = colorscheme == "gruvbox",
     opts = function()
       local palettes = require("gruvbox").palette
       local colors = {
@@ -145,7 +143,7 @@ return {
       }
     end,
   },
-  -- Configure LazyVim to load gruvbox
+  -- Configure LazyVim to load theme
   {
     "LazyVim/LazyVim",
     opts = {

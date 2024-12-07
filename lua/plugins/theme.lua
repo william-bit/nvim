@@ -1,4 +1,4 @@
-local Style = require("config.colorscheme")
+local Style = require("config.style")
 
 ---@type "catppuccin_latte" | "catppuccin_mocha" | "catppuccin_macchiato" | "catppuccin_frappe" | "gruvbox" | 'tokyonight-night' | 'tokyonight-storm' | 'tokyonight-day' | 'tokyonight-moon'
 local colorscheme = "gruvbox"

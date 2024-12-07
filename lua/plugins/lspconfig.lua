@@ -48,9 +48,12 @@ return {
           desc = "Goto T[y]pe Definition",
         },
       })
-      return {
-        inlay_hints = { enabled = false },
-      }
     end,
+  },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      inlay_hints = { enabled = false },
+    },
   },
 }

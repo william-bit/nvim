@@ -7,10 +7,13 @@
 ---@field one_bg2 string,
 ---@field one_bg3 string,
 ---@field white string,
+---@field white2 string,
 ---@field blue string,
+---@field bright_blue string,
 ---@field green string,
 ---@field red string,
 ---@field yellow string,
+---@field bright_yellow string,
 
 ---@class M
 local Style = {}
@@ -111,66 +114,30 @@ function Style.NvimTree(colors)
   }
 end
 
-return {
-  -- add gruvbox
-  {
-    "ellisonleao/gruvbox.nvim",
-    opts = function()
-      local palatte = require("gruvbox").palette
-      local colors = {
-        darker_black = palatte.dark0_hard,
-        black = palatte.dark0,
-        black2 = palatte.dark0_soft,
-        one_bg = palatte.dark1,
-        one_bg2 = palatte.dark2,
-        one_bg3 = palatte.dark3,
-        white = palatte.light1,
-        blue = palatte.neutral_blue,
-        purple = palatte.bright_purple,
-        green = palatte.bright_green,
-        red = palatte.bright_red,
-        yellow = palatte.neutral_yellow,
-      }
-      local telescope_style = Style.Telescope(false, colors)
+---@param colors Colors
+function Style.TreeSitter(colors)
+  return {
+    ["@tag"] = { fg = colors.bright_blue },
+    ["@tag.builtin"] = { fg = colors.white2 },
+    ["@tag.attribute"] = { fg = colors.bright_yellow },
+    ["@variable.parameter"] = { fg = colors.white2 },
+    ["@type"] = { fg = colors.bright_yellow },
+    ["@keyword.return"] = { fg = colors.red },
+    ["@keyword.function"] = { fg = colors.purple },
+    ["@function.call"] = { fg = colors.bright_blue },
+    ["@function.method.call"] = { fg = colors.bright_blue },
+    ["@function.method"] = { fg = colors.white2 },
+    ["@function"] = { fg = colors.white2 },
+  }
+end
 
-      local tree_sitter_style = {
-        ["@tag"] = { fg = colors.bright_blue },
-        ["@tag.builtin"] = { fg = colors.light2 },
-        ["@tag.attribute"] = { fg = colors.bright_yellow },
-        ["@variable.parameter"] = { fg = colors.light2 },
-        ["@type"] = { fg = colors.bright_yellow },
-        ["@keyword.return"] = { fg = colors.bright_red },
-        ["@keyword.function"] = { fg = colors.bright_purple },
-        ["@function.call"] = { fg = colors.bright_blue },
-        ["@function.method.call"] = { fg = colors.bright_blue },
-        ["@function.method"] = { fg = colors.light2 },
-        ["@function"] = { fg = colors.light2 },
-      }
+---@param colors Colors
+function Style.LSP(colors)
+  return {
+    ["@lsp.type.parameter"] = { fg = colors.white2 },
+    ["@lsp.type.interface"] = { fg = colors.bright_yellow },
+    ["@lsp.type.type"] = { fg = colors.bright_yellow },
+  }
+end
 
-      local lsp_style = {
-        ["@lsp.type.parameter"] = { fg = colors.light2 },
-        ["@lsp.type.interface"] = { fg = colors.bright_yellow },
-        ["@lsp.type.type"] = { fg = colors.bright_yellow },
-      }
-
-      require("gruvbox").setup({
-        overrides = vim.tbl_deep_extend(
-          "force",
-          telescope_style.hlgroups,
-          telescope_style.styles,
-          Style.NvimTree(colors),
-          lsp_style,
-          tree_sitter_style
-        ),
-      })
-    end,
-  },
-
-  -- Configure LazyVim to load gruvbox
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "gruvbox",
-    },
-  },
-}
+return Style

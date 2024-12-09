@@ -3,22 +3,8 @@ local Style = require("config.style")
 ---@type "catppuccin_latte" | "catppuccin_mocha" | "catppuccin_macchiato" | "catppuccin_frappe" | "gruvbox" | 'tokyonight-night' | 'tokyonight-storm' | 'tokyonight-day' | 'tokyonight-moon'
 local colorscheme = "gruvbox"
 
-local function proses_colorscheme()
-  local catppuccin = {
-    "catppuccin_latte",
-    "catppuccin_mocha",
-    "catppuccin_macchiato",
-    "catppuccin_frappe",
-  }
-  if vim.tbl_contains(catppuccin, colorscheme) then
-    return "catppuccin"
-  else
-    return colorscheme
-  end
-end
-
 return {
-  -- setting catppuccin
+  -- add gruvbox
   {
     "catppuccin/nvim",
     opts = function()
@@ -146,8 +132,23 @@ return {
   -- Configure LazyVim to load theme
   {
     "LazyVim/LazyVim",
-    opts = {
-      colorscheme = proses_colorscheme(),
-    },
+    opts = function()
+      local function proses_colorscheme()
+        local catppuccin = {
+          "catppuccin_latte",
+          "catppuccin_mocha",
+          "catppuccin_macchiato",
+          "catppuccin_frappe",
+        }
+        if vim.tbl_contains(catppuccin, colorscheme) then
+          return "catppuccin"
+        else
+          return colorscheme
+        end
+      end
+      return {
+        colorscheme = proses_colorscheme(),
+      }
+    end,
   },
 }

@@ -39,6 +39,11 @@ return {
         width = 40,
         preserve_window_proportions = true,
       },
+      git = {
+        enable = true,
+        ignore = false,
+        timeout = 500,
+      },
       renderer = {
         root_folder_label = false,
         highlight_git = true,

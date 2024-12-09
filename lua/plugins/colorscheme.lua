@@ -4,7 +4,29 @@ local Style = require("config.style")
 local colorscheme = "gruvbox"
 
 return {
-  -- add gruvbox
+  -- Configure LazyVim to load theme
+  {
+    "LazyVim/LazyVim",
+    opts = function()
+      local function proses_colorscheme()
+        local catppuccin = {
+          "catppuccin_latte",
+          "catppuccin_mocha",
+          "catppuccin_macchiato",
+          "catppuccin_frappe",
+        }
+        if vim.tbl_contains(catppuccin, colorscheme) then
+          return "catppuccin"
+        else
+          return colorscheme
+        end
+      end
+      return {
+        colorscheme = proses_colorscheme(),
+      }
+    end,
+  },
+  -- add catppuccin
   {
     "catppuccin/nvim",
     opts = function()
@@ -122,32 +144,10 @@ return {
             Style.LSP(colors),
             Style.TreeSitter(colors)
           )
-          for group, colors in pairs(colors_table) do
-            hl[group] = colors
+          for group, color in pairs(colors_table) do
+            hl[group] = color
           end
         end,
-      }
-    end,
-  },
-  -- Configure LazyVim to load theme
-  {
-    "LazyVim/LazyVim",
-    opts = function()
-      local function proses_colorscheme()
-        local catppuccin = {
-          "catppuccin_latte",
-          "catppuccin_mocha",
-          "catppuccin_macchiato",
-          "catppuccin_frappe",
-        }
-        if vim.tbl_contains(catppuccin, colorscheme) then
-          return "catppuccin"
-        else
-          return colorscheme
-        end
-      end
-      return {
-        colorscheme = proses_colorscheme(),
       }
     end,
   },

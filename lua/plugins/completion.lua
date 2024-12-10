@@ -61,11 +61,63 @@ return {
           { name = "path" },
           { name = "spell" },
         }),
+        window = {
+          completion = {
+            winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+            col_offset = -3,
+            side_padding = 0,
+          },
+        },
         formatting = {
+          fields = { "kind", "abbr", "menu" },
           format = function(_, item)
-            local icons = LazyVim.config.icons.kinds
+            local icons = {
+              Array = " ",
+              Boolean = "󰨙 ",
+              Class = " ",
+              Codeium = "󰘦 ",
+              Color = " ",
+              Control = " ",
+              Collapsed = " ",
+              Constant = "󰏿 ",
+              Constructor = " ",
+              Copilot = " ",
+              Enum = " ",
+              EnumMember = " ",
+              Event = " ",
+              Field = " ",
+              File = " ",
+              Folder = " ",
+              Function = "󰊕 ",
+              Interface = " ",
+              Key = "⧪ ",
+              Keyword = " ",
+              Method = "󰊕 ",
+              Module = " ",
+              Namespace = "󰦮 ",
+              Null = "␤ ",
+              Number = "󰎠 ",
+              Object = " ",
+              Operator = " ",
+              Package = " ",
+              Property = " ",
+              Reference = " ",
+              Snippet = "▢ ",
+              String = " ",
+              Struct = "󰆼 ",
+              Supermaven = " ",
+              TabNine = "󰏚 ",
+              Text = "Ͳ ",
+              TypeParameter = " ",
+              Unit = " ",
+              Value = "❖ ",
+              Variable = "󰀫 ",
+            }
+
             if icons[item.kind] then
-              item.kind = icons[item.kind] .. item.kind
+              local name = item.kind
+              item.kind = "  " .. icons[item.kind] .. " "
+              item.menu = "    (" .. (name or "") .. ")"
             end
 
             local widths = {

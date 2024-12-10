@@ -2,18 +2,23 @@
 ---@field black string,
 ---@field black2 string,
 ---@field darker_black string,
----@field one_bg string,
+---@field black3 string,
 ---@field purple string,
----@field one_bg2 string,
----@field one_bg3 string,
+---@field black4 string,
+---@field black5 string,
 ---@field white string,
 ---@field white2 string,
+---@field bright_purple string,
+---@field aqua string,
+---@field bright_aqua string,
 ---@field blue string,
 ---@field bright_blue string,
 ---@field green string,
 ---@field red string,
 ---@field yellow string,
 ---@field bright_yellow string,
+---@field orange string,
+---@field bright_orange string,
 
 ---@class M
 local Style = {}
@@ -30,7 +35,7 @@ function Style.Telescope(border, colors)
     TelescopeResultsDiffChange = { fg = colors.yellow },
     TelescopeResultsDiffDelete = { fg = colors.red },
 
-    TelescopeMatching = { bg = colors.one_bg, fg = colors.blue },
+    TelescopeMatching = { bg = colors.black3, fg = colors.blue },
   }
 
   local styles = {
@@ -47,10 +52,10 @@ function Style.Telescope(border, colors)
     },
 
     bordered = {
-      TelescopeBorder = { fg = colors.one_bg2 },
-      TelescopePromptBorder = { fg = colors.one_bg2 },
-      TelescopeResultsBorder = { fg = colors.one_bg2 },
-      TelescopePreviewBorder = { fg = colors.one_bg2 },
+      TelescopeBorder = { fg = colors.black4 },
+      TelescopePromptBorder = { fg = colors.black4 },
+      TelescopeResultsBorder = { fg = colors.black4 },
+      TelescopePreviewBorder = { fg = colors.black4 },
       TelescopePromptNormal = { bg = colors.black },
       TelescopeResultsTitle = { fg = colors.black, bg = colors.green },
       TelescopePreviewTitle = { fg = colors.black, bg = colors.blue },
@@ -73,7 +78,7 @@ function Style.NvimTree(colors)
     NvimTreeFolderName = { fg = colors.green },
     NvimTreeFolderArrowOpen = { fg = colors.green },
     NvimTreeFolderArrowClosed = { fg = colors.white },
-    NvimTreeIndentMarker = { fg = colors.one_bg2 },
+    NvimTreeIndentMarker = { fg = colors.black4 },
     NvimTreeOpenedFolderName = { fg = colors.green },
 
     NvimTreeGitNew = { fg = colors.yellow },
@@ -82,14 +87,14 @@ function Style.NvimTree(colors)
     NvimTreeGitIgnored = { fg = colors.white },
 
     NvimTreeGitFileDirtyHL = { fg = colors.yellow },
-    NvimTreeGitFileIgnoredHL = { fg = colors.one_bg3 },
+    NvimTreeGitFileIgnoredHL = { fg = colors.black5 },
     NvimTreeGitFileMergeHL = { fg = colors.purple },
     NvimTreeGitFileNewHL = { fg = colors.red },
     NvimTreeGitFileDeletedHL = { fg = colors.red },
     NvimTreeGitFileStagedHL = { fg = colors.blue },
 
     NvimTreeWinSeparator = {
-      fg = colors.one_bg3,
+      fg = colors.black5,
       bg = colors.black,
     },
 
@@ -138,6 +143,59 @@ function Style.LSP(colors)
     ["@lsp.type.interface"] = { fg = colors.bright_yellow },
     ["@lsp.type.type"] = { fg = colors.bright_yellow },
   }
+end
+---@param colors Colors
+function Style.CMP(colors)
+  -- custom highlights per style!
+  local styles_base = {
+    PmenuSel = { bg = colors.white, fg = "NONE" },
+    Pmenu = { fg = colors.bright_blue, bg = colors.black },
+
+    CmpItemAbbrDeprecated = { fg = colors.black4, bg = "NONE", strikethrough = true },
+    CmpItemAbbrMatch = { fg = colors.bright_blue, bg = "NONE", bold = true },
+    CmpItemAbbrMatchFuzzy = { fg = colors.bright_blue, bg = "NONE", bold = true },
+    CmpItemMenu = { fg = colors.bright_purple, bg = "NONE", italic = true },
+  }
+  local style_item = {
+    CmpItemKindField = { bg = colors.black3, fg = colors.red },
+    CmpItemKindProperty = { bg = colors.black3, fg = colors.red },
+    CmpItemKindEvent = { bg = colors.black3, fg = colors.red },
+
+    CmpItemKindText = { bg = colors.black3, fg = colors.green },
+    CmpItemKindEnum = { bg = colors.black3, fg = colors.green },
+    CmpItemKindKeyword = { bg = colors.black3, fg = colors.green },
+
+    CmpItemKindConstant = { bg = colors.black3, fg = colors.bright_yellow },
+    CmpItemKindConstructor = { bg = colors.black3, fg = colors.bright_yellow },
+    CmpItemKindReference = { bg = colors.black3, fg = colors.bright_yellow },
+
+    CmpItemKindFunction = { bg = colors.black3, fg = colors.bright_purple },
+    CmpItemKindStruct = { bg = colors.black3, fg = colors.bright_purple },
+    CmpItemKindClass = { bg = colors.black3, fg = colors.bright_purple },
+    CmpItemKindModule = { bg = colors.black3, fg = colors.bright_purple },
+    CmpItemKindOperator = { bg = colors.black3, fg = colors.bright_purple },
+
+    CmpItemKindVariable = { bg = colors.black3, fg = colors.white },
+    CmpItemKindFile = { bg = colors.black3, fg = colors.white },
+
+    CmpItemKindUnit = { bg = colors.black3, fg = colors.bright_orange },
+    CmpItemKindSnippet = { bg = colors.black3, fg = colors.bright_orange },
+    CmpItemKindFolder = { bg = colors.black3, fg = colors.bright_orange },
+
+    CmpItemKindMethod = { bg = colors.black3, fg = colors.blue },
+    CmpItemKindValue = { bg = colors.black3, fg = colors.blue },
+    CmpItemKindEnumMember = { bg = colors.black3, fg = colors.blue },
+
+    CmpItemKindInterface = { bg = colors.black3, fg = colors.blue },
+    CmpItemKindColor = { bg = colors.black3, fg = colors.aqua },
+    CmpItemKindTypeParameter = { bg = colors.black3, fg = colors.aqua },
+
+    CmpItemKindCopilot = { bg = colors.black3, fg = colors.bright_blue },
+    CmpItemKindCodeium = { bg = colors.black3, fg = colors.bright_blue },
+    CmpItemKindTabNine = { bg = colors.black3, fg = colors.bright_blue },
+    CmpItemKindSuperMaven = { bg = colors.black3, fg = colors.bright_blue },
+  }
+  return vim.tbl_extend("force", styles_base, style_item)
 end
 
 return Style

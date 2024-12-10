@@ -49,9 +49,9 @@ return {
         darker_black = palettes.crust,
         black = palettes.base,
         black2 = palettes.mantle,
-        one_bg = palettes.surface0,
-        one_bg2 = palettes.surface1,
-        one_bg3 = palettes.surface2,
+        black3 = palettes.surface0,
+        black4 = palettes.surface1,
+        black5 = palettes.surface2,
         white = palettes.text,
         white2 = palettes.surface2,
         blue = palettes.blue,
@@ -60,7 +60,12 @@ return {
         green = palettes.green,
         red = palettes.red,
         yellow = palettes.yellow,
-        bright_yellow = palettes.bright_yellow,
+        bright_yellow = palettes.yellow,
+        orange = palettes.peach,
+        bright_orange = palettes.peach,
+        bright_purple = palettes.lavender,
+        aqua = palettes.sapphire,
+        bright_aqua = palettes.sapphire,
       }
       local telescope_style = Style.Telescope(false, colors)
 
@@ -72,6 +77,7 @@ return {
           telescope_style.styles,
           Style.NvimTree(colors),
           Style.LSP(colors),
+          Style.CMP(colors),
           Style.TreeSitter(colors)
         ),
       }
@@ -86,18 +92,23 @@ return {
         darker_black = palettes.dark0_hard,
         black = palettes.dark0,
         black2 = palettes.dark0_soft,
-        one_bg = palettes.dark1,
-        one_bg2 = palettes.dark2,
-        one_bg3 = palettes.dark3,
-        white = palettes.light1,
-        white2 = palettes.light2,
+        black3 = palettes.dark1,
+        black4 = palettes.dark2,
+        black5 = palettes.dark3,
+        white = palettes.light0_hard,
+        white2 = palettes.light1,
         blue = palettes.neutral_blue,
         bright_blue = palettes.bright_blue,
-        purple = palettes.bright_purple,
+        purple = palettes.faded_purple,
         green = palettes.bright_green,
         red = palettes.bright_red,
         yellow = palettes.neutral_yellow,
-        bright_yellow = palettes.neutral_yellow,
+        bright_yellow = palettes.bright_yellow,
+        orange = palettes.neutral_orange,
+        bright_orange = palettes.bright_orange,
+        bright_purple = palettes.bright_purple,
+        aqua = palettes.neutral_aqua,
+        bright_aqua = palettes.bright_aqua,
       }
       local telescope_style = Style.Telescope(false, colors)
 
@@ -108,6 +119,7 @@ return {
           telescope_style.styles,
           Style.NvimTree(colors),
           Style.LSP(colors),
+          Style.CMP(colors),
           Style.TreeSitter(colors)
         ),
       }
@@ -122,18 +134,23 @@ return {
             darker_black = palettes.bg_dark,
             black = palettes.bg,
             black2 = palettes.bg_highlight,
-            one_bg = palettes.dark3,
-            one_bg2 = palettes.dark5,
-            one_bg3 = palettes.bg_dark,
+            black3 = palettes.dark3,
+            black4 = palettes.dark5,
+            black5 = palettes.bg_dark,
             white = palettes.fg,
             white2 = palettes.comment,
             blue = palettes.blue,
             bright_blue = palettes.blue0,
+            bright_purple = palettes.magenta,
             purple = palettes.purple,
             green = palettes.green,
             red = palettes.red,
             yellow = palettes.orange,
             bright_yellow = palettes.yellow,
+            orange = palettes.orange,
+            bright_orange = palettes.yellow,
+            aqua = palettes.cyan,
+            bright_aqua = palettes.blue6,
           }
           local telescope_style = Style.Telescope(false, colors)
           local colors_table = vim.tbl_deep_extend(
@@ -142,6 +159,7 @@ return {
             telescope_style.styles,
             Style.NvimTree(colors),
             Style.LSP(colors),
+            Style.CMP(colors),
             Style.TreeSitter(colors)
           )
           for group, color in pairs(colors_table) do

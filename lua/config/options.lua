@@ -8,7 +8,10 @@ vim.opt.spell = false
 -- vim.opt.listchars = "eol:↲"
 
 -- Remove h and l from 'whichwrap'
-vim.cmd([[ set whichwrap=h,l ]])
+vim.cmd([[ 
+  set whichwrap=h,l 
+  set mousemoveevent
+]])
 
 -- Vscode snippets
 vim.g.vscode_snippets_path = {

@@ -58,12 +58,11 @@ function M.close_buffer()
 end
 
 vim.api.nvim_create_user_command("Notification", function()
-  require("snacks").notifier.show_history(opts)
+  require("snacks").notifier.show_history()
 end, { nargs = 0, desc = "Show notifications history" })
 
 -- disable inlay hints
 vim.lsp.inlay_hint.enable(false)
-
 -- vim.api.nvim_create_user_command("QB", function()
 --   M.close_buffer()
 -- end, { nargs = 0, desc = "Quit Buffer First Then Exit" })

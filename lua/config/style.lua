@@ -128,7 +128,7 @@ function Style.TreeSitter(colors)
     ["@variable.parameter"] = { fg = colors.white2 },
     ["@type"] = { fg = colors.bright_yellow },
     ["@keyword.return"] = { fg = colors.red },
-    ["@keyword.function"] = { fg = colors.purple },
+    ["@keyword.function"] = { fg = colors.bright_purple },
     ["@function.call"] = { fg = colors.bright_blue },
     ["@function.method.call"] = { fg = colors.bright_blue },
     ["@function.method"] = { fg = colors.white2 },

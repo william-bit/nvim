@@ -23,6 +23,9 @@
 ---@class M
 local Style = {}
 
+---@type "catppuccin_latte" | "catppuccin_mocha" | "catppuccin_macchiato" | "catppuccin_frappe" | "gruvbox" | 'tokyonight-night' | 'tokyonight-storm' | 'tokyonight-day' | 'tokyonight-moon'
+Style.colorscheme = "gruvbox"
+
 ---@param colors Colors
 ---@param border boolean
 function Style.Telescope(border, colors)
@@ -197,5 +200,48 @@ function Style.CMP(colors)
   }
   return vim.tbl_extend("force", styles_base, style_item)
 end
+
+Style.CMP_ICONS = {
+  Array = " ",
+  Boolean = "󰨙 ",
+  Class = " ",
+  Codeium = "󰘦 ",
+  Color = " ",
+  Control = " ",
+  Collapsed = " ",
+  Constant = "󰏿 ",
+  Constructor = " ",
+  Copilot = " ",
+  Enum = " ",
+  EnumMember = " ",
+  Event = " ",
+  Field = " ",
+  File = " ",
+  Folder = " ",
+  Function = "󰊕 ",
+  Interface = " ",
+  Key = "⧪ ",
+  Keyword = " ",
+  Method = "󰊕 ",
+  Module = " ",
+  Namespace = "󰦮 ",
+  Null = "␤ ",
+  Number = "󰎠 ",
+  Object = " ",
+  Operator = " ",
+  Package = " ",
+  Property = " ",
+  Reference = " ",
+  Snippet = "▢ ",
+  String = " ",
+  Struct = "󰆼 ",
+  Supermaven = " ",
+  TabNine = "󰏚 ",
+  Text = "Ͳ ",
+  TypeParameter = " ",
+  Unit = " ",
+  Value = "❖ ",
+  Variable = "󰀫 ",
+}
 
 return Style

@@ -1,7 +1,6 @@
 local Style = require("config.style")
 
----@type "catppuccin_latte" | "catppuccin_mocha" | "catppuccin_macchiato" | "catppuccin_frappe" | "gruvbox" | 'tokyonight-night' | 'tokyonight-storm' | 'tokyonight-day' | 'tokyonight-moon'
-local colorscheme = "gruvbox"
+local colorscheme = Style.colorscheme
 
 return {
   -- Configure LazyVim to load theme

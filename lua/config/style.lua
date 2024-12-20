@@ -201,6 +201,57 @@ function Style.CMP(colors)
   return vim.tbl_extend("force", styles_base, style_item)
 end
 
+function Style.CMP_BLINK(colors)
+  -- custom highlights per style!
+  local styles_base = {
+    BlinkCmpMenu = { fg = colors.bright_blue, bg = colors.black3 },
+    BlinkCmpMenuSelection = { bg = colors.white4, fg = "NONE" },
+
+    BlinkCmpLabelDeprecated = { fg = colors.black5, bg = "NONE", strikethrough = true },
+    BlinkCmpLabelMatch = { fg = colors.bright_blue, bg = "NONE", bold = true },
+    BlinkCmpKind = { fg = colors.bright_purple, bg = "NONE", italic = true },
+  }
+  local style_item = {
+    BlinkCmpKindField = { bg = "NONE", fg = colors.red },
+    BlinkCmpKindProperty = { bg = "NONE", fg = colors.red },
+    BlinkCmpKindEvent = { bg = "NONE", fg = colors.red },
+
+    BlinkCmpKindText = { bg = "NONE", fg = colors.green },
+    BlinkCmpKindEnum = { bg = "NONE", fg = colors.green },
+    BlinkCmpKindKeyword = { bg = "NONE", fg = colors.green },
+
+    BlinkCmpKindConstant = { bg = "NONE", fg = colors.bright_yellow },
+    BlinkCmpKindConstructor = { bg = "NONE", fg = colors.bright_yellow },
+    BlinkCmpKindReference = { bg = "NONE", fg = colors.bright_yellow },
+
+    BlinkCmpKindFunction = { bg = "NONE", fg = colors.bright_purple },
+    BlinkCmpKindStruct = { bg = "NONE", fg = colors.bright_purple },
+    BlinkCmpKindClass = { bg = "NONE", fg = colors.bright_purple },
+    BlinkCmpKindModule = { bg = "NONE", fg = colors.bright_purple },
+    BlinkCmpKindOperator = { bg = "NONE", fg = colors.bright_purple },
+
+    BlinkCmpKindVariable = { bg = "NONE", fg = colors.white },
+    BlinkCmpKindFile = { bg = "NONE", fg = colors.white },
+
+    BlinkCmpKindUnit = { bg = "NONE", fg = colors.bright_orange },
+    BlinkCmpKindSnippet = { bg = "NONE", fg = colors.bright_orange },
+    BlinkCmpKindFolder = { bg = "NONE", fg = colors.bright_orange },
+
+    BlinkCmpKindMethod = { bg = "NONE", fg = colors.blue },
+    BlinkCmpKindValue = { bg = "NONE", fg = colors.blue },
+    BlinkCmpKindEnumMember = { bg = "NONE", fg = colors.blue },
+
+    BlinkCmpKindInterface = { bg = "NONE", fg = colors.blue },
+    BlinkCmpKindColor = { bg = "NONE", fg = colors.aqua },
+    BlinkCmpKindTypeParameter = { bg = "NONE", fg = colors.aqua },
+
+    BlinkCmpKindCopilot = { bg = "NONE", fg = colors.bright_blue },
+    BlinkCmpKindCodeium = { bg = "NONE", fg = colors.bright_blue },
+    BlinkCmpKindTabNine = { bg = "NONE", fg = colors.bright_blue },
+    BlinkCmpKindSuperMaven = { bg = "NONE", fg = colors.bright_blue },
+  }
+  return vim.tbl_extend("force", styles_base, style_item)
+end
 Style.CMP_ICONS = {
   Array = " ",
   Boolean = "󰨙 ",

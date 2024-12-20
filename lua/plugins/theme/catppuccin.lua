@@ -2,6 +2,7 @@ local Style = require("config.style")
 
 return {
   "catppuccin/nvim",
+  name = "catppuccin",
   opts = function()
     local palettes = {}
     local flavour = "macchiato"

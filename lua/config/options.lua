@@ -5,6 +5,7 @@
 -- disable vim inbuilt spell and wrap
 vim.opt.wrap = false
 vim.opt.spell = false
+vim.opt.completeopt = ""
 -- vim.opt.listchars = "eol:↲"
 
 -- Remove h and l from 'whichwrap'

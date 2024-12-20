@@ -24,7 +24,7 @@ map.set("n", "<A-i>", function()
   Snacks.lazygit()
 end, { desc = "Lazygit (Root Dir)" })
 
-map.set("n", "gr", "<Plug>ReplaceWithRegisterOperator")
+map.set("n", "gl", "<Plug>ReplaceWithRegisterOperator")
 
 map.set("n", ",", function()
   vim.lsp.buf.hover()

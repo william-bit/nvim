@@ -9,6 +9,11 @@ return {
       local d = ls.dynamic_node
 
       ls.add_snippets("go", {
+        s({ trig = "!", name = "Not same" }, {
+          i(1, "name"),
+          t({ "!=" }),
+          i(2, "value"),
+        }),
         s({ trig = ";", name = "Create variable" }, {
           i(1, "name"),
           t({ ":=" }),

@@ -26,16 +26,16 @@ return {
       aqua = palettes.neutral_aqua,
       bright_aqua = palettes.bright_aqua,
     }
-    local telescope_style = Style.Telescope(false, colors)
+    local search_style = Style.FZF_LUA(false, colors)
 
     return {
       overrides = vim.tbl_deep_extend(
         "force",
-        telescope_style.hlgroups,
-        telescope_style.styles,
+        search_style.hlgroups,
+        search_style.styles,
         Style.NvimTree(colors),
         Style.LSP(colors),
-        Style.CMP(colors),
+        Style.CMP_BLINK(colors),
         Style.TreeSitter(colors)
       ),
     }

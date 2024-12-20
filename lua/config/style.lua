@@ -68,6 +68,33 @@ function Style.Telescope(border, colors)
   }
   return { hlgroups = hlgroups, styles = styles[border and "bordered" or "borderless"] }
 end
+---@param colors Colors
+---@param border boolean
+function Style.FZF_LUA(border, colors)
+  local hlgroups = {
+    FzfLuaTitle = { fg = colors.black, bg = colors.red },
+    FzfLuaSearch = { bg = colors.black2, fg = colors.white },
+  }
+
+  local styles = {
+    borderless = {
+      FzfLuaNormal = { fg = colors.white, bg = colors.black },
+      FzfLuaBorder = { fg = colors.black, bg = colors.black },
+      FzfLuaPreviewBorder = { fg = colors.black, bg = colors.black },
+      FzfLuaPreviewTitle = { fg = colors.black, bg = colors.green },
+      FzfLuaPreviewNormal = { bg = colors.black },
+    },
+
+    bordered = {
+      FzfLuaNormal = { bg = colors.black },
+      FzfLuaBorder = { fg = colors.black4 },
+      FzfLuaPreviewBorder = { fg = colors.black4 },
+      FzfLuaPreviewTitle = { fg = colors.black, bg = colors.blue },
+      FzfLuaPreviewNormal = { bg = colors.black },
+    },
+  }
+  return { hlgroups = hlgroups, styles = styles[border and "bordered" or "borderless"] }
+end
 
 ---@param colors Colors
 function Style.NvimTree(colors)

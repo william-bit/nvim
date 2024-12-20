@@ -2,6 +2,7 @@ return {
   {
     "smoka7/hop.nvim",
     version = "*",
+    enabled = false,
     opts = function()
       require("hop").setup()
       local map = vim.keymap

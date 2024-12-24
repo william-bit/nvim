@@ -27,14 +27,14 @@ return {
           aqua = palettes.cyan,
           bright_aqua = palettes.blue6,
         }
-        local telescope_style = Style.Telescope(false, colors)
+        local search_style = Style.FZF_LUA(false, colors)
         local colors_table = vim.tbl_deep_extend(
           "force",
-          telescope_style.hlgroups,
-          telescope_style.styles,
+          search_style.hlgroups,
+          search_style.styles,
           Style.NvimTree(colors),
           Style.LSP(colors),
-          Style.CMP(colors),
+          Style.CMP_BLINK(colors),
           Style.TreeSitter(colors)
         )
         for group, color in pairs(colors_table) do

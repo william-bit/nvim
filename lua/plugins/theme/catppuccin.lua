@@ -41,17 +41,17 @@ return {
       aqua = palettes.sapphire,
       bright_aqua = palettes.sapphire,
     }
-    local telescope_style = Style.Telescope(false, colors)
+    local search_style = Style.FZF_LUA(false, colors)
 
     return {
       flavour = flavour, -- latte, frappe, macchiato, mocha
       custom_highlights = vim.tbl_deep_extend(
         "force",
-        telescope_style.hlgroups,
-        telescope_style.styles,
+        search_style.hlgroups,
+        search_style.styles,
         Style.NvimTree(colors),
         Style.LSP(colors),
-        Style.CMP(colors),
+        Style.CMP_BLINK(colors),
         Style.TreeSitter(colors)
       ),
     }

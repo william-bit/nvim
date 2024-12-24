@@ -72,7 +72,8 @@ end
 ---@param border boolean
 function Style.FZF_LUA(border, colors)
   local hlgroups = {
-    FzfLuaTitle = { fg = colors.black, bg = colors.red },
+    FzfLuaTitle = { bg = colors.red, fg = colors.black },
+    FzfLuaFzfHeader = { fg = colors.bright_blue },
     FzfLuaSearch = { bg = colors.black2, fg = colors.white },
   }
 
@@ -80,9 +81,9 @@ function Style.FZF_LUA(border, colors)
     borderless = {
       FzfLuaNormal = { fg = colors.white, bg = colors.black },
       FzfLuaBorder = { fg = colors.black, bg = colors.black },
-      FzfLuaPreviewBorder = { fg = colors.black, bg = colors.black },
-      FzfLuaPreviewTitle = { fg = colors.black, bg = colors.green },
-      FzfLuaPreviewNormal = { bg = colors.black },
+      FzfLuaPreviewBorder = { fg = colors.black2, bg = colors.black2 },
+      FzfLuaPreviewTitle = { fg = colors.black2, bg = colors.green },
+      FzfLuaPreviewNormal = { bg = colors.black2 },
     },
 
     bordered = {

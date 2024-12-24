@@ -12,6 +12,10 @@ return {
         path_shorten = true,
         multiprocess = true,
       },
+      buffers = {
+        color_icons = false,
+        path_shorten = true,
+      },
     },
   },
 }

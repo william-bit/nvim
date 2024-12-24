@@ -35,7 +35,7 @@ return {
         search_style.styles,
         Style.NvimTree(colors),
         Style.LSP(colors),
-        Style.CMP(colors),
+        Style.CMP_BLINK(colors),
         Style.TreeSitter(colors)
       ),
     }

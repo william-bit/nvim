@@ -39,10 +39,24 @@ end, { desc = "Rename LSP" })
 map.set({ "n", "v" }, "g.", vim.lsp.buf.code_action, { desc = "LSP code action" })
 
 map.set("n", "<c-t>", "<cmd>Trouble diagnostics toggle focus=true<CR>")
+
 map.set("n", "<c-o>", "<cmd>FzfLua buffers <CR>")
 map.set("n", "<c-f>", "<cmd>FzfLua live_grep<CR>")
 map.set("n", "<c-p>", "<cmd>FzfLua files<CR>")
 map.set("n", "<leader>fh", "<cmd>FzfLua help_tags <CR>")
+
+-- map.set("n", "<c-o>", "<cmd>Telescope buffers <CR>")
+-- map.set("n", "<c-f>", "<cmd>Telescope live_grep <CR>")
+-- map.set("n", "<leader>fh", "<cmd>Telescope help_tags <CR>")
+
+-- map.set("n", "<c-p>", function()
+--   require("telescope").extensions.frecency.frecency({
+--     workspace = "CWD",
+--     previewer = false,
+--     path_display = { "filename_first" },
+--   })
+-- end)
+
 map.set(
   "n",
   "<c-l>",

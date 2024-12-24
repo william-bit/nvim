@@ -1,7 +1,6 @@
 return {
   {
     "Saghen/blink.cmp",
-    enabled = false,
     opts = {
       keymap = {
         preset = "default",
@@ -25,11 +24,6 @@ return {
         menu = {
           draw = {
             columns = { { "kind_icon", gap = 10 }, { "label", "label_description" }, { "kind" } },
-          },
-          components = {
-            label = {
-              width = { fill = true, min = 60 },
-            },
           },
         },
       },

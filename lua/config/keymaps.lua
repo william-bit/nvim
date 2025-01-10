@@ -25,7 +25,7 @@ map.set("n", "<A-i>", function()
 end, { desc = "Lazygit (Root Dir)" })
 
 map.set("n", "gl", "<Plug>ReplaceWithRegisterOperator")
-map.set("n", "gll", "<Plug>ReplaceWithRegisterLine")
+map.set("n", "gln", "<Plug>ReplaceWithRegisterLine")
 
 map.set("n", ",", function()
   vim.lsp.buf.hover()

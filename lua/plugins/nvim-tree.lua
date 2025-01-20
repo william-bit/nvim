@@ -25,7 +25,7 @@ return {
   },
   {
     "nvim-tree/nvim-tree.lua",
-    enabled = true,
+    event = "VeryLazy",
     config = {
       filters = { dotfiles = false },
       disable_netrw = true,
@@ -42,7 +42,7 @@ return {
       git = {
         enable = true,
         ignore = false,
-        timeout = 500,
+        timeout = 100,
       },
       renderer = {
         root_folder_label = false,

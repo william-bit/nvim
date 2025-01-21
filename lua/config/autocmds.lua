@@ -23,13 +23,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Enable Twilight
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-  callback = function()
-    vim.cmd("TwilightEnable")
-  end,
-})
-
 -- Quit buffer first then exit
 local M = {}
 

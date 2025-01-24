@@ -26,7 +26,7 @@ return {
   {
     "nvim-tree/nvim-tree.lua",
     event = "VeryLazy",
-    config = {
+    opts = {
       filters = { dotfiles = false },
       disable_netrw = true,
       hijack_cursor = true,

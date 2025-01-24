@@ -62,3 +62,11 @@ vim.lsp.inlay_hint.enable(false)
 -- vim.cmd([[
 --     cabbrev q QB
 -- ]])
+
+-- Enable Twilight
+vim.api.nvim_create_autocmd({ "BufRead" }, {
+  callback = function()
+    vim.cmd("TwilightEnable")
+  end,
+})
+

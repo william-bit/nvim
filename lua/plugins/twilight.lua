@@ -1,14 +1,7 @@
--- Enable Twilight
-vim.api.nvim_create_autocmd({ "BufRead" }, {
-  callback = function()
-    vim.cmd("TwilightEnable")
-  end,
-})
-
 return {
   {
     "folke/twilight.nvim",
-    lazy = false,
+    event = "BufRead",
     opts = {
       -- your configuration comes here
       -- or leave it empty to use the default settings

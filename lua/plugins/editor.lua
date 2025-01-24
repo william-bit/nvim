@@ -1,19 +1,10 @@
 return {
-  { "vim-scripts/ReplaceWithRegister" },
-  { "tpope/vim-repeat" },
-  { "JoosepAlviste/nvim-ts-context-commentstring" },
+  { "vim-scripts/ReplaceWithRegister", event = "BufRead" },
+  { "tpope/vim-repeat", event = "BufRead" },
+  { "JoosepAlviste/nvim-ts-context-commentstring", event = "BufRead *.ts,*.tsx" },
   {
     "windwp/nvim-ts-autotag",
-    opts = function()
-      require("nvim-ts-autotag").setup({
-        opts = {
-          -- Defaults
-          enable_close = true, -- Auto close tags
-          enable_rename = true, -- Auto rename pairs of tags
-          enable_close_on_slash = true, -- Auto close on trailing </
-        },
-      })
-    end,
+    event = "InsertEnter",
   },
   {
     "windwp/nvim-autopairs",
@@ -25,7 +16,7 @@ return {
   {
     "kylechui/nvim-surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
-    event = "VeryLazy",
+    event = "BufRead",
     config = function()
       require("nvim-surround").setup({
         -- Configuration here, or leave empty to use defaults

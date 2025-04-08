@@ -1,7 +1,7 @@
 return {
   {
     "lewis6991/gitsigns.nvim",
-    event =  "User FilePost" ,
+    event = "User FilePost",
     opts = function()
       dofile(vim.g.base46_cache .. "git")
       return {
@@ -14,7 +14,7 @@ return {
   },
   {
     "lukas-reineke/indent-blankline.nvim",
-    event =  "User FilePost" ,
+    event = "User FilePost",
     opts = {
       indent = { char = "│", highlight = "IblChar" },
       scope = { char = "│", highlight = "IblScopeChar" },
@@ -44,7 +44,24 @@ return {
   },
   {
     "windwp/nvim-ts-autotag",
-    event = "InsertEnter",
+    ft = {
+      "html",
+      "xml",
+      "javascript",
+      "typescript",
+      "vue",
+      "astro",
+      "glimmer",
+      "handlebars",
+      "javascriptreact",
+      "typescriptreact",
+      "markdown",
+      "php",
+      "blade",
+      "rescript",
+      "svelte",
+      "twig",
+    },
     config = true,
   },
   {

@@ -5,7 +5,7 @@ local keys = {
     function()
       require("toggleterm").toggle()
     end,
-    desc = "terminal toggleable vertical term",
+    desc = "terminal toggleable vertical term at button",
     mode = { "n", "t" },
   },
   {

@@ -54,9 +54,21 @@ M.capabilities.textDocument.completion.completionItem = {
   },
 }
 
+M.diagnostic_config = function()
+  local x = vim.diagnostic.severity
+
+  vim.diagnostic.config {
+    virtual_text = { prefix = "" },
+    signs = { text = { [x.ERROR] = "󰅙", [x.WARN] = "", [x.INFO] = "󰋼", [x.HINT] = "󰌵" } },
+    underline = true,
+    float = { border = "single" },
+  }
+
+end
+
 M.defaults = function()
   dofile(vim.g.base46_cache .. "lsp")
-  require("nvchad.lsp").diagnostic_config()
+  M.diagnostic_config()
 
   require("lspconfig").lua_ls.setup {
     on_attach = M.on_attach,

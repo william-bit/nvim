@@ -46,9 +46,10 @@ return {
       git = {
         enable = true,
         ignore = false,
-        timeout = 500,
+        timeout = 1500,
       },
       renderer = {
+        group_empty = true,
         root_folder_label = false,
         highlight_git = true,
         indent_markers = { enable = true },

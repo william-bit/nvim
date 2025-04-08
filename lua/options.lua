@@ -145,5 +145,3 @@ vim.cmd [[
   "Change to directory given as argument
   if argc() == 1 && isdirectory(argv(0)) | cd `=argv(0)` | endif
 ]]
-
-require "style"

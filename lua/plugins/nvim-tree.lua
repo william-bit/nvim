@@ -2,6 +2,22 @@ dofile(vim.g.base46_cache .. "nvimtree")
 
 return {
   {
+    "nvim-tree/nvim-web-devicons",
+    lazy = true,
+    opts = function()
+      dofile(vim.g.base46_cache .. "devicons")
+      return {
+        override = {
+          default_icon = { icon = "󰈚", name = "Default" },
+          js = { icon = "󰌞", name = "js" },
+          ts = { icon = "󰛦", name = "ts" },
+          lock = { icon = "󰌾", name = "lock" },
+          ["robots.txt"] = { icon = "󰚩", name = "robots" },
+        },
+      }
+    end,
+  },
+  {
     "nvim-tree/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeFocus" },
     keys = {

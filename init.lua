@@ -19,7 +19,6 @@ end
 
 require("options")
 require("autocmds")
-require("style")
 
 vim.schedule(function()
   require("mappings")

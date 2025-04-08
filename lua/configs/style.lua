@@ -196,6 +196,19 @@ function Style.CMP_BLINK()
   return vim.tbl_extend("force", styles_base, style_item)
 end
 
+function Style.FOLDS()
+  ---@type Colors
+  local colors = Style.colors
+  -- custom highlights per style!
+  return {
+    FoldColumn = { fg = colors.grey_fg },
+    -- Folded = { fg = colors.red },
+    -- SignColumn = { fg = colors.red },
+    -- FoldText = { fg = colors.red },
+    -- LineNr = { fg = colors.red },
+  }
+end
+Style.Override(Style.FOLDS())
 Style.Override(Style.CMP_BLINK())
 Style.Override(Style.FZF_LUA(false))
 Style.Override(Style.DAP())

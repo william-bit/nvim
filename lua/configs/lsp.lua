@@ -36,6 +36,11 @@ end
 -- vim.lsp.protocol.make_client_capabilities()
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 
+M.capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+}
+
 M.capabilities.textDocument.completion.completionItem = {
   documentationFormat = { "markdown", "plaintext" },
   snippetSupport = true,

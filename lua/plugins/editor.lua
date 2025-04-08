@@ -1,7 +1,7 @@
 return {
   {
     "lewis6991/gitsigns.nvim",
-    event = { "VeryLazy", "User FilePost" },
+    event =  "User FilePost" ,
     opts = function()
       dofile(vim.g.base46_cache .. "git")
       return {
@@ -14,7 +14,7 @@ return {
   },
   {
     "lukas-reineke/indent-blankline.nvim",
-    event = { "VeryLazy", "User FilePost" },
+    event =  "User FilePost" ,
     opts = {
       indent = { char = "│", highlight = "IblChar" },
       scope = { char = "│", highlight = "IblScopeChar" },

@@ -2,7 +2,7 @@ return {
   {
     "saghen/blink.cmp",
     version = "*",
-    event = { "VeryLazy" },
+    event = { "BufReadPost", "BufNewFile" },
     dependencies = {
       "rafamadriz/friendly-snippets",
       "saghen/blink.compat",

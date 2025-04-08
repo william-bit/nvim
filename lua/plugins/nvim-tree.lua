@@ -4,7 +4,6 @@ return {
 	{
 		"nvim-tree/nvim-tree.lua",
 		cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-		event = "VeryLazy",
 		keys = {
 			{
 				"<A-b>",

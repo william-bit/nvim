@@ -35,7 +35,6 @@ return {
   {
     "akinsho/toggleterm.nvim",
     cmd = "ToggleTerm",
-    event = "VeryLazy",
     keys = keys,
     opts = {
       shade_terminals = false,

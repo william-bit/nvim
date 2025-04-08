@@ -146,12 +146,4 @@ vim.cmd [[
   if argc() == 1 && isdirectory(argv(0)) | cd `=argv(0)` | endif
 ]]
 
-function isRecording()
-  local reg = vim.fn.reg_recording()
-  if reg == "" then
-    return ""
-  end -- not recording
-  return "recording to " .. reg
-end
-
 require "style"

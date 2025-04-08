@@ -18,6 +18,9 @@ for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
 end
 
 require("options")
-require("mappings")
-require("style")
 require("autocmds")
+require("style")
+
+vim.schedule(function()
+  require("mappings")
+end)

@@ -1,59 +1,42 @@
 local map = vim.keymap.set
+-------------------------------------- user mapping ------------------------------------------
 
+-- highlights off
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
 
+-- save and copy file
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "general save file" })
 map("n", "<C-c>", "<cmd>%y+<CR>", { desc = "general copy whole file" })
 
 map("n", "<leader>n", "<cmd>set nu!<CR>", { desc = "toggle line number" })
 map("n", "<leader>rn", "<cmd>set rnu!<CR>", { desc = "toggle relative number" })
 
--- global lsp mappings
-map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "LSP diagnostic loclist" })
-
 -- Comment
 map("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
 map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
 
--- nvimtree
-map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
-
 -- terminal
 map("t", "<C-x>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
+map("t", "<c-u>", "<Up>", { desc = "terminal scroll up" })
+map("t", "<c-d>", "<Down>", { desc = "terminal scroll down" })
 
--- whichkey
-map("n", "<leader>wK", "<cmd>WhichKey <CR>", { desc = "whichkey all keymaps" })
+-- remap ctrl-n to ctrl-v
+map("n", "<c-n>", "<c-v>")
 
-map("n", "<leader>wk", function()
-  vim.cmd("WhichKey " .. vim.fn.input "WhichKey: ")
-end, { desc = "whichkey query lookup" })
-
--- nvchad
-
-map("n", "<leader>th", function()
-  require("nvchad.themes").open()
-end, { desc = "select nvchad themes" })
-
-map("n", "<leader>ch", "<cmd>NvCheatsheet<CR>", { desc = "toggle nvcheatsheet" })
--------------------------------------- user mapping ------------------------------------------
-
-map("n", "<c-k>", "<c-v>")
-map("n", "<c-k>", "A_<Esc>r")
+-- fold shortcuts
 map("n", "<c-c>", "za")
+
+-- make x and X don't polute clipboard
 map("n", "x", '"_x')
 map("n", "X", '"_X')
+
+-- editor windows shortcuts
 map("n", "=", "<c-w>+")
 map("n", "-", "<c-w>-")
 map("n", "(", "<c-w><")
 map("n", ")", "<c-w>>")
-map("n", "<c-n>", "<c-v>")
 
 map("n", "<A-n>", "<cmd>enew <CR>")
-
-map("n", "<A-;>", "<cmd>lua HandleCursorUrl()<CR>", { desc = "Open Url in cursor line" })
-
-map("t", "<c-u>", "<Up>")
-map("t", "<c-d>", "<Down>")
 
 -- Map Ctrl-Backspace to delete the previous word in insert mode.
 vim.cmd [[
@@ -64,6 +47,9 @@ vim.cmd [[
 ]]
 
 -- Handle link
+
+map("n", "<A-;>", "<cmd>lua HandleCursorUrl()<CR>", { desc = "Open Url in cursor line" })
+
 function HandleLineURL()
   local line = vim.fn.getline "."
   local url = string.match(line, "[a-z]*://[^ >,;]*")
@@ -83,5 +69,3 @@ function HandleCursorUrl()
     HandleLineURL()
   end
 end
-
-

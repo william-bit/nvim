@@ -19,6 +19,17 @@ return {
   {
     "nvchad/ui",
     event = "VeryLazy",
+    keys = {
+      { "<leader>ch", "<cmd>NvCheatsheet<CR>", mode = { "n" }, desc = "toggle nvcheatsheet" },
+      {
+        "<leader>th",
+        function()
+          require("nvchad.themes").open()
+        end,
+        desc = "select nvchad themes",
+        mode = { "n" },
+      },
+    },
     config = function()
       require "nvchad"
     end,

@@ -21,7 +21,7 @@ local options = {
     python = { "isort", "black" },
     -- Use a sub-list to run only the first available formatter
     markdown = { "prettierd", stop_after_first = true },
-    -- java = { "google-java-format" },
+    java = { "google-java-format", lsp_format = "first" },
     javascript = { "prettierd", stop_after_first = true },
     typescript = { "prettierd", stop_after_first = true },
     javascriptreact = { "prettierd", "rustywind" },
@@ -32,11 +32,6 @@ local options = {
     html = function(bufnr)
       return { "rustywind", first(bufnr, "prettierd", "prettier") }
     end,
-  },
-  format_on_save = {
-    -- These options will be passed to conform.format()
-    timeout_ms = 1500,
-    lsp_fallback = false,
   },
 }
 

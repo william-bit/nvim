@@ -19,7 +19,7 @@ return {
     end,
     opts = function()
       require "configs.style"
-    end
+    end,
   },
   {
     "nvchad/base46",

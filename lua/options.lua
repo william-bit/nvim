@@ -3,41 +3,11 @@ local o = vim.o
 local g = vim.g
 
 -------------------------------------- options ------------------------------------------
-o.laststatus = 3
-o.showmode = false
-
-o.clipboard = "unnamedplus"
-o.cursorline = true
-o.cursorlineopt = "number"
-
 -- Indenting
-o.expandtab = true
-o.shiftwidth = 2
-o.smartindent = true
-o.tabstop = 2
 o.softtabstop = 2
 
-opt.fillchars = { eob = " " }
-o.ignorecase = true
-o.smartcase = true
-o.mouse = "a"
-
 -- Numbers
-o.number = true
 o.numberwidth = 2
-o.ruler = false
-
--- disable nvim intro
-opt.shortmess:append "sI"
-
-o.signcolumn = "yes"
-o.splitbelow = true
-o.splitright = true
-o.timeoutlen = 400
-o.undofile = true
-
--- interval for writing swap file to disk, also used by gitsigns
-o.updatetime = 250
 
 -- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line
@@ -112,7 +82,7 @@ opt.ruler = false -- Disable the default ruler
 opt.scrolloff = 4 -- Lines of context
 opt.shiftround = true -- Round indent
 opt.shiftwidth = 2 -- Size of an indent
-opt.shortmess:append { W = true, I = true, c = true, C = true }
+opt.shortmess:append { s= true,W = true, I = true, c = true, C = true } -- disable nvim intro
 opt.showmode = false -- Dont show mode since we have a statusline
 opt.sidescrolloff = 8 -- Columns of context
 opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
@@ -127,7 +97,7 @@ opt.termguicolors = true -- True color support
 opt.timeoutlen = vim.g.vscode and 1000 or 300 -- Lower than default (1000) to quickly trigger which-key
 opt.undofile = true
 opt.undolevels = 10000
-opt.updatetime = 200 -- Save swap file and trigger CursorHold
+opt.updatetime = 250 -- Save swap file and trigger CursorHold and interval for writing swap file to disk, also used by gitsigns
 opt.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
 opt.wildmode = "longest:full,full" -- Command-line completion mode
 opt.winminwidth = 5 -- Minimum window width

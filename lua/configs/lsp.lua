@@ -91,12 +91,6 @@ M.defaults = function()
           globals = { "vim" },
         },
         workspace = {
-          library = {
-            vim.fn.expand "$VIMRUNTIME/lua",
-            vim.fn.stdpath "config" .. "/lua",
-            vim.fn.stdpath "data" .. "/lazy",
-            "${3rd}/luv/library",
-          },
           maxPreload = 100000,
           preloadFileSize = 10000,
           -- Do not send telemetry data containing a randomized but unique identifier

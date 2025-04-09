@@ -89,7 +89,7 @@ opt.foldenable = true
 -- example (https://neovim.io/doc/user/options.html#'statuscolumn'):
 
 -- without separators
-opt.statuscolumn = '%=%s%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "▼" : "⏵") : " " }%l '
+opt.statuscolumn = '%=%s%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "" : "") : " " } %l '
 
 -- with separators
 -- opt.statuscolumn = '%=%s%{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "┮" : "╾") : "│") : " " }%l '

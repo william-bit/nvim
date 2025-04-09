@@ -27,7 +27,7 @@ return {
         function()
           require("nvim-tree.api").tree.toggle()
         end,
-        desc = "toggle nvim-tree",
+        desc = "nvimtree toggle explorer",
       },
     },
     opts = {

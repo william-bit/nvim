@@ -1,5 +1,13 @@
 return {
   {
+    "Exafunction/windsurf.nvim",
+    lazy = false,
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("codeium").setup {}
+    end,
+  },
+  {
     "supermaven-inc/supermaven-nvim",
     event = "InsertEnter",
     cmd = {

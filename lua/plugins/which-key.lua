@@ -17,7 +17,7 @@ return {
         function()
           require("which-key").show("z=", { mode = "n", auto = true })
         end,
-        desc = "Fix spell check",
+        desc = "whichkey fix spell check",
         mode = { "n" },
       },
       { "<leader>wK", "<cmd>WhichKey <CR>", mode = { "n" }, desc = "whichkey all keymaps" },

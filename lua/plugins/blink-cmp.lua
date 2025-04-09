@@ -1,11 +1,11 @@
 return {
+  "saghen/blink.compat",
   {
     "saghen/blink.cmp",
     version = "*",
-    event = { "BufReadPost", "BufNewFile" },
+    event = { "BufReadPost", "BufNewFile", "CmdlineEnter" },
     dependencies = {
       "rafamadriz/friendly-snippets",
-      "saghen/blink.compat",
       { "L3MON4D3/LuaSnip", version = "v2.*" },
     },
     -- use a release tag to download pre-built binaries
@@ -13,7 +13,7 @@ return {
       snippets = { preset = "luasnip" },
       -- ensure you have the `snippets` source (enabled by default)
       sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
+        default = { "supermaven", "codeium", "lsp", "path", "snippets", "buffer" ,"omni"},
         providers = {
           lsp = {
             async = true,
@@ -23,6 +23,26 @@ return {
             module = "blink.compat.source",
             score_offset = 100,
             async = true,
+            transform_items = function(ctx, items)
+              for _, item in ipairs(items) do
+                item.kind_icon = " "
+                item.kind_name = "Supermaven"
+              end
+              return items
+            end,
+          },
+          codeium = {
+            name = "codeium",
+            module = "blink.compat.source",
+            score_offset = 90,
+            async = true,
+            transform_items = function(ctx, items)
+              for _, item in ipairs(items) do
+                item.kind_icon = "󰘦 "
+                item.kind_name = "Codeium"
+              end
+              return items
+            end,
           },
         },
       },
@@ -65,17 +85,7 @@ return {
           auto_show = true,
           auto_show_delay_ms = 200,
         },
-
         menu = {
-          auto_show = function(ctx)
-            if ctx.mode == "cmdline" then
-              return false
-            end
-            if vim.tbl_contains({ "/", "?" }, vim.fn.getcmdtype()) then
-              return false
-            end
-            return true
-          end,
           draw = {
             columns = { { "kind_icon", gap = 10 }, { "label", "label_description" }, { "kind" } },
             treesitter = { "lsp" },

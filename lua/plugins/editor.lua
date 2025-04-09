@@ -8,8 +8,8 @@ return {
   {
     "vim-scripts/ReplaceWithRegister",
     keys = {
-      { "gl", "<Plug>ReplaceWithRegisterOperator" },
-      { "glr", "<Plug>ReplaceWithRegisterLine" },
+      { "gl", "<Plug>ReplaceWithRegisterOperator", desc = "ReplaceWithRegister Operator" },
+      { "glr", "<Plug>ReplaceWithRegisterLine", desc = "ReplaceWithRegister Line" },
     },
   },
   {
@@ -53,7 +53,7 @@ return {
     "hedyhli/outline.nvim",
     cmd = { "Outline", "OutlineOpen" },
     keys = { -- Example mapping to toggle outline
-      { "<A-o>", "<cmd>Outline<CR>", desc = "Toggle outline" },
+      { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
     },
   },
   {

@@ -50,7 +50,7 @@ opt.fillchars = {
   diff = "╱",
   eob = " ",
 }
-opt.foldcolumn = 'auto:1'
+opt.foldcolumn = '1'
 opt.foldlevel = 99
 opt.foldlevelstart = 99
 opt.foldenable = true
@@ -59,10 +59,10 @@ opt.foldenable = true
 -- example (https://neovim.io/doc/user/options.html#'statuscolumn'):
 
 -- without separators
-opt.statuscolumn = '%=%s%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "" : "") : " " } %l '
+opt.statuscolumn = '%s%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "" : "") : " " } %l%='
 
 -- with separators
--- opt.statuscolumn = '%=%s%{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "┮" : "╾") : "│") : " " }%l '
+-- opt.statuscolumn = '%s%{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "┮" : "╾") : "│") : " " } %l%='
 
 opt.formatexpr = "v:lua.require'conform'.formatexpr()"
 opt.grepformat = "%f:%l:%c:%m"

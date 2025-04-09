@@ -1,7 +1,7 @@
 return {
   {
     "Exafunction/windsurf.nvim",
-    lazy = false,
+    event = "InsertEnter",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       require("codeium").setup {}

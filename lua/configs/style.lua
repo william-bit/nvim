@@ -33,10 +33,6 @@
 
 ---@class M
 local Style = {
-  -- uncoment to use base46 colors
-  -- colors = require("base46").get_theme_tb "base_30",
-
-  -- Use nvchad inbuild colors overide
   colors = {
     white = "white",
     black = "black",
@@ -71,12 +67,6 @@ local Style = {
     folder_bg = "folder_bg",
   },
 }
-
-function Style.Override(style)
-  for k, v in pairs(style) do
-    vim.api.nvim_set_hl(0, k, v)
-  end
-end
 
 ---@param border boolean
 function Style.FZF_LUA(border)
@@ -244,12 +234,6 @@ function Style.FOLDS()
     -- FoldText = { fg = colors.red },
   }
 end
-
--- Uncomment to use base46 colors
--- Style.Override(Style.FOLDS())
--- Style.Override(Style.CMP_BLINK())
--- Style.Override(Style.FZF_LUA(false))
--- Style.Override(Style.DAP())
 
 return vim.tbl_extend(
   "force",

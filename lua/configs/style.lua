@@ -142,26 +142,6 @@ function Style.DAP()
     DapLogPoint = { fg = colors.seablue },
   }
 
-  vim.fn.sign_define(
-    "DapBreakpoint",
-    { text = "•", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
-  )
-  vim.fn.sign_define(
-    "DapBreakpointCondition",
-    { text = "•", texthl = "DapBreakpointCondition", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
-  )
-  vim.fn.sign_define(
-    "DapBreakpointRejected",
-    { text = "•", texthl = "DapBreakpointRejected", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
-  )
-  vim.fn.sign_define(
-    "DapStopped",
-    { text = "•", texthl = "DapStopped", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
-  )
-  vim.fn.sign_define(
-    "DapLogPoint",
-    { text = "•", texthl = "DapLogPoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
-  )
 
   return vim.tbl_extend("force", styles_base, style_item, signs)
 end

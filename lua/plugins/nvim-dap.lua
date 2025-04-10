@@ -32,6 +32,28 @@ return {
         dapui.close()
       end
 
+      -- Symbols displayed in the gutter
+      vim.fn.sign_define(
+        "DapBreakpoint",
+        { text = "•", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
+      )
+      vim.fn.sign_define(
+        "DapBreakpointCondition",
+        { text = "•", texthl = "DapBreakpointCondition", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
+      )
+      vim.fn.sign_define(
+        "DapBreakpointRejected",
+        { text = "•", texthl = "DapBreakpointRejected", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
+      )
+      vim.fn.sign_define(
+        "DapStopped",
+        { text = "•", texthl = "DapStopped", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
+      )
+      vim.fn.sign_define(
+        "DapLogPoint",
+        { text = "•", texthl = "DapLogPoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
+      )
+
       -- Taken directly from https://github.com/mfussenegger/nvim-dap/wiki/Java
       local dap = require "dap"
       local mason_registry = require "mason-registry"

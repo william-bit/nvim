@@ -9,9 +9,12 @@ M.base46 = {
   theme = "gruvbox",
 
   hl_override = {
-    Comment = { italic = true },
-    ["@comment"] = { italic = true },
+    {
+      Comment = { italic = true },
+      ["@comment"] = { italic = true },
+    },
   },
+  hl_add = require "configs.style",
 }
 
 M.nvdash = {
@@ -116,7 +119,9 @@ M.ui = {
         return "Recording @" .. reg .. " "
       end,
       keystroke = function()
-        vim.on_key(function() vim.cmd [[ doautoall ]] end)
+        vim.on_key(function()
+          vim.cmd [[ doautoall ]]
+        end)
         return " " .. (require("noice").api.status.command.get() or "") .. " "
       end,
     },

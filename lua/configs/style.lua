@@ -33,7 +33,43 @@
 
 ---@class M
 local Style = {
-  colors = require("base46").get_theme_tb "base_30",
+  -- uncoment to use base46 colors
+  -- colors = require("base46").get_theme_tb "base_30",
+
+  -- Use nvchad inbuild colors overide
+  colors = {
+    white = "white",
+    black = "black",
+    darker_black = "darker_black",
+    black2 = "black2",
+    one_bg = "one_bg",
+    one_bg2 = "one_bg2",
+    one_bg3 = "one_bg3",
+    grey = "grey",
+    grey_fg = "grey_fg",
+    grey_fg2 = "grey_fg2",
+    light_grey = "light_grey",
+    red = "red",
+    baby_pink = "baby_pink",
+    pink = "pink",
+    line = "line",
+    green = "green",
+    vibrant_green = "vibrant_green",
+    nord_blue = "nord_blue",
+    blue = "blue",
+    seablue = "seablue",
+    yellow = "yellow",
+    sun = "sun",
+    purple = "purple",
+    dark_purple = "dark_purple",
+    teal = "teal",
+    orange = "orange",
+    cyan = "cyan",
+    statusline_bg = "statusline_bg",
+    lightbg = "lightbg",
+    pmenu_bg = "pmenu_bg",
+    folder_bg = "folder_bg",
+  },
 }
 
 function Style.Override(style)
@@ -201,14 +237,24 @@ function Style.FOLDS()
   local colors = Style.colors
   -- custom highlights per style!
   return {
-    FoldColumn = { fg = colors.grey_fg },
+    LineNr = { fg = colors.grey },
+    -- FoldColumn = { fg = colors.red },
     -- Folded = { fg = colors.red },
     -- SignColumn = { fg = colors.red },
     -- FoldText = { fg = colors.red },
-    -- LineNr = { fg = colors.red },
   }
 end
-Style.Override(Style.FOLDS())
-Style.Override(Style.CMP_BLINK())
-Style.Override(Style.FZF_LUA(false))
-Style.Override(Style.DAP())
+
+-- Uncomment to use base46 colors
+-- Style.Override(Style.FOLDS())
+-- Style.Override(Style.CMP_BLINK())
+-- Style.Override(Style.FZF_LUA(false))
+-- Style.Override(Style.DAP())
+
+return vim.tbl_extend(
+  "force",
+  Style.FZF_LUA(false),
+  Style.FOLDS(),
+  Style.CMP_BLINK(),
+  Style.DAP()
+)

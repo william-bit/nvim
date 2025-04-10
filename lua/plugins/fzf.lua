@@ -20,7 +20,6 @@ return {
     opts = function()
       -- use `fzf-lua` for replace vim.ui.select
       require("fzf-lua").register_ui_select()
-
       return {
         keymap = {
           fzf = {

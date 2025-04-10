@@ -23,29 +23,6 @@ return {
       },
     },
   },
-  {
-    "nvim-treesitter/nvim-treesitter",
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
-      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-      parser_config.blade = {
-        install_info = {
-          url = "https://github.com/EmranMR/tree-sitter-blade",
-          files = { "src/parser.c" },
-          branch = "main",
-        },
-        filetype = "blade",
-      }
-
-      -- in my settings
-      -- Filetypes --
-      vim.filetype.add {
-        pattern = {
-          [".*%.blade%.php"] = "blade",
-        },
-      }
-    end,
-  },
   "saghen/blink.compat",
   {
     "saghen/blink.cmp",
@@ -141,7 +118,6 @@ return {
       },
       appearance = {
         kind_icons = {
-
           Array = " ",
           Boolean = "󰨙 ",
           Class = " ",
@@ -188,9 +164,7 @@ return {
   },
   {
     "folke/ts-comments.nvim",
-    opts = {},
     event = "BufReadPost",
-    enabled = vim.fn.has "nvim-0.10.0" == 1,
   },
   {
     "vim-scripts/ReplaceWithRegister",
@@ -270,7 +244,6 @@ return {
     opts = function()
       -- use `fzf-lua` for replace vim.ui.select
       require("fzf-lua").register_ui_select()
-
       return {
         keymap = {
           fzf = {
@@ -384,6 +357,7 @@ return {
     },
     opts = require "configs.conform",
   },
+
   -- These are some examples, uncomment them if you want to see them work!
   {
     "neovim/nvim-lspconfig",
@@ -404,6 +378,22 @@ return {
     end,
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
+      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+      parser_config.blade = {
+        install_info = {
+          url = "https://github.com/EmranMR/tree-sitter-blade",
+          files = { "src/parser.c" },
+          branch = "main",
+        },
+        filetype = "blade",
+      }
+      -- in my settings
+      -- Filetypes --
+      vim.filetype.add {
+        pattern = {
+          [".*%.blade%.php"] = "blade",
+        },
+      }
     end,
   },
   -- Set up nvim-jdtls to attach to java files.

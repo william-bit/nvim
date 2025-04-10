@@ -94,7 +94,6 @@ return {
       },
       appearance = {
         kind_icons = {
-
           Array = " ",
           Boolean = "󰨙 ",
           Class = " ",

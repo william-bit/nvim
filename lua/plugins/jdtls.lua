@@ -1,20 +1,3 @@
--- This is the same as in lspconfig.configs.jdtls, but avoids
--- needing to require that when this module loads.
-local java_filetypes = { "java" }
-
--- Utility function to extend or override a config table, similar to the way
--- that Plugin.opts works.
----@param config table
----@param custom function | table | nil
-local function extend_or_override(config, custom, ...)
-  if type(custom) == "function" then
-    config = custom(config, ...) or config
-  elseif custom then
-    config = vim.tbl_deep_extend("force", config, custom) --[[@as table]]
-  end
-  return config
-end
-
 return {
   -- Set up nvim-jdtls to attach to java files.
   {
@@ -26,7 +9,9 @@ return {
         opts = { ensure_installed = { "jdtls" } },
       },
     },
-    ft = java_filetypes,
+    -- This is the same as in lspconfig.configs.jdtls, but avoids
+    -- needing to require that when this module loads.
+    ft = { "java" },
     opts = function()
       local cmd = { vim.fn.exepath "jdtls" }
       local mason_registry = require "mason-registry"
@@ -142,6 +127,19 @@ return {
       local function attach_jdtls()
         local fname = vim.api.nvim_buf_get_name(0)
 
+        -- Utility function to extend or override a config table, similar to the way
+        -- that Plugin.opts works.
+        ---@param config table
+        ---@param custom function | table | nil
+        local function extend_or_override(config, custom, ...)
+          if type(custom) == "function" then
+            config = custom(config, ...) or config
+          elseif custom then
+            config = vim.tbl_deep_extend("force", config, custom) --[[@as table]]
+          end
+          return config
+        end
+
         -- Configuration can be augmented and overridden by opts.jdtls
         local config = extend_or_override({
           cmd = opts.full_cmd(opts),
@@ -166,7 +164,7 @@ return {
       -- depending on filetype, so this autocmd doesn't run for the first file.
       -- For that, we call directly below.
       vim.api.nvim_create_autocmd("FileType", {
-        pattern = java_filetypes,
+        pattern = { "java" },
         callback = attach_jdtls,
       })
 
@@ -213,7 +211,6 @@ return {
               },
             }
 
-            local mason_registry = require "mason-registry"
             if opts.dap and mason_registry.is_installed "java-debug-adapter" then
               -- custom init for Java debugger
               require("jdtls").setup_dap(opts.dap)

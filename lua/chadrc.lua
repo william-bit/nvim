@@ -106,19 +106,7 @@ M.ui = {
   statusline = {
     theme = "minimal",
     separator_style = "default",
-    order = {
-      "mode",
-      "file",
-      "git",
-      "%=",
-      "%=",
-      "diagnostics",
-      "lsp",
-      "macro",
-      "keystroke",
-      "cwd",
-      "cursor",
-    },
+    order = { "mode", "file", "git", "%=", "%=", "diagnostics", "lsp", "macro", "keystroke", "cwd", "cursor" },
     modules = {
       macro = function()
         local reg = vim.fn.reg_recording()
@@ -128,11 +116,7 @@ M.ui = {
         return "Recording @" .. reg .. " "
       end,
       keystroke = function()
-        if require("noice").api.status.command.has() then
-          return " " .. require("noice").api.status.command.get() .. " "
-        else
-          return " "
-        end
+        return " " .. table.concat(require("configs.keystroke").array_key) .. " "
       end,
     },
   },

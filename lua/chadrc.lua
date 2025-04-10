@@ -116,7 +116,8 @@ M.ui = {
         return "Recording @" .. reg .. " "
       end,
       keystroke = function()
-        return " " .. table.concat(require("configs.keystroke").array_key) .. " "
+        vim.on_key(function() vim.cmd [[ doautoall ]] end)
+        return " " .. (require("noice").api.status.command.get() or "") .. " "
       end,
     },
   },

@@ -1,17 +1,7 @@
 local opt = vim.opt
-local o = vim.o
 local g = vim.g
 
--------------------------------------- options ------------------------------------------
--- Indenting
-o.softtabstop = 2
-
--- Numbers
-o.numberwidth = 2
-
--- go to previous/next line with h,l,left arrow and right arrow
--- when cursor reaches end/beginning of line
-opt.whichwrap:append "<>[]hl"
+-------------------------------------- general options ------------------------------------------
 
 -- disable some default providers
 g.loaded_node_provider = 0
@@ -25,7 +15,29 @@ local sep = is_windows and "\\" or "/"
 local delim = is_windows and ";" or ":"
 vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, sep) .. delim .. vim.env.PATH
 
+vim.cmd [[
+  "set up powershell as shell
+  let &shell = executable('pwsh') ? 'pwsh -NoLogo' : 'powershell -NoLogo'
+  let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
+  let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+  let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+  set shellquote= shellxquote=
+
+  "highlight yanked text for 200ms using the "Visual" highlight group
+  augroup highlight_yank
+  autocmd!
+  au TextYankPost * silent! lua vim.highlight.on_yank({higroup="Visual", timeout=200})
+  augroup END
+
+  "Change to directory given as argument
+  if argc() == 1 && isdirectory(argv(0)) | cd `=argv(0)` | endif
+]]
+
 -------------------------------------- user options ------------------------------------------
+---
+-- go to previous/next line with h,l,left arrow and right arrow
+-- when cursor reaches end/beginning of line
+opt.whichwrap:append "<>[]hl"
 
 opt.autowrite = true -- Enable auto write
 -- only set clipboard if not in ssh, to make sure the OSC 52
@@ -75,6 +87,8 @@ opt.linebreak = true -- Wrap lines at convenient points
 opt.list = true -- Show some invisible characters (tabs...
 opt.mouse = "a" -- Enable mouse mode
 opt.number = true -- Print line number
+opt.softtabstop = 2 -- Indenting
+opt.numberwidth = 2 -- Numbers
 opt.pumblend = 10 -- Popup blend
 opt.pumheight = 10 -- Maximum number of entries in a popup
 opt.relativenumber = true -- Relative line numbers
@@ -102,21 +116,3 @@ opt.virtualedit = "block" -- Allow cursor to move where there is no text in visu
 opt.wildmode = "longest:full,full" -- Command-line completion mode
 opt.winminwidth = 5 -- Minimum window width
 opt.wrap = false -- Disable line wrap
-
-vim.cmd [[
-  "set up powershell as shell
-  let &shell = executable('pwsh') ? 'pwsh -NoLogo' : 'powershell -NoLogo'
-  let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
-  let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-  let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-  set shellquote= shellxquote=
-
-  "highlight yanked text for 200ms using the "Visual" highlight group
-  augroup highlight_yank
-  autocmd!
-  au TextYankPost * silent! lua vim.highlight.on_yank({higroup="Visual", timeout=200})
-  augroup END
-
-  "Change to directory given as argument
-  if argc() == 1 && isdirectory(argv(0)) | cd `=argv(0)` | endif
-]]

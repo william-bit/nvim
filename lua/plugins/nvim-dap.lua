@@ -55,7 +55,6 @@ return {
       )
 
       -- Taken directly from https://github.com/mfussenegger/nvim-dap/wiki/Java
-      local dap = require "dap"
       local mason_registry = require "mason-registry"
       if mason_registry.is_installed "php-debug-adapter" then
         local php_dbg_pkg = mason_registry.get_package "php-debug-adapter"

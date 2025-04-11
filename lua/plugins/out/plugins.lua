@@ -340,8 +340,6 @@ return {
       local hooks = require "ibl.hooks"
       hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
       require("ibl").setup(opts)
-
-      dofile(vim.g.base46_cache .. "blankline")
     end,
   },
   {
@@ -375,6 +373,7 @@ return {
     build = ":TSUpdate",
     opts = function()
       require("nvim-treesitter.install").compilers = { "zig" }
+      dofile(vim.g.base46_cache .. "treesitter")
       return require "configs.treesitter"
     end,
     config = function(_, opts)

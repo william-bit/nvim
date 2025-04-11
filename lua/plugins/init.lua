@@ -30,6 +30,7 @@ return {
     build = ":TSUpdate",
     opts = function()
       require("nvim-treesitter.install").compilers = { "zig" }
+      dofile(vim.g.base46_cache .. "treesitter")
       return require "configs.treesitter"
     end,
     config = function(_, opts)

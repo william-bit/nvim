@@ -2,7 +2,8 @@
   "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
   "workspace.library": [
     "C:\\Program Files\\Neovim\\share\\nvim\\runtime\\lua",
-    "..\\nvim-data\\lazy"
+    "..\\nvim-data\\lazy",
+    "${3rd}/luv/library"
   ],
   "runtime.version": "LuaJIT"
 }

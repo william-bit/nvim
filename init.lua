@@ -33,9 +33,9 @@ local lazy_config = require "configs.lazy"
 require("lazy").setup(lazy_config)
 
 -- put this after lazy setup
-
 dofile(vim.g.base46_cache .. "defaults")
 dofile(vim.g.base46_cache .. "statusline")
+dofile(vim.g.base46_cache .. "lsp")
 
 require("options")
 require("autocmds")

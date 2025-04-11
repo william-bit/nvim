@@ -72,7 +72,6 @@ M.diagnostic_config = function()
 end
 
 M.defaults = function()
-  dofile(vim.g.base46_cache .. "lsp")
   M.diagnostic_config()
 
   require("lspconfig").lua_ls.setup {

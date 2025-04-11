@@ -1,6 +1,7 @@
 return {
   {
     "Exafunction/windsurf.nvim",
+    enabled = false,
     event = "InsertEnter",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
@@ -37,7 +38,7 @@ return {
       snippets = { preset = "luasnip" },
       -- ensure you have the `snippets` source (enabled by default)
       sources = {
-        default = { "supermaven", "codeium", "lsp", "path", "snippets", "buffer" ,"omni"},
+        default = { "supermaven", "lsp", "path", "snippets", "buffer" ,"omni"},
         providers = {
           lsp = {
             async = true,

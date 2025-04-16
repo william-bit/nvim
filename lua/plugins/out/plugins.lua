@@ -451,8 +451,8 @@ return {
               "-Dlog.protocol=true",
               "-Dlog.level=ALL",
               "-Xms512m",
-              "-Xmx2G",
-              "-Xss2M",
+              "-Xmx2g",
+              "-Xss2m",
               "--add-modules=ALL-SYSTEM",
               "--add-opens",
               "java.base/java.util=ALL-UNNAMED",
@@ -996,6 +996,10 @@ return {
     "kevinhwang91/nvim-ufo",
     config = true,
     event = "BufRead",
+    keys = {
+      { "zM", function() require("ufo").closeAllFolds() end , desc = "Close all folds", mode = { "n" } },
+      {  "zR", function() require("ufo").openAllFolds() end , desc = "Open all folds", mode = { "n" } },
+    },
     dependencies = { "kevinhwang91/promise-async" },
   },
   {

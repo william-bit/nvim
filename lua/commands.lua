@@ -21,7 +21,7 @@ local function listFilesInDirectory(directory)
   -- Split the result into individual file names
   local files = {}
   for file in result:gmatch "[^\r\n]+" do
-    if file ~= "." and file ~= ".." and file ~= "out" then
+    if file ~= "." and file ~= ".." and file ~= "out" and file ~= "disabled" then
       table.insert(files, file)
     end
   end

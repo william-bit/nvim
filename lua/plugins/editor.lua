@@ -48,17 +48,4 @@ return {
       { "ds" },
     },
   },
-  {
-    "hedyhli/outline.nvim",
-    cmd = { "Outline", "OutlineOpen" },
-    keys = { -- Example mapping to toggle outline
-      { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
-    },
-  },
-  {
-    "kevinhwang91/nvim-ufo",
-    config = true,
-    event = "BufRead",
-    dependencies = { "kevinhwang91/promise-async" },
-  },
 }

@@ -23,6 +23,9 @@ map("t", "<c-d>", "<Down>", { desc = "terminal scroll down" })
 -- remap ctrl-n to ctrl-v
 map("n", "<c-n>", "<c-v>")
 
+-- closed all buffers
+map("n", "<leader>bo", "<cmd>%bd|e#<cr>", {desc="Close all buffers but the current one"})
+
 -- fold shortcuts
 map("n", "<c-c>", "za")
 

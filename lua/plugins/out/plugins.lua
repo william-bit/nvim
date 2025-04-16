@@ -213,19 +213,6 @@ return {
     },
   },
   {
-    "hedyhli/outline.nvim",
-    cmd = { "Outline", "OutlineOpen" },
-    keys = { -- Example mapping to toggle outline
-      { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
-    },
-  },
-  {
-    "kevinhwang91/nvim-ufo",
-    config = true,
-    event = "BufRead",
-    dependencies = { "kevinhwang91/promise-async" },
-  },
-  {
     "ibhagwan/fzf-lua",
     cmd = "FzfLua",
     keys = {
@@ -233,7 +220,7 @@ return {
       { "<c-f>", "<cmd>FzfLua live_grep<CR>" },
       { "<c-p>", "<cmd>FzfLua files<CR>" },
       { "<c-t>", "<cmd>FzfLua git_status<CR>" },
-      { "<c-x>", "<cmd>FzfLua oldfiles<CR>" },
+      { "<c-i>", "<cmd>FzfLua oldfiles<CR>" },
       { "gD", "<cmd>FzfLua lsp_declarations<CR>", desc = "Lsp Go to declaration", mode = { "n" } },
       { "gd", "<cmd>FzfLua lsp_definitions<CR>", desc = "Lsp Go to definition", mode = { "n" } },
       { "gy", "<cmd>FzfLua lsp_definitions<CR>", desc = "Lsp Document Symbol", mode = { "n" } },
@@ -325,6 +312,7 @@ return {
           delete = { text = "󰍵" },
           changedelete = { text = "󱕖" },
         },
+        update_debounce = 1000,
       }
     end,
   },
@@ -464,7 +452,7 @@ return {
               "-Dlog.level=ALL",
               "-Xms512m",
               "-Xmx2G",
-              "-Xss2m",
+              "-Xss2M",
               "--add-modules=ALL-SYSTEM",
               "--add-opens",
               "java.base/java.util=ALL-UNNAMED",
@@ -1003,6 +991,12 @@ return {
         opts = { ensure_installed = { "java-debug-adapter", "java-test" } },
       },
     },
+  },
+  {
+    "kevinhwang91/nvim-ufo",
+    config = true,
+    event = "BufRead",
+    dependencies = { "kevinhwang91/promise-async" },
   },
   {
     "mfussenegger/nvim-lint",

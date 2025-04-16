@@ -7,7 +7,7 @@ return {
       { "<c-f>", "<cmd>FzfLua live_grep<CR>" },
       { "<c-p>", "<cmd>FzfLua files<CR>" },
       { "<c-t>", "<cmd>FzfLua git_status<CR>" },
-      { "<c-x>", "<cmd>FzfLua oldfiles<CR>" },
+      { "<c-i>", "<cmd>FzfLua oldfiles<CR>" },
       { "gD", "<cmd>FzfLua lsp_declarations<CR>", desc = "Lsp Go to declaration", mode = { "n" } },
       { "gd", "<cmd>FzfLua lsp_definitions<CR>", desc = "Lsp Go to definition", mode = { "n" } },
       { "gy", "<cmd>FzfLua lsp_definitions<CR>", desc = "Lsp Document Symbol", mode = { "n" } },

@@ -38,7 +38,7 @@ M.nvdash = {
     { txt = "  Find File", keys = "C-p", cmd = "FzfLua files" },
     { txt = "󰈭  Find Word", keys = "C-f", cmd = "FzfLua live_grep" },
     { txt = "  Git Files", keys = "C-t", cmd = "FzfLua git_status" },
-    { txt = "  Recent Files", keys = "C-x", cmd = "FzfLua oldfiles" },
+    { txt = "  Recent Files", keys = "C-m", cmd = "FzfLua oldfiles" },
     {
       txt = "  LazyGit",
       keys = "A-i",
@@ -109,7 +109,7 @@ M.ui = {
   statusline = {
     theme = "minimal",
     separator_style = "default",
-    order = { "mode", "file", "git", "%=", "%=", "diagnostics", "lsp", "macro", "keystroke", "cwd", "cursor" },
+    order = { "mode", "file", "git", "%=", "%=", "diagnostics", "lsp", "macro", "cwd", "cursor" },
     modules = {
       macro = function()
         local reg = vim.fn.reg_recording()
@@ -118,12 +118,12 @@ M.ui = {
         end -- not recording
         return "Recording @" .. reg .. " "
       end,
-      keystroke = function()
-        vim.on_key(function()
-          vim.cmd [[ doautoall ]]
-        end)
-        return " " .. (require("noice").api.status.command.get() or "") .. " "
-      end,
+      -- keystroke = function()
+      --   vim.on_key(function()
+      --     vim.cmd [[ doautoall ]]
+      --   end)
+      --   return " " .. (require("noice").api.status.command.get() or "") .. " "
+      -- end,
     },
   },
 }

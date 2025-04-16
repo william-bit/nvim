@@ -9,6 +9,7 @@ return {
           delete = { text = "󰍵" },
           changedelete = { text = "󱕖" },
         },
+        update_debounce = 1000,
       }
     end,
   },

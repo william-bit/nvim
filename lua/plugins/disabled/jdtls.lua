@@ -65,7 +65,7 @@ return {
               "-Dlog.protocol=true",
               "-Dlog.level=ALL",
               "-Xms512m",
-              "-Xmx2g",
+              "-Xmx2G",
               "-Xss2m",
               "--add-modules=ALL-SYSTEM",
               "--add-opens",

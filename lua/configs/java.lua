@@ -1,0 +1,182 @@
+local M = {}
+local mason_registry = require "mason-registry"
+
+M.lombok_jar = mason_registry.get_package("jdtls"):get_install_path() .. "/lombok.jar"
+M.opts = {
+  dap_main = {},
+  test = true,
+  dap = { hotcodereplace = "auto", config_overrides = {} },
+}
+
+M.on_attach = function(client, bufnr)
+  require("configs.lsp").on_attach(client, bufnr)
+  if client and client.name == "jdtls" then
+    local wk = require "which-key"
+    wk.add {
+      {
+        mode = "n",
+        buffer = bufnr,
+        { "<leader>cx", group = "extract" },
+        { "<leader>cxv", require("jdtls").extract_variable_all, desc = "Extract Variable" },
+        { "<leader>cxc", require("jdtls").extract_constant, desc = "Extract Constant" },
+        { "<leader>cgs", require("jdtls").super_implementation, desc = "Goto Super" },
+        { "<leader>coi", require("jdtls").organize_imports, desc = "Organize Imports" },
+        { "<leader>cgS", require("jdtls.tests").goto_subjects, desc = "Goto Subjects" },
+      },
+    }
+    wk.add {
+      {
+        mode = "v",
+        buffer = bufnr,
+        { "<leader>cx", group = "extract" },
+        {
+          "<leader>cxm",
+          [[<ESC><CMD>lua require('jdtls').extract_method(true)<CR>]],
+          desc = "Extract Method",
+        },
+        {
+          "<leader>cxv",
+          [[<ESC><CMD>lua require('jdtls').extract_variable_all(true)<CR>]],
+          desc = "Extract Variable",
+        },
+        {
+          "<leader>cxc",
+          [[<ESC><CMD>lua require('jdtls').extract_constant(true)<CR>]],
+          desc = "Extract Constant",
+        },
+      },
+    }
+
+    if M.opts.dap and mason_registry.is_installed "java-debug-adapter" then
+      -- custom init for Java debugger
+      require("jdtls").setup_dap(M.opts.dap)
+      if M.opts.dap_main then
+        require("jdtls.dap").setup_dap_main_class_configs(M.opts.dap_main)
+      end
+
+      -- Java Test require Java debugger to work
+      if M.opts.test and mason_registry.is_installed "java-test" then
+        -- custom keymaps for Java test runner (not yet compatible with neotest)
+        wk.add {
+          {
+            mode = "n",
+            buffer = bufnr,
+            { "<leader>t", group = "test" },
+            {
+              "<leader>tt",
+              function()
+                require("jdtls.dap").test_class {
+                  config_overrides = type(M.opts.dap) ~= "boolean" and M.opts.dap.config_overrides or nil,
+                }
+              end,
+              desc = "Run All Test",
+            },
+            {
+              "<leader>tr",
+              function()
+                require("jdtls.dap").test_nearest_method {
+                  config_overrides = type(M.opts.dap) ~= "boolean" and M.opts.dap.config_overrides or nil,
+                }
+              end,
+              desc = "Run Nearest Test",
+            },
+            { "<leader>tT", require("jdtls.dap").pick_test, desc = "Run Test" },
+          },
+        }
+      end
+    end
+  end
+end
+
+M.equinox_jar = function()
+  -- INFO: It's annoying to edit the version again and again.
+  local equinox_path =
+    vim.split(vim.fn.glob(mason_registry.get_package("jdtls"):get_install_path() .. "/plugins/*jar"), "\n")
+  local equinox_launcher = ""
+
+  for _, file in pairs(equinox_path) do
+    if file:match "org.eclipse.equinox.launcher_" then
+      equinox_launcher = file
+      break
+    end
+  end
+  return equinox_launcher
+end
+
+M.jar_patterns = {}
+
+M.test = function()
+  -- java-test also depends on java-debug-adapter.
+  if M.opts.test and mason_registry.is_installed "java-test" then
+    local java_test_pkg = mason_registry.get_package "java-test"
+    local java_test_path = java_test_pkg:get_install_path()
+    vim.list_extend(M.jar_patterns, {
+      java_test_path .. "/extension/server/*.jar",
+    })
+  end
+end
+
+M.debug = function()
+  if M.opts.dap and mason_registry.is_installed "java-debug-adapter" then
+    local java_dbg_pkg = mason_registry.get_package "java-debug-adapter"
+    local java_dbg_path = java_dbg_pkg:get_install_path()
+    vim.list_extend(M.jar_patterns, {
+      java_dbg_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar",
+    })
+  end
+end
+M.bundles = function()
+  M.test()
+  M.debug()
+  local bundles = {} ---@type string[]
+  if M.jar_patterns == {} then
+    return {}
+  end
+  local notify = vim.notify "Searching for jar bundles..."
+  for _, jar_pattern in ipairs(M.jar_patterns) do
+    for _, bundle in ipairs(vim.split(vim.fn.glob(jar_pattern), "\n")) do
+      -- notify loading bundles but only filename not full path
+      notify = vim.notify("Loading jar : " .. vim.fn.fnamemodify(bundle, ":t"), "info", { replace = notify })
+      table.insert(bundles, bundle)
+    end
+  end
+  notify = vim.notify("Finish load jar bundles", "info", { replace = notify })
+  return bundles
+end
+
+M.fname = vim.api.nvim_buf_get_name(0)
+-- How to find the project name for a given root dir.
+M.project_name = function()
+  local root_dir = M.root_dir
+  return vim.fs.basename(root_dir)
+end
+
+-- Where are the config and workspace dirs for a project?
+M.jdtls_config_dir = function()
+  return vim.fn.stdpath "cache" .. "/jdtls/" .. M.project_name() .. "/config"
+end
+M.jdtls_workspace_dir = function()
+  return vim.fn.stdpath "cache" .. "/jdtls/" .. M.project_name() .. "/workspace"
+end
+
+M.root_dir = require("lspconfig.configs.jdtls").default_config.root_dir(M.fname)
+M.handler = require("lspconfig.configs.jdtls").default_config.handlers
+M.init_options = {
+  workspace = M.jdtls_workspace_dir(),
+  jvm_args = {},
+  os_config = nil,
+  bundles = M.bundles(),
+}
+
+M.get_jdtls_jvm_args = function()
+  local args = {}
+  for a in string.gmatch((os.getenv "JDTLS_JVM_ARGS" or ""), "%S+") do
+    local arg = string.format("--jvm-arg=%s", a)
+    table.insert(args, arg)
+  end
+  return unpack(args)
+end
+
+M.capabilities = vim.lsp.protocol.make_client_capabilities()
+
+return M

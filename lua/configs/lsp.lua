@@ -6,7 +6,7 @@ M.on_attach = function(_, bufnr)
   local function opts(desc)
     return { buffer = bufnr, desc = "LSP " .. desc }
   end
--- global lsp mappings
+  -- global lsp mappings
   map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "LSP diagnostic loclist" })
   map("n", "<leader>sh", vim.lsp.buf.signature_help, opts "Show signature help")
   map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts "Add workspace folder")
@@ -34,11 +34,11 @@ end
 -- require('blink.cmp').get_lsp_capabilities()
 -- require("cmp_nvim_lsp").default_capabilities()
 -- vim.lsp.protocol.make_client_capabilities()
-M.capabilities = require('blink.cmp').get_lsp_capabilities()
+M.capabilities = require("blink.cmp").get_lsp_capabilities()
 
 M.capabilities.textDocument.foldingRange = {
-    dynamicRegistration = false,
-    lineFoldingOnly = true
+  dynamicRegistration = false,
+  lineFoldingOnly = true,
 }
 
 M.capabilities.textDocument.completion.completionItem = {
@@ -68,7 +68,6 @@ M.diagnostic_config = function()
     underline = true,
     float = { border = "single" },
   }
-
 end
 
 M.defaults = function()

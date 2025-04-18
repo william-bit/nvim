@@ -13,9 +13,12 @@ return {
       snippets = { preset = "luasnip" },
       -- ensure you have the `snippets` source (enabled by default)
       sources = {
-        default = { "supermaven", "lsp", "path", "snippets", "buffer" ,"omni"},
+        default = { "supermaven", "lsp", "path", "snippets", "buffer", "omni" },
         providers = {
           lsp = {
+            name = 'LSP',
+            module = 'blink.cmp.sources.lsp',
+            enabled = true,
             async = true,
           },
           supermaven = {

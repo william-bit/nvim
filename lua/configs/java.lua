@@ -135,8 +135,12 @@ M.bundles = function()
   local notify = vim.notify "Searching for jar bundles..."
   for _, jar_pattern in ipairs(M.jar_patterns) do
     for _, bundle in ipairs(vim.split(vim.fn.glob(jar_pattern), "\n")) do
-      -- notify loading bundles but only filename not full path
-      notify = vim.notify("Loading jar : " .. vim.fn.fnamemodify(bundle, ":t"), "info", { replace = notify })
+      -- remove com.microsoft.java.test.runner-jar-with-dependencies.jar from bundles
+      local file_name = vim.fn.fnamemodify(bundle, ":t")
+      if file_name ~= "com.microsoft.java.test.runner-jar-with-dependencies.jar" then
+        -- notify loading bundles but only filename not full path
+        notify = vim.notify("Loading jar : " .. vim.fn.fnamemodify(bundle, ":t"), "info", { replace = notify })
+      end
       table.insert(bundles, bundle)
     end
   end
@@ -165,7 +169,7 @@ M.init_options = {
   workspace = M.jdtls_workspace_dir(),
   jvm_args = {},
   os_config = nil,
-  bundles = M.bundles(),
+  -- bundles = M.bundles(),
 }
 
 M.get_jdtls_jvm_args = function()

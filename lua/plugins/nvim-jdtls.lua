@@ -8,6 +8,7 @@ return {
       local lombok = string.format("--jvm-arg=-javaagent:%s", javalsp.lombok_jar)
       local equinox_jar = javalsp.equinox_jar()
       local jdtls_location = vim.fn.exepath "jdtls"
+      -- local jdtls_location = "C:\\Users\\dartmedia\\AppData\\Local\\nvim-data\\mason\\packages\\jdtls.cmd"
       local jdtls_config_dir = javalsp.jdtls_config_dir()
       local jdtls_workspace_dir = javalsp.jdtls_workspace_dir()
       local config = {
@@ -22,12 +23,9 @@ return {
           "-Xms512m",
           "-Xmx2g",
           "-Xss2m",
-          "--add-modules jdk.incubator.vector",
           "--add-modules=ALL-SYSTEM",
-          "--add-opens",
-          "java.base/java.util=ALL-UNNAMED",
-          "--add-opens",
-          "java.base/java.lang=ALL-UNNAMED",
+          "--add-opens java.base/java.util=ALL-UNNAMED",
+          "--add-opens java.base/java.lang=ALL-UNNAMED",
           "-jar",
           equinox_jar,
           "-configuration",

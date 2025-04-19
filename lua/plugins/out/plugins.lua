@@ -520,11 +520,11 @@ return {
         "rcarriga/nvim-notify",
         opts = function()
           -- Remove notification when cursor changed and new text added
-          -- vim.api.nvim_create_autocmd({ "CursorMoved", "TextChangedI" }, {
-          --   callback = function()
-          --     require("notify").dismiss()
-          --   end,
-          -- })
+          vim.api.nvim_create_autocmd({ "CursorMoved", "TextChangedI" }, {
+            callback = function()
+              require("notify").dismiss()
+            end,
+          })
 
           -- Change native notify to vim notify
           return {
@@ -575,165 +575,6 @@ return {
   "nvzone/menu",
   { "nvzone/minty", cmd = { "Huefy", "Shades" } },
   {
-    "rcarriga/nvim-dap-ui",
-    keys = {
-      { "<leader>di", "<cmd>lua require('dapui').toggle()<cr>" },
-    },
-    opts = {
-      icons = { expanded = "▾", collapsed = "▸" },
-      mappings = {
-        -- Use a table to apply multiple mappings
-        expand = { "<CR>", "<2-LeftMouse>" },
-        open = "o",
-        remove = "d",
-        edit = "e",
-        repl = "r",
-        toggle = "t",
-      },
-      sidebar = {
-        elements = {
-          -- Provide as ID strings or tables with "id" and "size" keys
-          {
-            id = "scopes",
-            size = 0.25, -- Can be float or integer > 1
-          },
-          { id = "breakpoints", size = 0.25 },
-          { id = "stacks", size = 0.25 },
-          { id = "watches", size = 00.25 },
-        },
-        size = 40,
-        position = "left", -- Can be "left", "right", "top", "bottom"
-      },
-      tray = {
-        elements = { "repl" },
-        size = 10,
-        position = "bottom", -- Can be "left", "right", "top", "bottom"
-      },
-      floating = {
-        max_height = nil, -- These can be integers or a float between 0 and 1.
-        max_width = nil, -- Floats will be treated as percentage of your screen.
-        border = "single", -- Border style. Can be "single", "double" or "rounded"
-        mappings = {
-          close = { "q", "<Esc>" },
-        },
-      },
-    },
-    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
-  },
-  -- Ensure java debugger and test packages are installed.
-  {
-    "mfussenegger/nvim-dap",
-    keys = {
-      { "<leader>dd", "<cmd>lua require('dap').toggle_breakpoint()<cr>" },
-      { "<leader>dr", "<cmd>lua require('dap').repl.open()<cr>" },
-      { "<leader>dc", "<cmd>lua require('dap').continue()<cr>" },
-      { "<leader>db", "<cmd>lua require('dap').step_back()<cr>" },
-      { "<leader>dn", "<cmd>lua require('dap').step_over()<cr>" },
-      { "<leader>ds", "<cmd>lua require('dap').step_into()<cr>" },
-      { "<leader>du", "<cmd>lua require('dap').step_out()<cr>" },
-      { "<leader>dl", "<cmd>lua require('dap').run_last()<cr>" },
-      { "<leader>dt", "<cmd>lua require('dap').terminate()<cr>" },
-      { "<leader>dp", "<cmd>lua require('dap').pause.toggle()<cr>" },
-      { "<leader>dv", "<cmd>lua require('dap').variables()<cr>" },
-      { "<leader>do", "<cmd>lua require('dap').open()<cr>" },
-    },
-    config = function()
-      -- Simple configuration to attach to remote java debug process
-      local dap, dapui = require "dap", require "dapui"
-      dap.listeners.before.attach.dapui_config = function()
-        dapui.open()
-      end
-      dap.listeners.before.launch.dapui_config = function()
-        dapui.open()
-      end
-      dap.listeners.before.event_terminated.dapui_config = function()
-        dapui.close()
-      end
-      dap.listeners.before.event_exited.dapui_config = function()
-        dapui.close()
-      end
-
-      -- Symbols displayed in the gutter
-      vim.fn.sign_define(
-        "DapBreakpoint",
-        { text = "•", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
-      )
-      vim.fn.sign_define(
-        "DapBreakpointCondition",
-        { text = "•", texthl = "DapBreakpointCondition", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
-      )
-      vim.fn.sign_define(
-        "DapBreakpointRejected",
-        { text = "•", texthl = "DapBreakpointRejected", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
-      )
-      vim.fn.sign_define(
-        "DapStopped",
-        { text = "•", texthl = "DapStopped", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
-      )
-      vim.fn.sign_define(
-        "DapLogPoint",
-        { text = "•", texthl = "DapLogPoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
-      )
-
-      -- Taken directly from https://github.com/mfussenegger/nvim-dap/wiki/Java
-      local mason_registry = require "mason-registry"
-      if mason_registry.is_installed "php-debug-adapter" then
-        local php_dbg_pkg = mason_registry.get_package "php-debug-adapter"
-        local php_dbg_path = php_dbg_pkg:get_install_path()
-        dap.adapters.php = {
-          type = "executable",
-          command = "node",
-          args = { php_dbg_path .. "/extension/out/phpDebug.js" },
-        }
-        dap.configurations.php = {
-          {
-            type = "php",
-            request = "launch",
-            name = "Listen for Xdebug",
-            stopOnEntry = false,
-            port = 9000,
-            log = true,
-            serverSourceRoot = "C:\\laragon\\www\\",
-            localSourceRoot = vim.fn.expand "%:p:h" .. "\\",
-          },
-          {
-            type = "php",
-            request = "launch",
-            name = "Launch current file",
-            program = "${file}",
-            cwd = "${fileDirname}",
-            port = 9003,
-          },
-          {
-            type = "php",
-            request = "launch",
-            name = "Launch current file (web)",
-            program = "${file}",
-            cwd = "${fileDirname}",
-            port = 9003,
-            server = "php",
-          },
-        }
-      end
-
-      dap.configurations.java = {
-        {
-          type = "java",
-          request = "attach",
-          name = "Debug (Attach) - Remote",
-          hostName = "127.0.0.1",
-          port = 5005,
-        },
-      }
-    end,
-    dependencies = {
-      {
-        "williamboman/mason.nvim",
-        opts = { ensure_installed = { "java-debug-adapter", "java-test" } },
-      },
-    },
-  },
-  {
     "kevinhwang91/nvim-ufo",
     config = true,
     event = "BufRead",
@@ -752,6 +593,7 @@ return {
       local lombok = string.format("--jvm-arg=-javaagent:%s", javalsp.lombok_jar)
       local equinox_jar = javalsp.equinox_jar()
       local jdtls_location = vim.fn.exepath "jdtls"
+      -- local jdtls_location = "C:\\Users\\dartmedia\\AppData\\Local\\nvim-data\\mason\\packages\\jdtls.cmd"
       local jdtls_config_dir = javalsp.jdtls_config_dir()
       local jdtls_workspace_dir = javalsp.jdtls_workspace_dir()
       local config = {
@@ -761,17 +603,11 @@ return {
           "-Declipse.application=org.eclipse.jdt.ls.core.id1",
           "-Dosgi.bundles.defaultStartLevel=4",
           "-Declipse.product=org.eclipse.jdt.ls.core.product",
-          "-Dlog.protocol=true",
           "-Dlog.level=ALL",
-          "-Xms512m",
-          "-Xmx2g",
-          "-Xss2m",
-          "--add-modules jdk.incubator.vector",
+          "-Xmx1g",
           "--add-modules=ALL-SYSTEM",
-          "--add-opens",
-          "java.base/java.util=ALL-UNNAMED",
-          "--add-opens",
-          "java.base/java.lang=ALL-UNNAMED",
+          "--add-opens java.base/java.util=ALL-UNNAMED",
+          "--add-opens java.base/java.lang=ALL-UNNAMED",
           "-jar",
           equinox_jar,
           "-configuration",

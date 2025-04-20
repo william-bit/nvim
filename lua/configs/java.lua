@@ -1,11 +1,17 @@
 local M = {}
 local mason_registry = require "mason-registry"
 
-M.lombok_jar = mason_registry.get_package("jdtls"):get_install_path() .. "/lombok.jar"
+M.lombok_jar = mason_registry.get_package("jdtls"):get_install_path() .. "\\lombok.jar"
 M.opts = {
   dap_main = {},
   test = true,
   dap = { hotcodereplace = "auto", config_overrides = {} },
+}
+
+M.env = {
+  HOME = vim.uv.os_homedir(),
+  XDG_CACHE_HOME = os.getenv "XDG_CACHE_HOME",
+  JDTLS_JVM_ARGS = os.getenv "JDTLS_JVM_ARGS",
 }
 
 M.on_attach = function(client, bufnr)
@@ -140,8 +146,8 @@ M.bundles = function()
       if file_name ~= "com.microsoft.java.test.runner-jar-with-dependencies.jar" then
         -- notify loading bundles but only filename not full path
         notify = vim.notify("Loading jar : " .. vim.fn.fnamemodify(bundle, ":t"), "info", { replace = notify })
+        table.insert(bundles, bundle)
       end
-      table.insert(bundles, bundle)
     end
   end
   notify = vim.notify("Finish load jar bundles", "info", { replace = notify })
@@ -157,29 +163,25 @@ end
 
 -- Where are the config and workspace dirs for a project?
 M.jdtls_config_dir = function()
-  return vim.fn.stdpath "cache" .. "/jdtls/" .. M.project_name() .. "/config"
+  return mason_registry.get_package("jdtls"):get_install_path() .. "\\config_win"
 end
 M.jdtls_workspace_dir = function()
-  return vim.fn.stdpath "cache" .. "/jdtls/" .. M.project_name() .. "/workspace"
+  return M.get_jdtls_cache_dir() .. "\\workspace"
+end
+
+M.get_cache_dir = function()
+  return M.env.XDG_CACHE_HOME and M.env.XDG_CACHE_HOME or M.env.HOME .. "\\.cache"
+end
+
+M.get_jdtls_cache_dir = function()
+  return M.get_cache_dir() .. "\\jdtls"
 end
 
 M.root_dir = require("lspconfig.configs.jdtls").default_config.root_dir(M.fname)
 M.handler = require("lspconfig.configs.jdtls").default_config.handlers
 M.init_options = {
-  workspace = M.jdtls_workspace_dir(),
-  jvm_args = {},
-  os_config = nil,
-  -- bundles = M.bundles(),
+  bundles = M.bundles(),
 }
-
-M.get_jdtls_jvm_args = function()
-  local args = {}
-  for a in string.gmatch((os.getenv "JDTLS_JVM_ARGS" or ""), "%S+") do
-    local arg = string.format("--jvm-arg=%s", a)
-    table.insert(args, arg)
-  end
-  return unpack(args)
-end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 

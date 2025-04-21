@@ -28,7 +28,7 @@ lspconfig.gradle_ls.setup {
     "settings.gradle", -- Gradle (multi-project)
     "build.gradle" -- Gradle
   ),
-  cmd = { "gradle-language-server.cmd" },
+  cmd = { "gradle-language-server" },
   -- gradle-language-server expects init_options.settings to be defined
   init_options = {
     settings = {

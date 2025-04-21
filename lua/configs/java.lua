@@ -1,17 +1,17 @@
 local M = {}
-local mason_registry = require "mason-registry"
-
-M.lombok_jar = mason_registry.get_package("jdtls"):get_install_path() .. "\\lombok.jar"
-M.opts = {
-  dap_main = {},
-  test = true,
-  dap = { hotcodereplace = "auto", config_overrides = {} },
-}
-
 M.env = {
   HOME = vim.uv.os_homedir(),
   XDG_CACHE_HOME = os.getenv "XDG_CACHE_HOME",
   JDTLS_JVM_ARGS = os.getenv "JDTLS_JVM_ARGS",
+  JDTLS_EXT_DIR = "C:\\Users\\dartmedia\\AppData\\Local\\nvim-data\\java\\",
+}
+
+M.lombok_jar = M.env.JDTLS_EXT_DIR .. "\\lombok.jar"
+
+M.opts = {
+  dap_main = {},
+  test = true,
+  dap = { hotcodereplace = "auto", config_overrides = {} },
 }
 
 M.on_attach = function(client, bufnr)
@@ -28,6 +28,7 @@ M.on_attach = function(client, bufnr)
         { "<leader>cgs", require("jdtls").super_implementation, desc = "Goto Super" },
         { "<leader>coi", require("jdtls").organize_imports, desc = "Organize Imports" },
         { "<leader>cgS", require("jdtls.tests").goto_subjects, desc = "Goto Subjects" },
+        { "<leader>cr", [[<ESC><CMD>JdtRestart<CR>]], desc = "JdtRestart" },
       },
     }
     wk.add {
@@ -53,51 +54,46 @@ M.on_attach = function(client, bufnr)
       },
     }
 
-    if M.opts.dap and mason_registry.is_installed "java-debug-adapter" then
-      -- custom init for Java debugger
-      require("jdtls").setup_dap(M.opts.dap)
-      if M.opts.dap_main then
-        require("jdtls.dap").setup_dap_main_class_configs(M.opts.dap_main)
-      end
-
-      -- Java Test require Java debugger to work
-      if M.opts.test and mason_registry.is_installed "java-test" then
-        -- custom keymaps for Java test runner (not yet compatible with neotest)
-        wk.add {
-          {
-            mode = "n",
-            buffer = bufnr,
-            { "<leader>t", group = "test" },
-            {
-              "<leader>tt",
-              function()
-                require("jdtls.dap").test_class {
-                  config_overrides = type(M.opts.dap) ~= "boolean" and M.opts.dap.config_overrides or nil,
-                }
-              end,
-              desc = "Run All Test",
-            },
-            {
-              "<leader>tr",
-              function()
-                require("jdtls.dap").test_nearest_method {
-                  config_overrides = type(M.opts.dap) ~= "boolean" and M.opts.dap.config_overrides or nil,
-                }
-              end,
-              desc = "Run Nearest Test",
-            },
-            { "<leader>tT", require("jdtls.dap").pick_test, desc = "Run Test" },
-          },
-        }
-      end
+    -- custom init for Java debugger
+    require("jdtls").setup_dap(M.opts.dap)
+    if M.opts.dap_main then
+      require("jdtls.dap").setup_dap_main_class_configs(M.opts.dap_main)
     end
+
+    -- Java Test require Java debugger to work
+    -- custom keymaps for Java test runner (not yet compatible with neotest)
+    wk.add {
+      {
+        mode = "n",
+        buffer = bufnr,
+        { "<leader>t", group = "test" },
+        {
+          "<leader>tt",
+          function()
+            require("jdtls.dap").test_class {
+              config_overrides = type(M.opts.dap) ~= "boolean" and M.opts.dap.config_overrides or nil,
+            }
+          end,
+          desc = "Run All Test",
+        },
+        {
+          "<leader>tr",
+          function()
+            require("jdtls.dap").test_nearest_method {
+              config_overrides = type(M.opts.dap) ~= "boolean" and M.opts.dap.config_overrides or nil,
+            }
+          end,
+          desc = "Run Nearest Test",
+        },
+        { "<leader>tT", require("jdtls.dap").pick_test, desc = "Run Test" },
+      },
+    }
   end
 end
 
 M.equinox_jar = function()
   -- INFO: It's annoying to edit the version again and again.
-  local equinox_path =
-    vim.split(vim.fn.glob(mason_registry.get_package("jdtls"):get_install_path() .. "/plugins/*jar"), "\n")
+  local equinox_path = vim.split(vim.fn.glob(M.env.JDTLS_EXT_DIR .. "jdtls\\plugins\\*jar"), "\n")
   local equinox_launcher = ""
 
   for _, file in pairs(equinox_path) do
@@ -113,23 +109,13 @@ M.jar_patterns = {}
 
 M.test = function()
   -- java-test also depends on java-debug-adapter.
-  if M.opts.test and mason_registry.is_installed "java-test" then
-    local java_test_pkg = mason_registry.get_package "java-test"
-    local java_test_path = java_test_pkg:get_install_path()
-    vim.list_extend(M.jar_patterns, {
-      java_test_path .. "/extension/server/*.jar",
-    })
-  end
+  local java_test_path = M.env.JDTLS_EXT_DIR .. "java-test/server/*.jar"
+  vim.list_extend(M.jar_patterns, { java_test_path })
 end
 
 M.debug = function()
-  if M.opts.dap and mason_registry.is_installed "java-debug-adapter" then
-    local java_dbg_pkg = mason_registry.get_package "java-debug-adapter"
-    local java_dbg_path = java_dbg_pkg:get_install_path()
-    vim.list_extend(M.jar_patterns, {
-      java_dbg_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar",
-    })
-  end
+  local java_dbg_path = M.env.JDTLS_EXT_DIR .. "java-debug/extension/server/*.jar"
+  vim.list_extend(M.jar_patterns, { java_dbg_path })
 end
 M.bundles = function()
   M.test()
@@ -141,13 +127,9 @@ M.bundles = function()
   local notify = vim.notify "Searching for jar bundles..."
   for _, jar_pattern in ipairs(M.jar_patterns) do
     for _, bundle in ipairs(vim.split(vim.fn.glob(jar_pattern), "\n")) do
-      -- remove com.microsoft.java.test.runner-jar-with-dependencies.jar from bundles
-      local file_name = vim.fn.fnamemodify(bundle, ":t")
-      if file_name ~= "com.microsoft.java.test.runner-jar-with-dependencies.jar" then
-        -- notify loading bundles but only filename not full path
-        notify = vim.notify("Loading jar : " .. vim.fn.fnamemodify(bundle, ":t"), "info", { replace = notify })
-        table.insert(bundles, bundle)
-      end
+      -- notify loading bundles but only filename not full path
+      notify = vim.notify("Loading jar : " .. vim.fn.fnamemodify(bundle, ":t"), "info", { replace = notify })
+      table.insert(bundles, bundle)
     end
   end
   notify = vim.notify("Finish load jar bundles", "info", { replace = notify })
@@ -163,7 +145,7 @@ end
 
 -- Where are the config and workspace dirs for a project?
 M.jdtls_config_dir = function()
-  return mason_registry.get_package("jdtls"):get_install_path() .. "\\config_win"
+  return M.env.JDTLS_EXT_DIR .. "jdtls\\config_win"
 end
 M.jdtls_workspace_dir = function()
   return M.get_jdtls_cache_dir() .. "\\workspace"
@@ -180,6 +162,7 @@ end
 M.root_dir = require("lspconfig.configs.jdtls").default_config.root_dir(M.fname)
 M.handler = require("lspconfig.configs.jdtls").default_config.handlers
 M.init_options = {
+  extendedClientCapabilities = require("jdtls").extendedClientCapabilities,
   bundles = M.bundles(),
 }
 

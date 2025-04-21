@@ -745,6 +745,9 @@ return {
   },
   {
     "mfussenegger/nvim-jdtls",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+    },
     ft = { "java" },
     config = function()
       local javalsp = require "configs.java"
@@ -754,20 +757,22 @@ return {
       local jdtls_config_dir = javalsp.jdtls_config_dir()
       local jdtls_workspace_dir = javalsp.jdtls_workspace_dir()
       local config = {
+        flags = {
+          debounce_text_changes = 80,
+        },
         cmd = {
-          "C:/Program Files/Eclipse Adoptium/jdk-21.0.6.7-hotspot/bin/java.exe",
-          lombok,
+          "java",
           "-Declipse.application=org.eclipse.jdt.ls.core.id1",
           "-Dosgi.bundles.defaultStartLevel=4",
           "-Declipse.product=org.eclipse.jdt.ls.core.product",
           "-Dlog.protocol=true",
           "-Dlog.level=ALL",
-          "-Xmx1g",
           "--add-modules=ALL-SYSTEM",
           "--add-opens",
           "java.base/java.util=ALL-UNNAMED",
           "--add-opens",
           "java.base/java.lang=ALL-UNNAMED",
+          lombok,
           "-jar",
           equinox_jar,
           "-configuration",
@@ -787,6 +792,11 @@ return {
 
         settings = {
           java = {
+            saveActions = {
+              organizeImports = true,
+            },
+            signatureHelp = { enabled = true },
+            contentProvider = { preferred = "fernflower" },
             inlayHints = {
               parameterNames = {
                 enabled = "all",
@@ -797,6 +807,13 @@ return {
       }
 
       require("jdtls").start_or_attach(config)
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "java" },
+        callback = function()
+          require("jdtls").start_or_attach(config)
+        end,
+      })
     end,
   },
   {

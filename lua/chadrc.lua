@@ -73,7 +73,6 @@ M.mason = {
     "delve",
     "gofumpt",
     "goimports",
-    "google-java-format",
     "gopls",
     "gradle-language-server",
     "hadolint",
@@ -105,6 +104,10 @@ M.mason = {
 M.ui = {
   tabufline = {
     enabled = false,
+  },
+  cmp = {
+    enabled = true,
+    style = "atom",
   },
   statusline = {
     theme = "minimal",

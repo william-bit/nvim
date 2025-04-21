@@ -1,36 +1,28 @@
 return {
   {
     "mfussenegger/nvim-jdtls",
-    dependencies = {
-      "mfussenegger/nvim-dap",
-    },
     ft = { "java" },
     config = function()
       local javalsp = require "configs.java"
       local lsp = require "configs.lsp"
-      local lombok = string.format("-javaagent:%s", javalsp.lombok_jar)
-      local equinox_jar = javalsp.equinox_jar()
+      local lombok = string.format("--jvm-arg=-javaagent:%s", javalsp.lombok_jar)
+      local jdtls_location = vim.fn.exepath "jdtls"
       local jdtls_config_dir = javalsp.jdtls_config_dir()
       local jdtls_workspace_dir = javalsp.jdtls_workspace_dir()
       local config = {
-        flags = {
-          debounce_text_changes = 80,
-        },
         cmd = {
-          "java",
+          jdtls_location,
+          lombok,
           "-Declipse.application=org.eclipse.jdt.ls.core.id1",
           "-Dosgi.bundles.defaultStartLevel=4",
           "-Declipse.product=org.eclipse.jdt.ls.core.product",
           "-Dlog.protocol=true",
           "-Dlog.level=ALL",
+          "-Xmx2g",
           "--add-modules=ALL-SYSTEM",
-          "--add-opens",
-          "java.base/java.util=ALL-UNNAMED",
-          "--add-opens",
-          "java.base/java.lang=ALL-UNNAMED",
-          lombok,
-          "-jar",
-          equinox_jar,
+          "--add-modules=jdk.incubator.vector",
+          "--add-opens java.base/java.util=ALL-UNNAMED",
+          "--add-opens java.base/java.lang=ALL-UNNAMED",
           "-configuration",
           jdtls_config_dir,
           "-data",
@@ -48,11 +40,6 @@ return {
 
         settings = {
           java = {
-            saveActions = {
-              organizeImports = true,
-            },
-            signatureHelp = { enabled = true },
-            contentProvider = { preferred = "fernflower" },
             inlayHints = {
               parameterNames = {
                 enabled = "all",
@@ -66,10 +53,10 @@ return {
 
       vim.api.nvim_create_autocmd("FileType", {
         pattern = { "java" },
-        callback = function()
-          require("jdtls").start_or_attach(config)
-        end,
+        callback = function() require("jdtls").start_or_attach(config) end,
       })
+
     end,
   },
 }
+

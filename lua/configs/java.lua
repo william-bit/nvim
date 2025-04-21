@@ -6,7 +6,7 @@ M.env = {
   JDTLS_EXT_DIR = "C:\\Users\\dartmedia\\AppData\\Local\\nvim-data\\java\\",
 }
 
-M.lombok_jar = M.env.JDTLS_EXT_DIR .. "\\lombok.jar"
+M.lombok_jar = M.env.JDTLS_EXT_DIR .. "lombok.jar"
 
 M.opts = {
   dap_main = {},
@@ -127,9 +127,13 @@ M.bundles = function()
   local notify = vim.notify "Searching for jar bundles..."
   for _, jar_pattern in ipairs(M.jar_patterns) do
     for _, bundle in ipairs(vim.split(vim.fn.glob(jar_pattern), "\n")) do
-      -- notify loading bundles but only filename not full path
-      notify = vim.notify("Loading jar : " .. vim.fn.fnamemodify(bundle, ":t"), "info", { replace = notify })
-      table.insert(bundles, bundle)
+      -- remove com.microsoft.java.test.runner-jar-with-dependencies.jar from bundles
+      local file_name = vim.fn.fnamemodify(bundle, ":t")
+      if file_name ~= "com.microsoft.java.test.runner-jar-with-dependencies.jar" and file_name ~= "jacocoagent.jar" then
+        -- notify loading bundles but only filename not full path
+        notify = vim.notify("Loading jar : " .. vim.fn.fnamemodify(bundle, ":t"), "info", { replace = notify })
+        table.insert(bundles, bundle)
+      end
     end
   end
   notify = vim.notify("Finish load jar bundles", "info", { replace = notify })
@@ -167,5 +171,80 @@ M.init_options = {
 }
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
+
+M.add_modules = function()
+  local list_module = {
+    "java.base",
+    "java.compiler",
+    "java.datatransfer",
+    "java.desktop",
+    "java.instrument",
+    "java.logging",
+    "java.management",
+    "java.management.rmi",
+    "java.naming",
+    "java.net.http",
+    "java.prefs",
+    "java.rmi",
+    "java.scripting",
+    "java.se",
+    "java.security.jgss",
+    "java.security.sasl",
+    "java.smartcardio",
+    "java.sql",
+    "java.sql.rowset",
+    "java.transaction.xa",
+    "java.xml",
+    "java.xml.crypto",
+    "jdk.accessibility",
+    "jdk.attach",
+    "jdk.charsets",
+    "jdk.compiler",
+    "jdk.crypto.cryptoki",
+    "jdk.crypto.ec",
+    "jdk.crypto.mscapi",
+    "jdk.dynalink",
+    "jdk.editpad",
+    "jdk.hotspot.agent",
+    "jdk.httpserver",
+    "jdk.internal.ed",
+    "jdk.internal.jvmstat",
+    "jdk.internal.le",
+    "jdk.internal.opt",
+    "jdk.internal.vm.ci",
+    "jdk.internal.vm.compiler",
+    "jdk.internal.vm.compiler.management",
+    "jdk.jartool",
+    "jdk.javadoc",
+    "jdk.jcmd",
+    "jdk.jconsole",
+    "jdk.jdeps",
+    "jdk.jdi",
+    "jdk.jdwp.agent",
+    "jdk.jfr",
+    "jdk.jlink",
+    "jdk.jpackage",
+    "jdk.jshell",
+    "jdk.jsobject",
+    "jdk.jstatd",
+    "jdk.localedata",
+    "jdk.management",
+    "jdk.management.agent",
+    "jdk.management.jfr",
+    "jdk.naming.dns",
+    "jdk.naming.rmi",
+    "jdk.net",
+    "jdk.nio.mapmode",
+    "jdk.random",
+    "jdk.sctp",
+    "jdk.security.auth",
+    "jdk.security.jgss",
+    "jdk.unsupported",
+    "jdk.unsupported.desktop",
+    "jdk.xml.dom",
+    "jdk.zipfs",
+  }
+  return "--add-modules=" .. table.concat(list_module, ",")
+end
 
 return M

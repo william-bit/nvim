@@ -754,6 +754,7 @@ return {
       local lsp = require "configs.lsp"
       local lombok = string.format("-javaagent:%s", javalsp.lombok_jar)
       local equinox_jar = javalsp.equinox_jar()
+      local add_modules = javalsp.add_modules()
       local jdtls_config_dir = javalsp.jdtls_config_dir()
       local jdtls_workspace_dir = javalsp.jdtls_workspace_dir()
       local config = {
@@ -767,7 +768,7 @@ return {
           "-Declipse.product=org.eclipse.jdt.ls.core.product",
           "-Dlog.protocol=true",
           "-Dlog.level=ALL",
-          "--add-modules=ALL-SYSTEM",
+          add_modules,
           "--add-opens",
           "java.base/java.util=ALL-UNNAMED",
           "--add-opens",

@@ -7,7 +7,6 @@ return {
     ft = { "java" },
     config = function()
       local javalsp = require "configs.java"
-      local lsp = require "configs.lsp"
       local lombok = string.format("-javaagent:%s", javalsp.lombok_jar)
       local equinox_jar = javalsp.equinox_jar()
       local add_modules = javalsp.add_modules()
@@ -50,6 +49,15 @@ return {
 
         settings = {
           java = {
+            references = {
+              includeDecompiledSources = true,
+            },
+            eclipse = {
+              downloadSources = true,
+            },
+            maven = {
+              downloadSources = true,
+            },
             saveActions = {
               organizeImports = true,
             },
@@ -65,6 +73,25 @@ return {
                 "java.util.Objects.requireNonNullElse",
                 "org.mockito.Mockito.*",
               },
+              filteredTypes = {
+                "com.sun.*",
+                "io.micrometer.shaded.*",
+                "java.awt.*",
+                "jdk.*",
+                "sun.*",
+              },
+              importOrder = {
+                "java",
+                "javax",
+                "com",
+                "org",
+              },
+            },
+            codeGeneration = {
+              toString = {
+                template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+              },
+              useBlocks = true,
             },
             sources = {
               organizeImports = {

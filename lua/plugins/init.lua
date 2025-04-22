@@ -1,4 +1,5 @@
 return {
+  {'vim-scripts/dbext.vim',ft = {'sql'}},
   {
     "stevearc/conform.nvim",
     -- event = "BufWritePre", -- uncomment for format on save

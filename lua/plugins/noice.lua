@@ -13,11 +13,11 @@ return {
         "rcarriga/nvim-notify",
         opts = function()
           -- Remove notification when cursor changed and new text added
-          vim.api.nvim_create_autocmd({ "CursorMoved", "TextChangedI" }, {
-            callback = function()
-              require("notify").dismiss()
-            end,
-          })
+          -- vim.api.nvim_create_autocmd({ "CursorMoved", "TextChangedI" }, {
+          --   callback = function()
+          --     require("notify").dismiss()
+          --   end,
+          -- })
 
           -- Change native notify to vim notify
           return {

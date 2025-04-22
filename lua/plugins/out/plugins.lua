@@ -334,6 +334,7 @@ return {
       require("ibl").setup(opts)
     end,
   },
+  {'vim-scripts/dbext.vim',ft = {'sql'}},
   {
     "stevearc/conform.nvim",
     -- event = "BufWritePre", -- uncomment for format on save
@@ -520,11 +521,11 @@ return {
         "rcarriga/nvim-notify",
         opts = function()
           -- Remove notification when cursor changed and new text added
-          vim.api.nvim_create_autocmd({ "CursorMoved", "TextChangedI" }, {
-            callback = function()
-              require("notify").dismiss()
-            end,
-          })
+          -- vim.api.nvim_create_autocmd({ "CursorMoved", "TextChangedI" }, {
+          --   callback = function()
+          --     require("notify").dismiss()
+          --   end,
+          -- })
 
           -- Change native notify to vim notify
           return {
@@ -759,13 +760,20 @@ return {
       local jdtls_workspace_dir = javalsp.jdtls_workspace_dir()
       local config = {
         flags = {
-          debounce_text_changes = 80,
+          debounce_text_changes = 300,
         },
         cmd = {
           "java",
           "-Declipse.application=org.eclipse.jdt.ls.core.id1",
           "-Dosgi.bundles.defaultStartLevel=4",
           "-Declipse.product=org.eclipse.jdt.ls.core.product",
+          "-Dosgi.checkConfiguration=true",
+          "-Dosgi.sharedConfiguration.area=" .. jdtls_config_dir,
+          "-Dosgi.sharedConfiguration.area.readOnly=true",
+          "-Dosgi.configuration.cascaded=true",
+          "-Dorg.eclipse.lsp4j.trace=verbose",
+          "-Xmx2G",
+          "-Xms512M",
           "-Dlog.protocol=true",
           "-Dlog.level=ALL",
           add_modules,
@@ -808,13 +816,6 @@ return {
       }
 
       require("jdtls").start_or_attach(config)
-
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "java" },
-        callback = function()
-          require("jdtls").start_or_attach(config)
-        end,
-      })
     end,
   },
   {

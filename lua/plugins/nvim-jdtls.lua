@@ -15,13 +15,20 @@ return {
       local jdtls_workspace_dir = javalsp.jdtls_workspace_dir()
       local config = {
         flags = {
-          debounce_text_changes = 80,
+          debounce_text_changes = 300,
         },
         cmd = {
           "java",
           "-Declipse.application=org.eclipse.jdt.ls.core.id1",
           "-Dosgi.bundles.defaultStartLevel=4",
           "-Declipse.product=org.eclipse.jdt.ls.core.product",
+          "-Dosgi.checkConfiguration=true",
+          "-Dosgi.sharedConfiguration.area=" .. jdtls_config_dir,
+          "-Dosgi.sharedConfiguration.area.readOnly=true",
+          "-Dosgi.configuration.cascaded=true",
+          "-Dorg.eclipse.lsp4j.trace=verbose",
+          "-Xmx2G",
+          "-Xms512M",
           "-Dlog.protocol=true",
           "-Dlog.level=ALL",
           add_modules,
@@ -62,8 +69,6 @@ return {
           },
         },
       }
-
-      require("jdtls").start_or_attach(config)
 
       vim.api.nvim_create_autocmd("FileType", {
         pattern = { "java" },

@@ -152,18 +152,10 @@ M.jdtls_config_dir = function()
   return M.env.JDTLS_EXT_DIR .. "jdtls\\config_win"
 end
 M.jdtls_workspace_dir = function()
-  return M.get_jdtls_cache_dir() .. "\\workspace"
+  return vim.fn.stdpath "cache" .. "\\jdtls\\" .. M.project_name() .. "\\workspace"
 end
 
-M.get_cache_dir = function()
-  return M.env.XDG_CACHE_HOME and M.env.XDG_CACHE_HOME or M.env.HOME .. "\\.cache"
-end
-
-M.get_jdtls_cache_dir = function()
-  return M.get_cache_dir() .. "\\jdtls"
-end
-
-M.root_dir = require("lspconfig.configs.jdtls").default_config.root_dir(M.fname)
+M.root_dir = vim.fs.root(0, {".git", "mvnw", "gradlew"});
 M.handler = require("lspconfig.configs.jdtls").default_config.handlers
 M.init_options = {
   extendedClientCapabilities = require("jdtls").extendedClientCapabilities,

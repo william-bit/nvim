@@ -155,14 +155,20 @@ M.jdtls_workspace_dir = function()
   return vim.fn.stdpath "cache" .. "\\jdtls\\" .. M.project_name() .. "\\workspace"
 end
 
-M.root_dir = vim.fs.root(0, {".git", "mvnw", "gradlew"});
+M.root_dir = require("jdtls.setup").find_root({ ".git", "mvnw", "gradlew" })
 M.handler = require("lspconfig.configs.jdtls").default_config.handlers
+
+M.extendedClientCapabilities = require'jdtls'.extendedClientCapabilities
+M.extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
+
 M.init_options = {
-  extendedClientCapabilities = require("jdtls").extendedClientCapabilities,
+  extendedClientCapabilities = M.extendedClientCapabilities,
   bundles = M.bundles(),
 }
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
+M.capabilities.workspace.configuration = true;
+M.capabilities.textDocument.completion.completionItem.snippetSupport = true;
 
 M.add_modules = function()
   local list_module = {

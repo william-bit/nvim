@@ -792,7 +792,7 @@ return {
         on_attach = javalsp.on_attach,
 
         settings = {
-          java = javalsp.settings
+          java = javalsp.settings,
         },
       }
 

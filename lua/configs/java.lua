@@ -526,6 +526,13 @@ M.settings = {
       "org",
     },
   },
+  jdt = {
+    ls = {
+      lombokSupport = {
+        enabled = true
+      }
+    }
+  },
   progressReports = {
     enabled = true,
   },

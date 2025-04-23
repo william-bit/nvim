@@ -19,7 +19,6 @@ return {
             module = "blink.cmp.sources.lsp",
             enabled = true,
             timeout_ms = 1000,
-            min_keyword_length = 3,
           },
           supermaven = {
             name = "supermaven",

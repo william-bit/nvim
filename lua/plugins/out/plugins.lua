@@ -44,7 +44,6 @@ return {
             module = "blink.cmp.sources.lsp",
             enabled = true,
             timeout_ms = 1000,
-            min_keyword_length = 3,
           },
           supermaven = {
             name = "supermaven",
@@ -792,10 +791,21 @@ return {
         on_attach = javalsp.on_attach,
 
         settings = {
+          -- https://github.com/eclipse-jdtls/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
           java = {
+            -- disable formatting and inlayHints because it crash jdtls
             format = {
-              enabled = true,
-              insertSpaces = true,
+              enabled = false,
+              insertSpaces = false,
+            },
+            saveActions = {
+              organizeImports = false,
+            },
+            inlayHints = {
+              parameterNames = {
+                -- none, literals, all
+                enabled = "none",
+              },
             },
             trace = {
               server = "message",
@@ -818,9 +828,6 @@ return {
                   path = "C:/Program Files/Amazon Corretto/jdk21.0.7_6",
                 },
               },
-            },
-            saveActions = {
-              organizeImports = true,
             },
             signatureHelp = { enabled = true },
             contentProvider = { preferred = "fernflower" },
@@ -866,11 +873,8 @@ return {
             referencesCodeLens = {
               enabled = true,
             },
-            inlayHints = {
-              parameterNames = {
-                -- none, literals, all
-                enabled = "none",
-              },
+            implementationsCodeLens = {
+              enabled = true,
             },
           },
         },

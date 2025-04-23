@@ -31,21 +31,20 @@ return {
     event = { "BufReadPost", "BufNewFile", "CmdlineEnter" },
     dependencies = {
       "rafamadriz/friendly-snippets",
-      { "L3MON4D3/LuaSnip", version = "v2.*" },
     },
     -- use a release tag to download pre-built binaries
-    config = {
+    opts = {
       snippets = { preset = "luasnip" },
       -- ensure you have the `snippets` source (enabled by default)
       sources = {
-        default = { "supermaven", "lsp", "path", "snippets", "buffer", "omni" },
+        default = { "supermaven", "lsp", "cmdline", "path", "snippets", "buffer", "omni" },
         providers = {
           lsp = {
             name = "LSP",
             module = "blink.cmp.sources.lsp",
             enabled = true,
             timeout_ms = 1000,
-            min_keyword_length  = 3,
+            min_keyword_length = 3,
           },
           supermaven = {
             name = "supermaven",
@@ -765,7 +764,6 @@ return {
         },
         cmd = {
           "java",
-          "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044",
           lombok,
           "-Declipse.application=org.eclipse.jdt.ls.core.id1",
           "-Dosgi.bundles.defaultStartLevel=4",
@@ -870,7 +868,8 @@ return {
             },
             inlayHints = {
               parameterNames = {
-                enabled = "all",
+                -- none, literals, all
+                enabled = "none",
               },
             },
           },

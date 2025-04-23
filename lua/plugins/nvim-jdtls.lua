@@ -19,7 +19,6 @@ return {
         },
         cmd = {
           "java",
-          "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044",
           lombok,
           "-Declipse.application=org.eclipse.jdt.ls.core.id1",
           "-Dosgi.bundles.defaultStartLevel=4",
@@ -124,7 +123,8 @@ return {
             },
             inlayHints = {
               parameterNames = {
-                enabled = "all",
+                -- none, literals, all
+                enabled = "none",
               },
             },
           },

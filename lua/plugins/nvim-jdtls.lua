@@ -6,7 +6,7 @@ return {
     },
     ft = { "java" },
     config = function()
-      local javalsp = require "configs.java"
+      local javalsp = require "configs.lsp.java"
       local lombok = string.format("-javaagent:%s", javalsp.lombok_jar)
       local equinox_jar = javalsp.equinox_jar()
       local add_modules = javalsp.add_modules()

@@ -33,7 +33,7 @@
 ---@field templates TemplatesOption?
 ---@field trace TraceOptions?
 ---@field edit EditOption?
----
+
 ---@class EnabledOption
 ---@field enabled boolean
 
@@ -213,13 +213,31 @@
 ---@field default boolean?
 ---@alias ExecutionEnvironment 'J2SE-1.5'| 'JavaSE-1.6'| 'JavaSE-1.7'| 'JavaSE-1.8'| 'JavaSE-9'| 'JavaSE-10'| 'JavaSE-11'| 'JavaSE-12'| 'JavaSE-13'| 'JavaSE-14'| 'JavaSE-15'| 'JavaSE-16'| 'JavaSE-17'| 'JavaSE-18'| 'JavaSE-19'| 'JavaSE-20'| 'JavaSE-21'| 'JavaSE-22'
 
+-- Current lsp directory structure
+-- ../nvim-data
+--    └── lsp
+--        ├── jdtls
+--        ├── java-debug
+--        └── java-test
+
 local M = {}
 M.env = {
   HOME = vim.uv.os_homedir(),
   XDG_CACHE_HOME = os.getenv "XDG_CACHE_HOME",
   JDTLS_JVM_ARGS = os.getenv "JDTLS_JVM_ARGS",
-  JDTLS_EXT_DIR = "C:\\Users\\dartmedia\\AppData\\Local\\nvim-data\\java\\",
-  JDTLS_VERSION = "jdtls",
+  JDTLS_EXT_DIR = vim.fn.stdpath "data" .. "\\lsp\\java\\",
+  JDTLS_FOLDER_NAME = "jdtls",
+  JDTLS_CONFIG_OS_FOLDER_NAME = "config_win",
+  JAVA_TEST_FOLDER_NAME = "java-test",
+  JAVA_DEBUG_FOLDER_NAME = "java-debug",
+
+  --- @type RuntimeOption[]
+  runtimes = {
+    {
+      name = "JavaSE-21",
+      path = "C:/Program Files/Amazon Corretto/jdk21.0.7_6",
+    },
+  },
 }
 
 M.lombok_jar = M.env.JDTLS_EXT_DIR .. "lombok.jar"
@@ -231,7 +249,7 @@ M.opts = {
 }
 
 M.on_attach = function(client, bufnr)
-  require("configs.lsp").on_attach(client, bufnr)
+  require("configs.lsp.default").on_attach(client, bufnr)
   if client and client.name == "jdtls" then
     local wk = require "which-key"
     wk.add {
@@ -309,7 +327,7 @@ end
 
 M.equinox_jar = function()
   -- INFO: It's annoying to edit the version again and again.
-  local equinox_path = vim.split(vim.fn.glob(M.env.JDTLS_EXT_DIR .. M.env.JDTLS_VERSION .. "\\plugins\\*jar"), "\n")
+  local equinox_path = vim.split(vim.fn.glob(M.env.JDTLS_EXT_DIR .. M.env.JDTLS_FOLDER_NAME .. "\\plugins\\*jar"), "\n")
   local equinox_launcher = ""
 
   for _, file in pairs(equinox_path) do
@@ -325,14 +343,15 @@ M.jar_patterns = {}
 
 M.test = function()
   -- java-test also depends on java-debug-adapter.
-  local java_test_path = M.env.JDTLS_EXT_DIR .. "java-test/server/*.jar"
+  local java_test_path = M.env.JDTLS_EXT_DIR .. M.env.JAVA_TEST_FOLDER_NAME .. "/server/*.jar"
   vim.list_extend(M.jar_patterns, { java_test_path })
 end
 
 M.debug = function()
-  local java_dbg_path = M.env.JDTLS_EXT_DIR .. "java-debug/extension/server/*.jar"
+  local java_dbg_path = M.env.JDTLS_EXT_DIR .. M.env.JAVA_DEBUG_FOLDER_NAME .. "/extension/server/*.jar"
   vim.list_extend(M.jar_patterns, { java_dbg_path })
 end
+
 M.bundles = function()
   M.test()
   M.debug()
@@ -357,6 +376,7 @@ M.bundles = function()
 end
 
 M.fname = vim.api.nvim_buf_get_name(0)
+
 -- How to find the project name for a given root dir.
 M.project_name = function()
   local root_dir = M.root_dir
@@ -365,10 +385,10 @@ end
 
 -- Where are the config and workspace dirs for a project?
 M.jdtls_config_dir = function()
-  return M.env.JDTLS_EXT_DIR .. M.env.JDTLS_VERSION .. "\\config_win"
+  return M.env.JDTLS_EXT_DIR .. M.env.JDTLS_FOLDER_NAME .. "\\" .. M.env.JDTLS_CONFIG_OS_FOLDER_NAME
 end
 M.jdtls_workspace_dir = function()
-  return vim.fn.stdpath "cache" .. "\\" .. M.env.JDTLS_VERSION .. "\\" .. M.project_name() .. "\\workspace"
+  return vim.fn.stdpath "cache" .. "\\" .. M.env.JDTLS_FOLDER_NAME .. "\\" .. M.project_name() .. "\\workspace"
 end
 
 M.root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew" }
@@ -461,7 +481,6 @@ M.add_modules = function()
   return "--add-modules=" .. table.concat(list_module, ",")
 end
 
-
 ---@type JavaConfig
 M.settings = {
   -- disable formatting and inlayHints because it crash jdtls
@@ -493,12 +512,7 @@ M.settings = {
   },
   configuration = {
     updateBuildConfiguration = "interactive",
-    runtimes = {
-      {
-        name = "JavaSE-21",
-        path = "C:/Program Files/Amazon Corretto/jdk21.0.7_6",
-      },
-    },
+    runtimes = M.env.runtimes,
   },
   signatureHelp = { enabled = true },
   contentProvider = { preferred = "fernflower" },
@@ -529,9 +543,9 @@ M.settings = {
   jdt = {
     ls = {
       lombokSupport = {
-        enabled = true
-      }
-    }
+        enabled = true,
+      },
+    },
   },
   progressReports = {
     enabled = true,

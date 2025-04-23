@@ -1,5 +1,5 @@
 local lspconfig = require "lspconfig"
-local lsp = require "configs.lsp"
+local lsp = require "configs.lsp.default"
 
 lsp.defaults()
 

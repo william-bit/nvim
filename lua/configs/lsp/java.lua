@@ -213,7 +213,7 @@
 ---@field default boolean?
 ---@alias ExecutionEnvironment 'J2SE-1.5'| 'JavaSE-1.6'| 'JavaSE-1.7'| 'JavaSE-1.8'| 'JavaSE-9'| 'JavaSE-10'| 'JavaSE-11'| 'JavaSE-12'| 'JavaSE-13'| 'JavaSE-14'| 'JavaSE-15'| 'JavaSE-16'| 'JavaSE-17'| 'JavaSE-18'| 'JavaSE-19'| 'JavaSE-20'| 'JavaSE-21'| 'JavaSE-22'
 
--- Current lsp directory structure
+-- Current lsp directory structure for these configs
 -- ../nvim-data
 --    └── lsp
 --        ├── jdtls
@@ -222,18 +222,11 @@
 
 local M = {}
 M.env = {
-  HOME = vim.uv.os_homedir(),
-  XDG_CACHE_HOME = os.getenv "XDG_CACHE_HOME",
-  JDTLS_JVM_ARGS = os.getenv "JDTLS_JVM_ARGS",
   JDTLS_EXT_DIR = vim.fn.stdpath "data" .. "\\lsp\\java\\",
   JDTLS_FOLDER_NAME = "jdtls",
   JDTLS_CONFIG_OS_FOLDER_NAME = "config_win",
   JAVA_TEST_FOLDER_NAME = "java-test",
   JAVA_DEBUG_FOLDER_NAME = "java-debug",
-
-  -- I don't know why but this module always show warning in lsp.log : "WARNING: Using incubator modules: jdk.incubator.vector"
-  EXClUDE_JAVA_MODULES = {"jdk.incubator.vector"},
-
   --- @type RuntimeOption[]
   runtimes = {
     {
@@ -241,6 +234,12 @@ M.env = {
       path = "C:/Program Files/Amazon Corretto/jdk21.0.7_6",
     },
   },
+
+  -- I don't know why but this module always show warning in lsp.log : "WARNING: Using incubator modules: jdk.incubator.vector"
+  EXClUDE_JAVA_MODULES = { "jdk.incubator.vector" },
+
+  -- I don't know why but this jars always show error in lsp.log when include in bundles
+  EXCLUDE_JDTLS_JAR_BUNDLES = { "com.microsoft.java.test.runner-jar-with-dependencies.jar", "jacocoagent.jar" },
 }
 
 M.lombok_jar = M.env.JDTLS_EXT_DIR .. "lombok.jar"
@@ -367,7 +366,7 @@ M.bundles = function()
     for _, bundle in ipairs(vim.split(vim.fn.glob(jar_pattern), "\n")) do
       -- remove com.microsoft.java.test.runner-jar-with-dependencies.jar from bundles
       local file_name = vim.fn.fnamemodify(bundle, ":t")
-      if file_name ~= "com.microsoft.java.test.runner-jar-with-dependencies.jar" and file_name ~= "jacocoagent.jar" then
+      if not vim.tbl_contains(M.env.EXCLUDE_JDTLS_JAR_BUNDLES, file_name) then
         -- notify loading bundles but only filename not full path
         notify = vim.notify("Loading jar : " .. vim.fn.fnamemodify(bundle, ":t"), "info", { replace = notify })
         table.insert(bundles, bundle)
@@ -434,10 +433,9 @@ end
 
 ---@type JavaConfig
 M.settings = {
-  -- disable formatting and inlayHints because it crash jdtls
+  -- disable formatting,saveActions and inlayHints because it crash jdtls
   format = {
     enabled = false,
-    insertSpaces = false,
   },
   saveActions = {
     organizeImports = false,

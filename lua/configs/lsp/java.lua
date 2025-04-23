@@ -230,6 +230,7 @@ M.env = {
   JDTLS_CONFIG_OS_FOLDER_NAME = "config_win",
   JAVA_TEST_FOLDER_NAME = "java-test",
   JAVA_DEBUG_FOLDER_NAME = "java-debug",
+  EXClUDE_JAVA_MODULES = {"jdk.incubator.vector"},
 
   --- @type RuntimeOption[]
   runtimes = {
@@ -407,77 +408,25 @@ M.capabilities.workspace.configuration = true
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 M.add_modules = function()
-  local list_module = {
-    "java.base",
-    "java.compiler",
-    "java.datatransfer",
-    "java.desktop",
-    "java.instrument",
-    "java.logging",
-    "java.management",
-    "java.management.rmi",
-    "java.naming",
-    "java.net.http",
-    "java.prefs",
-    "java.rmi",
-    "java.scripting",
-    "java.se",
-    "java.security.jgss",
-    "java.security.sasl",
-    "java.smartcardio",
-    "java.sql",
-    "java.sql.rowset",
-    "java.transaction.xa",
-    "java.xml",
-    "java.xml.crypto",
-    "jdk.accessibility",
-    "jdk.attach",
-    "jdk.charsets",
-    "jdk.compiler",
-    "jdk.crypto.cryptoki",
-    "jdk.crypto.ec",
-    "jdk.crypto.mscapi",
-    "jdk.dynalink",
-    "jdk.editpad",
-    "jdk.hotspot.agent",
-    "jdk.httpserver",
-    "jdk.internal.ed",
-    "jdk.internal.jvmstat",
-    "jdk.internal.le",
-    "jdk.internal.opt",
-    "jdk.internal.vm.ci",
-    "jdk.internal.vm.compiler",
-    "jdk.internal.vm.compiler.management",
-    "jdk.jartool",
-    "jdk.javadoc",
-    "jdk.jcmd",
-    "jdk.jconsole",
-    "jdk.jdeps",
-    "jdk.jdi",
-    "jdk.jdwp.agent",
-    "jdk.jfr",
-    "jdk.jlink",
-    "jdk.jpackage",
-    "jdk.jshell",
-    "jdk.jsobject",
-    "jdk.jstatd",
-    "jdk.localedata",
-    "jdk.management",
-    "jdk.management.agent",
-    "jdk.management.jfr",
-    "jdk.naming.dns",
-    "jdk.naming.rmi",
-    "jdk.net",
-    "jdk.nio.mapmode",
-    "jdk.random",
-    "jdk.sctp",
-    "jdk.security.auth",
-    "jdk.security.jgss",
-    "jdk.unsupported",
-    "jdk.unsupported.desktop",
-    "jdk.xml.dom",
-    "jdk.zipfs",
-  }
+  local list_module = {}
+  local handle = io.popen "java --list-modules"
+
+  if not handle then
+    error "Failed to open handle"
+  end
+
+  local result = handle:read "*a"
+
+  for line in result:gmatch "[^\r\n]+" do
+    -- extract the module name
+    local module = line:match "([^@]+)@"
+    -- exclude jdk.incubator.vector module
+    if not vim.tbl_contains(M.env.EXClUDE_JAVA_MODULES, module) then
+      -- add the module to the list
+      table.insert(list_module, module)
+    end
+  end
+
   return "--add-modules=" .. table.concat(list_module, ",")
 end
 

@@ -15,7 +15,8 @@ return {
       local config = {
         flags = {
           allow_incremental_sync = true,
-          debounce_text_changes = 5000,
+          debounce_text_changes = 1000,
+          exit_timeout = false,
         },
         cmd = {
           "java",

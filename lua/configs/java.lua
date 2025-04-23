@@ -1,3 +1,218 @@
+---@class JavaConfig -- convert from https://github.com/eclipse-jdtls/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
+---@field autobuild EnabledOption?
+---@field cleanup CleanUpOption?
+---@field codeGeneration CodeGenerationOption?
+---@field codeAction CodeActionOption?
+---@field completion CompletionOptions?
+---@field configuration ConfigurationOptions?
+---@field contentProvider ContentProvider?
+---@field eclipse EclipseOptions?
+---@field errors ErrorsOptions?
+---@field executeCommand EnabledOption?
+---@field foldingRange EnabledOption?
+---@field format FormatOption?
+---@field home string?
+---@field implementationsCodeLens EnabledOption?
+---@field import ImportOption?
+---@field inlayhints InlayHints?
+---@field jdt JDTOptions?
+---@field maven MavenOptions?
+---@field maxConcurrentBuilds number?
+---@field memberSortOrder string?
+---@field project ProjectOptions?
+---@field quickfix QuickFixOption?
+---@field referencesCodeLens EnabledOption?
+---@field references ReferencesOption?
+---@field rename EnabledOption?
+---@field saveActions SaveActions?
+---@field selectionRange EnabledOption?
+---@field settings SettingsOption?
+---@field signatureHelp SignatureHelpOption?
+---@field sources SourcesOption?
+---@field symbols SymbolsOption?
+---@field templates TemplatesOption?
+---@field trace TraceOptions?
+---@field edit EditOption?
+---
+---@class EnabledOption
+---@field enabled boolean
+
+---@class CleanUpOption
+---@field actionsOnSave CleanUpOnSaveActions?
+---@alias CleanUpOnSaveActions 'qualifyMembers'| 'qualifyStaticMembers'| 'addOverride'| 'addDeprecated'| 'stringConcatToTextBlock'| 'invertEquals'| 'addFinalModifier'| 'instanceofPatternMatch'| 'lambdaExpression'| 'switchExpression'
+
+---@class CodeGenerationOption
+---@field generateComments boolean?
+---@field hashCodeEquals HashCodeOption?
+---@field insertionLocation string?
+---@field toString ToStringOption?
+---@field useBlocks boolean?
+
+---@class HashCodeOption
+---@field useInstanceof boolean?
+---@field useJava7Objects boolean?
+
+---@class ToStringOption
+---@field codeStyle string?
+---@field limitElements number?
+---@field listArrayContents boolean?
+---@field skipNullValues boolean?
+---@field template string?
+
+---@class CodeActionOption
+---@field sortMembers SortMembersOption
+
+---@class SortMembersOption
+---@field avoidVolatileChanges boolean?
+
+---@class ContentProvider
+---@field preferred string
+
+---@class EclipseOptions
+---@field downloadSources boolean
+
+---@class ErrorsOptions
+---@field incompleteClasspath IncompleteClasspath
+
+---@class IncompleteClasspath
+---@field severity  'ignore'| 'info'| 'warning'| 'error'
+
+---@class FormatOption
+---@field comments EnabledOption?
+---@field enabled boolean?
+---@field insertSpaces boolean?
+---@field onType EnabledOption?
+---@field settings FormatSettingsOption?
+---@field tabSize number?
+
+---@class FormatSettingsOption
+---@field profile string?
+---@field url string?
+
+---@class InlayHints
+---@field parameterNames ParameterNamesOption
+
+---@class ParameterNamesOption {
+---@field enabled 'none'| 'literals'| 'all'
+---@field exclusions string[]?
+
+---@class ImportOption
+---@field exclusions string[]
+---@field gradle GradleOption?
+---@field maven MavenImportOption?
+
+---@class MavenImportOption
+---@field enabled boolean?
+---@field offline EnabledOption?
+
+---@class GradleOption
+---@field annotationProcessing EnabledOption?
+---@field arguments string[]?
+---@field enabled boolean?
+---@field home string?
+---@field java HomeOption?
+---@field jvmArguments string[]?
+---@field offline EnabledOption?
+---@field user HomeOption?
+---@field version string?
+---@field wrapper GradleWrapperOption?
+
+---@class GradleWrapperOption
+---@field enabled boolean?
+---@field checksums string[]?
+
+---@class HomeOption
+---@field home string
+
+---@class JDTOptions
+---@field ls JDTLSOptions?
+
+---@class JDTLSOptions
+---@field androidSupport EnabledOption?
+---@field lombokSupport EnabledOption?
+---@field protofBufSupport EnabledOption?
+
+---@class MavenOptions
+---@field downloadSources boolean?
+---@field updateSnapshots boolean?
+
+---@class ProjectOptions
+---@field encoding  'IGNORE'| 'WARNING'| 'SETDEFAULT'?
+---@field outputPath string?
+---@field referencedLibraries string[] | ReferencedLibrariesOption?
+---@field resourceFilters string []?
+---@field sourcePaths string []?
+
+---@class ReferencedLibrariesOption
+---@field exclude string[]?
+---@field include string[]
+---@field sources SourceOption[]?
+
+---@class SourceOption
+---@field library string
+---@field source string
+
+---@class QuickFixOption
+---@field showAt string
+
+---@class ReferencesOption
+---@field includeAccessors boolean?
+---@field includeDecompiledSources boolean?
+
+---@class SaveActions
+---@field organizeImports boolean
+
+---@class SettingsOption
+---@field url string?
+
+---@class SignatureHelpOption
+---@field enabled boolean
+---@field description EnabledOption?
+
+---@class SourcesOption
+---@field organizeImports OrganizeImportsOption;
+
+---@class OrganizeImportsOption
+---@field starThreshold number?
+---@field staticStarThreshold number?
+
+---@class SymbolsOption
+---@field includeSourceMethodDeclarations boolean?
+
+---@class TemplatesOption
+---@field fileHeader string[]?
+---@field typeComment string[]?
+
+---@class TraceOptions
+---@field server 'off'| 'messages'| 'verbose'
+
+---@class EditOption
+---@field validateAllOpenBuffersOnChanges boolean?
+
+---@class CompletionOptions
+---@field enabled boolean?
+---@field favoriteStaticMembers string[]?
+---@field filteredTypes string[]?
+---@field guessMethodArguments boolean?
+---@field importOrder string[]?
+---@field matchCase "OFF"|"FIRSTLETTER"?
+---@field maxResults number?
+---@field overwrite boolean?
+---@field postfix EnabledOption?
+
+---@class ConfigurationOptions
+---@field updateBuildConfiguration 'disabled'| 'automatic'|'interactive'?
+---@field maven MavenOptions?
+---@field runtimes RuntimeOption[]?
+
+---@class RuntimeOption
+---@field name ExecutionEnvironment
+---@field path string
+---@field javadoc string?
+---@field sources string?
+---@field default boolean?
+---@alias ExecutionEnvironment 'J2SE-1.5'| 'JavaSE-1.6'| 'JavaSE-1.7'| 'JavaSE-1.8'| 'JavaSE-9'| 'JavaSE-10'| 'JavaSE-11'| 'JavaSE-12'| 'JavaSE-13'| 'JavaSE-14'| 'JavaSE-15'| 'JavaSE-16'| 'JavaSE-17'| 'JavaSE-18'| 'JavaSE-19'| 'JavaSE-20'| 'JavaSE-21'| 'JavaSE-22'
+
 local M = {}
 M.env = {
   HOME = vim.uv.os_homedir(),
@@ -245,5 +460,93 @@ M.add_modules = function()
   }
   return "--add-modules=" .. table.concat(list_module, ",")
 end
+
+
+---@type JavaConfig
+M.settings = {
+  -- disable formatting and inlayHints because it crash jdtls
+  format = {
+    enabled = false,
+    insertSpaces = false,
+  },
+  saveActions = {
+    organizeImports = false,
+  },
+  inlayHints = {
+    parameterNames = {
+      -- none, literals, all
+      enabled = "none",
+    },
+  },
+  trace = {
+    server = "messages",
+  },
+  references = {
+    includeDecompiledSources = true,
+  },
+  eclipse = {
+    downloadSources = true,
+  },
+  maven = {
+    updateSnapshots = true,
+    downloadSources = true,
+  },
+  configuration = {
+    updateBuildConfiguration = "interactive",
+    runtimes = {
+      {
+        name = "JavaSE-21",
+        path = "C:/Program Files/Amazon Corretto/jdk21.0.7_6",
+      },
+    },
+  },
+  signatureHelp = { enabled = true },
+  contentProvider = { preferred = "fernflower" },
+  completion = {
+    favoriteStaticMembers = {
+      "org.hamcrest.MatcherAssert.assertThat",
+      "org.hamcrest.Matchers.*",
+      "org.hamcrest.CoreMatchers.*",
+      "org.junit.jupiter.api.Assertions.*",
+      "java.util.Objects.requireNonNull",
+      "java.util.Objects.requireNonNullElse",
+      "org.mockito.Mockito.*",
+    },
+    filteredTypes = {
+      "com.sun.*",
+      "io.micrometer.shaded.*",
+      "java.awt.*",
+      "jdk.*",
+      "sun.*",
+    },
+    importOrder = {
+      "java",
+      "javax",
+      "com",
+      "org",
+    },
+  },
+  progressReports = {
+    enabled = true,
+  },
+  codeGeneration = {
+    toString = {
+      template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+    },
+    useBlocks = true,
+  },
+  sources = {
+    organizeImports = {
+      starThreshold = 9999,
+      staticStarThreshold = 9999,
+    },
+  },
+  referencesCodeLens = {
+    enabled = true,
+  },
+  implementationsCodeLens = {
+    enabled = true,
+  },
+}
 
 return M

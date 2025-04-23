@@ -230,6 +230,8 @@ M.env = {
   JDTLS_CONFIG_OS_FOLDER_NAME = "config_win",
   JAVA_TEST_FOLDER_NAME = "java-test",
   JAVA_DEBUG_FOLDER_NAME = "java-debug",
+
+  -- I don't know why but this module always show warning in lsp.log : "WARNING: Using incubator modules: jdk.incubator.vector"
   EXClUDE_JAVA_MODULES = {"jdk.incubator.vector"},
 
   --- @type RuntimeOption[]

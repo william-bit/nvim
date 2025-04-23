@@ -16,10 +16,11 @@ return {
         default = { "supermaven", "lsp", "path", "snippets", "buffer", "omni" },
         providers = {
           lsp = {
-            name = 'LSP',
-            module = 'blink.cmp.sources.lsp',
+            name = "LSP",
+            module = "blink.cmp.sources.lsp",
             enabled = true,
-            async = true,
+            timeout_ms = 1000,
+            min_keyword_length  = 3,
           },
           supermaven = {
             name = "supermaven",

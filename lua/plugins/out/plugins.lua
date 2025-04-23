@@ -41,10 +41,11 @@ return {
         default = { "supermaven", "lsp", "path", "snippets", "buffer", "omni" },
         providers = {
           lsp = {
-            name = 'LSP',
-            module = 'blink.cmp.sources.lsp',
+            name = "LSP",
+            module = "blink.cmp.sources.lsp",
             enabled = true,
-            async = true,
+            timeout_ms = 1000,
+            min_keyword_length  = 3,
           },
           supermaven = {
             name = "supermaven",
@@ -760,7 +761,7 @@ return {
       local config = {
         flags = {
           allow_incremental_sync = true,
-          debounce_text_changes = 300,
+          debounce_text_changes = 5000,
         },
         cmd = {
           "java",
@@ -794,6 +795,13 @@ return {
 
         settings = {
           java = {
+            format = {
+              enabled = true,
+              insertSpaces = true,
+            },
+            trace = {
+              server = "message",
+            },
             references = {
               includeDecompiledSources = true,
             },
@@ -801,7 +809,17 @@ return {
               downloadSources = true,
             },
             maven = {
+              updateSnapshots = true,
               downloadSources = true,
+            },
+            configuration = {
+              updateBuildConfiguration = "interactive",
+              runtimes = {
+                {
+                  name = "JavaSE-21",
+                  path = "C:/Program Files/Amazon Corretto/jdk21.0.7_6",
+                },
+              },
             },
             saveActions = {
               organizeImports = true,
@@ -832,6 +850,9 @@ return {
                 "org",
               },
             },
+            progressReports = {
+              enabled = true,
+            },
             codeGeneration = {
               toString = {
                 template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
@@ -843,6 +864,9 @@ return {
                 starThreshold = 9999,
                 staticStarThreshold = 9999,
               },
+            },
+            referencesCodeLens = {
+              enabled = true,
             },
             inlayHints = {
               parameterNames = {

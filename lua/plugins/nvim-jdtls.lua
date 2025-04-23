@@ -15,7 +15,7 @@ return {
       local config = {
         flags = {
           allow_incremental_sync = true,
-          debounce_text_changes = 300,
+          debounce_text_changes = 5000,
         },
         cmd = {
           "java",
@@ -49,6 +49,13 @@ return {
 
         settings = {
           java = {
+            format = {
+              enabled = true,
+              insertSpaces = true,
+            },
+            trace = {
+              server = "message",
+            },
             references = {
               includeDecompiledSources = true,
             },
@@ -56,7 +63,17 @@ return {
               downloadSources = true,
             },
             maven = {
+              updateSnapshots = true,
               downloadSources = true,
+            },
+            configuration = {
+              updateBuildConfiguration = "interactive",
+              runtimes = {
+                {
+                  name = "JavaSE-21",
+                  path = "C:/Program Files/Amazon Corretto/jdk21.0.7_6",
+                },
+              },
             },
             saveActions = {
               organizeImports = true,
@@ -87,6 +104,9 @@ return {
                 "org",
               },
             },
+            progressReports = {
+              enabled = true,
+            },
             codeGeneration = {
               toString = {
                 template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
@@ -98,6 +118,9 @@ return {
                 starThreshold = 9999,
                 staticStarThreshold = 9999,
               },
+            },
+            referencesCodeLens = {
+              enabled = true,
             },
             inlayHints = {
               parameterNames = {

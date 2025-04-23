@@ -4,6 +4,7 @@ M.env = {
   XDG_CACHE_HOME = os.getenv "XDG_CACHE_HOME",
   JDTLS_JVM_ARGS = os.getenv "JDTLS_JVM_ARGS",
   JDTLS_EXT_DIR = "C:\\Users\\dartmedia\\AppData\\Local\\nvim-data\\java\\",
+  JDTLS_VERSION = "jdtls",
 }
 
 M.lombok_jar = M.env.JDTLS_EXT_DIR .. "lombok.jar"
@@ -93,7 +94,7 @@ end
 
 M.equinox_jar = function()
   -- INFO: It's annoying to edit the version again and again.
-  local equinox_path = vim.split(vim.fn.glob(M.env.JDTLS_EXT_DIR .. "jdtls\\plugins\\*jar"), "\n")
+  local equinox_path = vim.split(vim.fn.glob(M.env.JDTLS_EXT_DIR .. M.env.JDTLS_VERSION .. "\\plugins\\*jar"), "\n")
   local equinox_launcher = ""
 
   for _, file in pairs(equinox_path) do
@@ -149,16 +150,16 @@ end
 
 -- Where are the config and workspace dirs for a project?
 M.jdtls_config_dir = function()
-  return M.env.JDTLS_EXT_DIR .. "jdtls\\config_win"
+  return M.env.JDTLS_EXT_DIR .. M.env.JDTLS_VERSION .. "\\config_win"
 end
 M.jdtls_workspace_dir = function()
-  return vim.fn.stdpath "cache" .. "\\jdtls\\" .. M.project_name() .. "\\workspace"
+  return vim.fn.stdpath "cache" .. "\\" .. M.env.JDTLS_VERSION .. "\\" .. M.project_name() .. "\\workspace"
 end
 
-M.root_dir = require("jdtls.setup").find_root({ ".git", "mvnw", "gradlew" })
+M.root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew" }
 M.handler = require("lspconfig.configs.jdtls").default_config.handlers
 
-M.extendedClientCapabilities = require'jdtls'.extendedClientCapabilities
+M.extendedClientCapabilities = require("jdtls").extendedClientCapabilities
 M.extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 
 M.init_options = {
@@ -167,8 +168,8 @@ M.init_options = {
 }
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
-M.capabilities.workspace.configuration = true;
-M.capabilities.textDocument.completion.completionItem.snippetSupport = true;
+M.capabilities.workspace.configuration = true
+M.capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 M.add_modules = function()
   local list_module = {

@@ -6,6 +6,7 @@ return {
     },
     ft = { "java" },
     config = function()
+      local jdtls = require("jdtls");
       local javalsp = require "configs.lsp.java"
       local lombok = string.format("-javaagent:%s", javalsp.lombok_jar)
       local equinox_jar = javalsp.equinox_jar()
@@ -56,20 +57,13 @@ return {
         client.notify("workspace/didChangeConfiguration", { settings = config.settings })
       end
 
-      local initOncePerBuffer = {}
       vim.api.nvim_create_autocmd("FileType", {
         pattern = { "java" },
-        callback = function(data)
-          local bufnr = data.buf
-          if not initOncePerBuffer[bufnr] then
-            initOncePerBuffer[bufnr] = true
-            require("jdtls").start_or_attach(config)
-            vim.notify "Attached jdtls to java buffer"
-          end
+        callback = function()
+            jdtls.start_or_attach(config)
         end,
       })
 
-      require("jdtls").start_or_attach(config)
     end,
   },
 }

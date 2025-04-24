@@ -453,7 +453,7 @@ M.settings = {
     enabled = false,
   },
   trace = {
-    server = "messages",
+    server = "verbose",
   },
   references = {
     includeDecompiledSources = true,
@@ -476,15 +476,6 @@ M.settings = {
       lombokSupport = {
         enabled = true,
       },
-    },
-  },
-  progressReports = {
-    enabled = true,
-  },
-  sources = {
-    organizeImports = {
-      starThreshold = 9999,
-      staticStarThreshold = 9999,
     },
   },
 }

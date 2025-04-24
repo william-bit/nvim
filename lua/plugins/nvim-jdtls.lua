@@ -56,12 +56,20 @@ return {
         client.notify("workspace/didChangeConfiguration", { settings = config.settings })
       end
 
+      local initOncePerBuffer = {}
       vim.api.nvim_create_autocmd("FileType", {
         pattern = { "java" },
-        callback = function()
-          require("jdtls").start_or_attach(config)
+        callback = function(data)
+          local bufnr = data.buf
+          if not initOncePerBuffer[bufnr] then
+            initOncePerBuffer[bufnr] = true
+            require("jdtls").start_or_attach(config)
+            vim.notify "Attached jdtls to java buffer"
+          end
         end,
       })
+
+      require("jdtls").start_or_attach(config)
     end,
   },
 }

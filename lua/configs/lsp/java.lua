@@ -433,7 +433,7 @@ end
 
 ---@type JavaConfig
 M.settings = {
-  -- disable formatting,saveActions and inlayHints because it crash jdtls
+  -- disable formatting,saveActions,codelens and inlayHints because it crash jdtls
   format = {
     enabled = false,
   },
@@ -445,6 +445,12 @@ M.settings = {
       -- none, literals, all
       enabled = "none",
     },
+  },
+  referencesCodeLens = {
+    enabled = false,
+  },
+  implementationsCodeLens = {
+    enabled = false,
   },
   trace = {
     server = "messages",
@@ -510,12 +516,6 @@ M.settings = {
       starThreshold = 9999,
       staticStarThreshold = 9999,
     },
-  },
-  referencesCodeLens = {
-    enabled = true,
-  },
-  implementationsCodeLens = {
-    enabled = true,
   },
 }
 

@@ -364,7 +364,6 @@ M.bundles = function()
   local notify = vim.notify "Searching for jar bundles..."
   for _, jar_pattern in ipairs(M.jar_patterns) do
     for _, bundle in ipairs(vim.split(vim.fn.glob(jar_pattern), "\n")) do
-      -- remove com.microsoft.java.test.runner-jar-with-dependencies.jar from bundles
       local file_name = vim.fn.fnamemodify(bundle, ":t")
       if not vim.tbl_contains(M.env.EXCLUDE_JDTLS_JAR_BUNDLES, file_name) then
         -- notify loading bundles but only filename not full path
@@ -373,7 +372,7 @@ M.bundles = function()
       end
     end
   end
-  notify = vim.notify("Finish load jar bundles", "info", { replace = notify })
+
   return bundles
 end
 
@@ -433,7 +432,8 @@ end
 
 ---@type JavaConfig
 M.settings = {
-  -- disable formatting,saveActions,codelens and inlayHints because it crash jdtls
+  -- disable formatting,saveActions,and inlayHints because it crash jdtls
+  -- disable codelens because it break jdtls and when not use it break jdtls when change file
   format = {
     enabled = false,
   },
@@ -471,30 +471,6 @@ M.settings = {
   },
   signatureHelp = { enabled = true },
   contentProvider = { preferred = "fernflower" },
-  completion = {
-    favoriteStaticMembers = {
-      "org.hamcrest.MatcherAssert.assertThat",
-      "org.hamcrest.Matchers.*",
-      "org.hamcrest.CoreMatchers.*",
-      "org.junit.jupiter.api.Assertions.*",
-      "java.util.Objects.requireNonNull",
-      "java.util.Objects.requireNonNullElse",
-      "org.mockito.Mockito.*",
-    },
-    filteredTypes = {
-      "com.sun.*",
-      "io.micrometer.shaded.*",
-      "java.awt.*",
-      "jdk.*",
-      "sun.*",
-    },
-    importOrder = {
-      "java",
-      "javax",
-      "com",
-      "org",
-    },
-  },
   jdt = {
     ls = {
       lombokSupport = {
@@ -504,12 +480,6 @@ M.settings = {
   },
   progressReports = {
     enabled = true,
-  },
-  codeGeneration = {
-    toString = {
-      template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
-    },
-    useBlocks = true,
   },
   sources = {
     organizeImports = {

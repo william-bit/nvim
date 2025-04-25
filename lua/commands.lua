@@ -33,10 +33,10 @@ end
 
 local function processPlugins()
   local luaPluginsCombine = ""
-  local luaPlugins = listFilesInDirectory (configFolder .. "/lua/plugins")
+  local luaPlugins = listFilesInDirectory(configFolder .. "/lua/plugins")
 
   for _, luaPlugin in ipairs(luaPlugins) do
-    local filePath = configFolder.."/lua/plugins/" .. luaPlugin
+    local filePath = configFolder .. "/lua/plugins/" .. luaPlugin
     local file = io.open(filePath, "r")
     if file then
       local lines = {}
@@ -58,6 +58,24 @@ local function processPlugins()
   return luaPluginsCombine
 end
 
+--- @param input_string string
+local function minify(input_string)
+  ---@type string[]
+  local textTable = {}
+  for line in input_string:gmatch("[^\r\n]+") do
+      table.insert(textTable, line)
+  end
+
+  local output_string = ""
+  for _, line in ipairs(textTable) do
+    local clean_line = line:gsub( "%-%- .*","")
+    clean_line = clean_line:match("^%s*(.*%S)") or ''
+    output_string = output_string .. clean_line .. "\n"
+  end
+
+  return output_string:gsub("\n"," ")
+end
+
 -- Step 3: Write the combined content to the output file
 local function reloadPlugins()
   -- remove the file if it exists
@@ -66,14 +84,17 @@ local function reloadPlugins()
   -- create the file
   local outputFile = io.open(configFolder .. "/lua/plugins/out/plugins.lua", "w")
 
+  local luaPlugins = "return {\n" .. processPlugins() .. "\n}"
+
+  luaPlugins = minify(luaPlugins)
   if outputFile then
-    outputFile:write("return {\n" .. processPlugins() .. "\n}")
+    outputFile:write(luaPlugins)
     outputFile:close()
   end
 end
 
 vim.api.nvim_create_user_command("PluginsReload", function()
-  local notify = vim.notify("Reloading plugins...")
+  local notify = vim.notify "Reloading plugins..."
   reloadPlugins()
   vim.notify("Reloaded plugins!", "info", { replace = notify })
 end, { desc = "Reload plugins" })

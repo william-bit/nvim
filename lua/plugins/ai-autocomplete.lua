@@ -21,6 +21,7 @@ return {
       ignore_filetypes = { "bigfile", "snacks_input", "snacks_notif" },
       keymaps = {
         accept_suggestion = "<c-l>",
+        accept_word = "<c-e>",
       },
     },
   },

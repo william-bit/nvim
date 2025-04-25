@@ -73,5 +73,7 @@ local function reloadPlugins()
 end
 
 vim.api.nvim_create_user_command("PluginsReload", function()
+  local notify = vim.notify("Reloading plugins...")
   reloadPlugins()
+  vim.notify("Reloaded plugins!", "info", { replace = notify })
 end, { desc = "Reload plugins" })

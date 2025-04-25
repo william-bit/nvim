@@ -10,6 +10,7 @@
 ---@field errors ErrorsOptions?
 ---@field executeCommand EnabledOption?
 ---@field foldingRange EnabledOption?
+---@field progressReports EnabledOption
 ---@field format FormatOption?
 ---@field home string?
 ---@field implementationsCodeLens EnabledOption?
@@ -453,7 +454,7 @@ M.settings = {
     enabled = false,
   },
   trace = {
-    server = "verbose",
+    server = "messages",
   },
   references = {
     includeDecompiledSources = true,
@@ -476,6 +477,15 @@ M.settings = {
       lombokSupport = {
         enabled = true,
       },
+    },
+  },
+  progressReports = {
+    enabled = true,
+  },
+  sources = {
+    organizeImports = {
+      starThreshold = 9999,
+      staticStarThreshold = 9999,
     },
   },
 }

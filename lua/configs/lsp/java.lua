@@ -223,11 +223,6 @@
 
 local M = {}
 M.env = {
-  JDTLS_EXT_DIR = vim.fn.stdpath "data" .. "\\lsp\\java\\",
-  JDTLS_FOLDER_NAME = "jdtls",
-  JDTLS_CONFIG_OS_FOLDER_NAME = "config_win",
-  JAVA_TEST_FOLDER_NAME = "java-test",
-  JAVA_DEBUG_FOLDER_NAME = "java-debug",
   --- @type RuntimeOption[]
   runtimes = {
     {
@@ -235,6 +230,15 @@ M.env = {
       path = "C:/Program Files/Amazon Corretto/jdk21.0.7_6",
     },
   },
+  dap_main = {},
+  test = true,
+  dap = { hotcodereplace = "auto", config_overrides = {} },
+
+  JDTLS_EXT_DIR = vim.fn.stdpath "data" .. "\\lsp\\java\\",
+  JDTLS_FOLDER_NAME = "jdtls",
+  JDTLS_CONFIG_OS_FOLDER_NAME = "config_win",
+  JAVA_TEST_FOLDER_NAME = "java-test",
+  JAVA_DEBUG_FOLDER_NAME = "java-debug",
 
   -- I don't know why but this module always show warning in lsp.log : "WARNING: Using incubator modules: jdk.incubator.vector"
   EXClUDE_JAVA_MODULES = { "jdk.incubator.vector" },
@@ -244,12 +248,6 @@ M.env = {
 }
 
 M.lombok_jar = M.env.JDTLS_EXT_DIR .. "lombok.jar"
-
-M.opts = {
-  dap_main = {},
-  test = true,
-  dap = { hotcodereplace = "auto", config_overrides = {} },
-}
 
 M.on_attach = function(client, bufnr)
   require("configs.lsp.default").on_attach(client, bufnr)
@@ -292,9 +290,9 @@ M.on_attach = function(client, bufnr)
     }
 
     -- custom init for Java debugger
-    require("jdtls").setup_dap(M.opts.dap)
-    if M.opts.dap_main then
-      require("jdtls.dap").setup_dap_main_class_configs(M.opts.dap_main)
+    require("jdtls").setup_dap(M.env.dap)
+    if M.env.dap_main then
+      require("jdtls.dap").setup_dap_main_class_configs(M.env.dap_main)
     end
 
     -- Java Test require Java debugger to work
@@ -308,7 +306,7 @@ M.on_attach = function(client, bufnr)
           "<leader>tt",
           function()
             require("jdtls.dap").test_class {
-              config_overrides = type(M.opts.dap) ~= "boolean" and M.opts.dap.config_overrides or nil,
+              config_overrides = type(M.env.dap) ~= "boolean" and M.env.dap.config_overrides or nil,
             }
           end,
           desc = "Run All Test",
@@ -317,7 +315,7 @@ M.on_attach = function(client, bufnr)
           "<leader>tr",
           function()
             require("jdtls.dap").test_nearest_method {
-              config_overrides = type(M.opts.dap) ~= "boolean" and M.opts.dap.config_overrides or nil,
+              config_overrides = type(M.env.dap) ~= "boolean" and M.env.dap.config_overrides or nil,
             }
           end,
           desc = "Run Nearest Test",

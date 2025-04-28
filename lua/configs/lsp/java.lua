@@ -392,14 +392,11 @@ M.jdtls_workspace_dir = function()
 end
 
 M.root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew" }
-M.handler = require("lspconfig.configs.jdtls").default_config.handlers
-
-M.extendedClientCapabilities = require("jdtls").extendedClientCapabilities
-M.extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
+M.handlers = require("lspconfig.configs.jdtls").default_config.handlers
 
 M.init_options = {
-  extendedClientCapabilities = M.extendedClientCapabilities,
   bundles = M.bundles(),
+  workspaceFolders = M.jdtls_workspace_dir(),
 }
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -524,7 +521,7 @@ M.config = function()
     root_dir = M.root_dir,
     single_file_support = true,
     init_options = M.init_options,
-    handlers = M.handler,
+    handlers = M.handlers,
 
     capabilities = M.capabilities,
     on_attach = M.on_attach,

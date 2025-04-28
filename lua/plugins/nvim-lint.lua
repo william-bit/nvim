@@ -32,7 +32,6 @@ return {
         bash = { "shellcheck" },
         sql = { "sqlfluff" },
         text = { "vale" },
-        markdown = { "vale" },
         laTeX = { "vale" },
       }
 

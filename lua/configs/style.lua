@@ -142,64 +142,7 @@ function Style.DAP()
     DapLogPoint = { fg = colors.seablue },
   }
 
-
   return vim.tbl_extend("force", styles_base, style_item, signs)
-end
-
-function Style.CMP_BLINK()
-  ---@type Colors
-  local colors = Style.colors
-  -- custom highlights per style!
-  local styles_base = {
-    BlinkCmpMenu = { fg = colors.seablue, bg = colors.black2 },
-    BlinkCmpMenuSelection = { bg = colors.grey, fg = "NONE" },
-
-    BlinkCmpLabelDescription = { fg = colors.light_grey },
-    BlinkCmpLabelDetail = { fg = colors.nord_blue },
-    BlinkCmpLabelDeprecated = { fg = colors.grey, bg = "NONE", strikethrough = true },
-    BlinkCmpLabelMatch = { fg = colors.seablue, bg = "NONE", bold = true },
-    BlinkCmpKind = { fg = colors.purple, bg = "NONE", italic = true },
-  }
-  local style_item = {
-    BlinkCmpKindField = { bg = "NONE", fg = colors.red },
-    BlinkCmpKindProperty = { bg = "NONE", fg = colors.red },
-    BlinkCmpKindEvent = { bg = "NONE", fg = colors.red },
-
-    BlinkCmpKindText = { bg = "NONE", fg = colors.green },
-    BlinkCmpKindEnum = { bg = "NONE", fg = colors.green },
-    BlinkCmpKindKeyword = { bg = "NONE", fg = colors.green },
-
-    BlinkCmpKindConstant = { bg = "NONE", fg = colors.yellow },
-    BlinkCmpKindConstructor = { bg = "NONE", fg = colors.yellow },
-    BlinkCmpKindReference = { bg = "NONE", fg = colors.yellow },
-
-    BlinkCmpKindFunction = { bg = "NONE", fg = colors.purple },
-    BlinkCmpKindStruct = { bg = "NONE", fg = colors.purple },
-    BlinkCmpKindClass = { bg = "NONE", fg = colors.purple },
-    BlinkCmpKindModule = { bg = "NONE", fg = colors.purple },
-    BlinkCmpKindOperator = { bg = "NONE", fg = colors.purple },
-
-    BlinkCmpKindVariable = { bg = "NONE", fg = colors.white },
-    BlinkCmpKindFile = { bg = "NONE", fg = colors.white },
-
-    BlinkCmpKindUnit = { bg = "NONE", fg = colors.orange },
-    BlinkCmpKindSnippet = { bg = "NONE", fg = colors.orange },
-    BlinkCmpKindFolder = { bg = "NONE", fg = colors.orange },
-
-    BlinkCmpKindMethod = { bg = "NONE", fg = colors.blue },
-    BlinkCmpKindValue = { bg = "NONE", fg = colors.blue },
-    BlinkCmpKindEnumMember = { bg = "NONE", fg = colors.blue },
-
-    BlinkCmpKindInterface = { bg = "NONE", fg = colors.blue },
-    BlinkCmpKindColor = { bg = "NONE", fg = colors.seablue },
-    BlinkCmpKindTypeParameter = { bg = "NONE", fg = colors.seablue },
-
-    BlinkCmpKindCopilot = { bg = "NONE", fg = colors.seablue },
-    BlinkCmpKindCodeium = { bg = "NONE", fg = colors.seablue },
-    BlinkCmpKindTabNine = { bg = "NONE", fg = colors.seablue },
-    BlinkCmpKindSuperMaven = { bg = "NONE", fg = colors.seablue },
-  }
-  return vim.tbl_extend("force", styles_base, style_item)
 end
 
 function Style.FOLDS()
@@ -219,6 +162,5 @@ return vim.tbl_extend(
   "force",
   Style.FZF_LUA(false),
   Style.FOLDS(),
-  Style.CMP_BLINK(),
   Style.DAP()
 )

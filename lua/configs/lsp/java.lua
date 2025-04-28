@@ -1,4 +1,5 @@
----@class JavaConfig -- convert from https://github.com/eclipse-jdtls/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
+-- Some references setting from https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/extras/lang/java.lua
+---@class JavaConfig -- Convert from https://github.com/eclipse-jdtls/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
 ---@field autobuild EnabledOption?
 ---@field cleanup CleanUpOption?
 ---@field codeGeneration CodeGenerationOption?

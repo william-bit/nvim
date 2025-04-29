@@ -13,6 +13,10 @@ return {
               require("notify").dismiss()
             end,
           })
+          return {
+            render = "compact",
+            stages = "static",
+          }
         end,
       },
     },

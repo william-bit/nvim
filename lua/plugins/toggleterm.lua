@@ -15,9 +15,7 @@ return {
         {
           "<a-i>",
           function()
-            require("toggleterm.terminal").Terminal
-              :new({ cmd = "lazygit", hidden = true, display_name = "LazyGit" })
-              :toggle(10, "float")
+            require("configs.term.lazygit").toggle()
           end,
           desc = "Lazygit (Root Dir)",
           mode = { "n", "t" },

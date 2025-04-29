@@ -17,10 +17,6 @@ M.base46 = {
   hl_add = require "configs.style",
 }
 
-M.lsp = {
-  signature = false,
-}
-
 M.nvdash = {
   load_on_startup = true,
   header = {
@@ -76,22 +72,21 @@ M.mason = {
     "delve",
     "gofumpt",
     "goimports",
+    "google-java-format",
     "gopls",
+    "gradle-language-server",
     "hadolint",
     "intelephense",
     "isort",
-    "google-java-format",
-    "gradle-language-server",
     "js-debug-adapter",
     "json-lsp",
+    "jsonlint",
     "lua-language-server",
     "php-cs-fixer",
     "php-debug-adapter",
-    "prisma-language-server",
-    "tailwindcss-language-server",
-    "jsonlint",
     "phpcs",
     "prettierd",
+    "prisma-language-server",
     "pyright",
     "ruff",
     "rustywind",
@@ -99,10 +94,17 @@ M.mason = {
     "shfmt",
     "sqlfluff",
     "stylua",
+    "tailwindcss-language-server",
+    "taplo",
     "vale",
     "vtsls",
     "xmlformatter",
   },
+}
+
+M.lsp = {
+  -- conflict with noice.nvim lsp
+  signature = false,
 }
 
 M.ui = {

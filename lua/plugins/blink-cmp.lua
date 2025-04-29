@@ -77,6 +77,7 @@ return {
             ["<S-Tab>"] = { "select_prev", "fallback" },
           },
         },
+        signature = { enabled = false, },
         completion = {
           ghost_text = { enabled = false },
           accept = {

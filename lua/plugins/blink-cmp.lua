@@ -1,11 +1,11 @@
 return {
-  "saghen/blink.compat",
   {
     "saghen/blink.cmp",
     version = "*",
     event = { "BufReadPost", "BufNewFile", "CmdlineEnter" },
     dependencies = {
       "rafamadriz/friendly-snippets",
+      "saghen/blink.compat",
     },
     -- use a release tag to download pre-built binaries
     opts = function()

@@ -1,5 +1,5 @@
 return {
-  {'vim-scripts/dbext.vim',ft = {'sql'}},
+  { "vim-scripts/dbext.vim", ft = { "sql" } },
   {
     "stevearc/conform.nvim",
     -- event = "BufWritePre", -- uncomment for format on save
@@ -8,7 +8,7 @@ return {
         "<leader>cf",
         function()
           require("conform").format {
-             timeout_ms = 10000,
+            timeout_ms = 10000,
           }
         end,
         desc = "Format File",
@@ -39,15 +39,12 @@ return {
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
       local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-      parser_config.blade = {
-        install_info = {
-          url = "https://github.com/EmranMR/tree-sitter-blade",
-          files = { "src/parser.c" },
-          branch = "main",
-        },
-        filetype = "blade",
+      parser_config.blade.filetype = "blade"
+      parser_config.blade.install_info = {
+        url = "https://github.com/EmranMR/tree-sitter-blade",
+        files = { "src/parser.c" },
+        branch = "main",
       }
-      -- in my settings
       -- Filetypes --
       vim.filetype.add {
         pattern = {

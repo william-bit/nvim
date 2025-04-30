@@ -21,6 +21,8 @@ return {
       },
     },
     opts = function()
+      dofile(vim.g.base46_cache .. "lsp")
+      dofile(vim.g.base46_cache .. "syntax")
       return {
         lsp = {
           signature = {

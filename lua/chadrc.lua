@@ -37,8 +37,8 @@ M.nvdash = {
     { txt = "  New File", keys = "n", cmd = "enew" },
     { txt = "  Find File", no_gap = true, keys = "C-p", cmd = "FzfLua files" },
     { txt = "󰈭  Find Word", no_gap = true, keys = "C-f", cmd = "FzfLua live_grep" },
-    { txt = "  Recent Files", keys = "C-i", cmd = "FzfLua oldfiles" },
-    { txt = "  Git Files", no_gap = true, keys = "C-t", cmd = "FzfLua git_status" },
+    { txt = "  Recent Files",no_gap = true, keys = "C-i", cmd = "FzfLua oldfiles" },
+    { txt = "  Git Files", keys = "C-t", cmd = "FzfLua git_status" },
     {
       txt = "  LazyGit",
       keys = "A-i",

@@ -31,7 +31,7 @@ M.hide = function()
       local mode = vim.api.nvim_get_mode()
       if mode.mode == "t" then
         local typed = vim.fn.keytrans(key)
-        if typed == "c" then
+        if typed == "c" or typed == ":" then
           M.delCloseMap();
           message_box = true
         end

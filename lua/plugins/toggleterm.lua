@@ -20,6 +20,14 @@ return {
           desc = "Lazygit (Root Dir)",
           mode = { "n", "t" },
         },
+        {
+          "<c-c>",
+          function()
+            require("configs.term.lazygit").lazygit:close()
+          end,
+          desc = "Terminal hide",
+          mode = { "t" },
+        },
       }
 
       for i = 10, 1, -1 do

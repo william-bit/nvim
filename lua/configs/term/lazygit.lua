@@ -1,22 +1,19 @@
 local map = vim.keymap.set
 local del = vim.keymap.del
+local Terminal = require("toggleterm.terminal").Terminal
 
 local M = {}
 
-local Terminal = require("toggleterm.terminal").Terminal
-local lazygit = Terminal:new { cmd = "lazygit", hidden = true, display_name = "LazyGit" }
+M.lazygit = Terminal:new { cmd = "lazygit", hidden = true, display_name = "LazyGit" }
 
 M.toggle = function()
-  lazygit:toggle(10, "float")
+  M.lazygit:toggle(10, "float")
 end
 
 M.setCloseMap = function()
   map("t", "q", function()
-    lazygit:close()
-  end, { desc = "Terminal hide" })
-  map("t", "<c-c>", function()
-    lazygit:close()
-  end, { desc = "Terminal hide" })
+    M.lazygit:close()
+  end)
 end
 
 M.delCloseMap = function()

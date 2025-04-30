@@ -28,9 +28,11 @@ M.hide = function()
       local mode = vim.api.nvim_get_mode()
       if mode.mode == "t" then
         local typed = vim.fn.keytrans(key)
-        if typed == "c" or typed == ":" then
-          M.delCloseMap();
-          message_box = true
+        if message_box == false then
+          if typed == "c" or typed == ":" then
+            M.delCloseMap()
+            message_box = true
+          end
         end
         if message_box then
           if typed == "<CR>" or typed == "<Esc>" then

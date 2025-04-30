@@ -36,6 +36,7 @@ return {
     end,
     opts = function()
       dofile(vim.g.base46_cache .. "term")
+      require("configs.term.lazygit").hide()
       return {
         shade_terminals = false,
         shade_filetypes = {},

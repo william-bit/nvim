@@ -30,6 +30,7 @@ local options = {
     vue = { "prettierd", "rustywind" },
     blade = { "rustywind" },
     php = { "rustywind", "php_cs_fixer" },
+    sql = {"sqruff"},
     html = function(bufnr)
       return { "rustywind", first(bufnr, "prettierd", "prettier") }
     end,

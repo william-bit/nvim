@@ -228,7 +228,7 @@ M.env = {
   runtimes = {
     {
       name = "JavaSE-21",
-      path = "C:/Program Files/Amazon Corretto/jdk21.0.7_6",
+      path = "C:/Program Files/Eclipse Adoptium/jdk-21.0.7.6-hotspot/bin/java.exe",
     },
   },
   dap_main = {},
@@ -238,7 +238,9 @@ M.env = {
   JDTLS_EXT_DIR = vim.fn.stdpath "data" .. "\\lsp\\java\\",
   JDTLS_FOLDER_NAME = "jdtls",
   JDTLS_CONFIG_OS_FOLDER_NAME = "config_win",
+
   JAVA_TEST_FOLDER_NAME = "java-test",
+
   JAVA_DEBUG_FOLDER_NAME = "java-debug",
 
   -- I don't know why but this module always show warning in lsp.log : "WARNING: Using incubator modules: jdk.incubator.vector"
@@ -248,6 +250,8 @@ M.env = {
   EXCLUDE_JDTLS_JAR_BUNDLES = { "com.microsoft.java.test.runner-jar-with-dependencies.jar", "jacocoagent.jar" },
 }
 
+M.java_test_path = M.env.JDTLS_EXT_DIR .. M.env.JAVA_TEST_FOLDER_NAME .. "/server/*.jar"
+M.java_debug_path = M.env.JDTLS_EXT_DIR .. M.env.JAVA_DEBUG_FOLDER_NAME .. "/extension/server/*.jar"
 M.lombok_jar = M.env.JDTLS_EXT_DIR .. "lombok.jar"
 
 M.on_attach = function(client, bufnr)
@@ -345,13 +349,11 @@ M.jar_patterns = {}
 
 M.test = function()
   -- java-test also depends on java-debug-adapter.
-  local java_test_path = M.env.JDTLS_EXT_DIR .. M.env.JAVA_TEST_FOLDER_NAME .. "/server/*.jar"
-  vim.list_extend(M.jar_patterns, { java_test_path })
+  vim.list_extend(M.jar_patterns, { M.java_test_path })
 end
 
 M.debug = function()
-  local java_dbg_path = M.env.JDTLS_EXT_DIR .. M.env.JAVA_DEBUG_FOLDER_NAME .. "/extension/server/*.jar"
-  vim.list_extend(M.jar_patterns, { java_dbg_path })
+  vim.list_extend(M.jar_patterns, { M.java_debug_path })
 end
 
 M.bundles = function()

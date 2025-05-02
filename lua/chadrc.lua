@@ -99,6 +99,7 @@ M.mason = {
     "vale",
     "vtsls",
     "xmlformatter",
+    "sqruff",
   },
 }
 
@@ -118,7 +119,7 @@ M.ui = {
   statusline = {
     theme = "minimal",
     separator_style = "default",
-    order = { "mode", "file", "git", "%=", "%=", "diagnostics", "lsp", "macro", "cwd", "cursor" },
+    order = { "mode", "file", "git", "%=", "%=", "diagnostics", "lsp", "macro", "cwd","cursor" },
     modules = {
       macro = function()
         local reg = vim.fn.reg_recording()
@@ -127,12 +128,9 @@ M.ui = {
         end -- not recording
         return "Recording @" .. reg .. " "
       end,
-      -- keystroke = function()
-      --   vim.on_key(function()
-      --     vim.cmd [[ doautoall ]]
-      --   end)
-      --   return " " .. (require("noice").api.status.command.get() or "") .. " "
-      -- end,
+      keystroke = function()
+        return " " .. (require("noice").api.status.command.get() or "") .. " "
+      end,
     },
   },
 }

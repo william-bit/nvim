@@ -499,6 +499,12 @@ M.settings = {
   },
 }
 
+M.on_init = function(client, _)
+  if client.supports_method "textDocument/semanticTokens" then
+    client.server_capabilities.semanticTokensProvider = false
+  end
+end
+
 M.memoize = nil
 M.config = function()
   if M.memoize then
@@ -539,6 +545,7 @@ M.config = function()
 
     capabilities = M.capabilities,
     on_attach = M.on_attach,
+    on_init = M.on_init,
 
     settings = {
       java = M.settings,

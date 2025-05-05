@@ -382,8 +382,7 @@ M.fname = vim.api.nvim_buf_get_name(0)
 
 -- How to find the project name for a given root dir.
 M.project_name = function()
-  local root_dir = M.root_dir
-  return vim.fs.basename(root_dir)
+  return vim.fs.basename(M.root_dir)
 end
 
 -- Where are the config and workspace dirs for a project?

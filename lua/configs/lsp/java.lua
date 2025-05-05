@@ -253,6 +253,7 @@ M.env = {
 M.java_test_path = M.env.JDTLS_EXT_DIR .. M.env.JAVA_TEST_FOLDER_NAME .. "/server/*.jar"
 M.java_debug_path = M.env.JDTLS_EXT_DIR .. M.env.JAVA_DEBUG_FOLDER_NAME .. "/extension/server/*.jar"
 M.lombok_jar = M.env.JDTLS_EXT_DIR .. "lombok.jar"
+M.equinox_path = vim.split(vim.fn.glob(M.env.JDTLS_EXT_DIR .. M.env.JDTLS_FOLDER_NAME .. "\\plugins\\*jar"), "\n")
 
 M.on_attach = function(client, bufnr)
   require("configs.lsp.default").on_attach(client, bufnr)
@@ -333,10 +334,8 @@ end
 
 M.equinox_jar = function()
   -- INFO: It's annoying to edit the version again and again.
-  local equinox_path = vim.split(vim.fn.glob(M.env.JDTLS_EXT_DIR .. M.env.JDTLS_FOLDER_NAME .. "\\plugins\\*jar"), "\n")
   local equinox_launcher = ""
-
-  for _, file in pairs(equinox_path) do
+  for _, file in pairs(M.equinox_path) do
     if file:match "org.eclipse.equinox.launcher_" then
       equinox_launcher = file
       break

@@ -490,6 +490,7 @@ M.settings = {
 M.memoize = nil
 M.config = function()
   if M.memoize then
+    vim.notify "Using cached config"
     return M.memoize
   end
   local config = {
@@ -531,7 +532,7 @@ M.config = function()
       java = M.settings,
     },
   }
-  M.memoize = config;
+  M.memoize = config
   return config
 end
 

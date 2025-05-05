@@ -250,6 +250,15 @@ M.env = {
 
   -- I don't know why but this jars always show error in lsp.log when include in bundles
   EXCLUDE_JDTLS_JAR_BUNDLES = { "com.microsoft.java.test.runner-jar-with-dependencies.jar", "jacocoagent.jar" },
+
+  -- It duplicate with jars bundle already included in jdtls default
+  DUPLICATE_JAR_BUNDLES = {
+    "junit-platform-commons_1.11.0.jar",
+    "junit-platform-engine_1.11.0.jar",
+    "junit-platform-launcher_1.11.0.jar",
+    "org.apiguardian.api_1.1.2.jar",
+    "org.opentest4j_1.3.0.jar",
+  },
 }
 
 M.java_test_path = M.env.JDTLS_EXT_DIR .. M.env.JAVA_TEST_FOLDER_NAME .. "/server/*.jar"
@@ -368,7 +377,10 @@ M.bundles = function()
   for _, jar_pattern in ipairs(M.jar_patterns) do
     for _, bundle in ipairs(vim.split(vim.fn.glob(jar_pattern), "\n")) do
       local file_name = vim.fn.fnamemodify(bundle, ":t")
-      if not vim.tbl_contains(M.env.EXCLUDE_JDTLS_JAR_BUNDLES, file_name) then
+      if
+        not vim.tbl_contains(M.env.EXCLUDE_JDTLS_JAR_BUNDLES, file_name)
+        and not vim.tbl_contains(M.env.DUPLICATE_JAR_BUNDLES, file_name)
+      then
         -- notify loading bundles but only filename not full path
         notify = vim.notify("Loading jar : " .. vim.fn.fnamemodify(bundle, ":t"), "info", { replace = notify })
         table.insert(bundles, bundle)

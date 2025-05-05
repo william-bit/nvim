@@ -390,6 +390,7 @@ end
 M.jdtls_config_dir = function()
   return M.env.JDTLS_EXT_DIR .. M.env.JDTLS_FOLDER_NAME .. "\\" .. M.env.JDTLS_CONFIG_OS_FOLDER_NAME
 end
+
 M.jdtls_workspace_dir = function()
   return vim.fn.stdpath "cache" .. "\\" .. M.env.JDTLS_FOLDER_NAME .. "\\" .. M.project_name() .. "\\workspace"
 end
@@ -489,11 +490,6 @@ M.settings = {
 }
 
 M.config = function()
-  local lombok = string.format("-javaagent:%s", M.lombok_jar)
-  local equinox_jar = M.equinox_jar()
-  local add_modules = M.add_modules()
-  local jdtls_config_dir = M.jdtls_config_dir()
-  local jdtls_workspace_dir = M.jdtls_workspace_dir()
   return {
     flags = {
       allow_incremental_sync = true,
@@ -502,7 +498,7 @@ M.config = function()
     },
     cmd = {
       "java",
-      lombok,
+      string.format("-javaagent:%s", M.lombok_jar),
       "-Declipse.application=org.eclipse.jdt.ls.core.id1",
       "-Dosgi.bundles.defaultStartLevel=4",
       "-Declipse.product=org.eclipse.jdt.ls.core.product",
@@ -511,12 +507,12 @@ M.config = function()
       "-Xms512M",
       "-Dlog.level=ALL",
       "-jar",
-      equinox_jar,
+      M.equinox_jar(),
       "-configuration",
-      jdtls_config_dir,
+      M.jdtls_config_dir(),
       "-data",
-      jdtls_workspace_dir,
-      add_modules,
+      M.jdtls_workspace_dir(),
+      M.add_modules(),
       "--add-opens java.base/java.util=ALL-UNNAMED",
       "--add-opens java.base/java.lang=ALL-UNNAMED",
     },

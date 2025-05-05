@@ -487,8 +487,12 @@ M.settings = {
   },
 }
 
+M.memoize = nil
 M.config = function()
-  return {
+  if M.memoize then
+    return M.memoize
+  end
+  local config = {
     flags = {
       allow_incremental_sync = true,
       debounce_text_changes = 1000,
@@ -527,6 +531,8 @@ M.config = function()
       java = M.settings,
     },
   }
+  M.memoize = config;
+  return config
 end
 
 return M

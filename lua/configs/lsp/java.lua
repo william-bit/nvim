@@ -237,6 +237,8 @@ M.env = {
 
   JDTLS_EXT_DIR = vim.fn.stdpath "data" .. "\\lsp\\java\\",
   JDTLS_FOLDER_NAME = "jdtls",
+
+  --- @type "config_win" | "config_linux" | "config_mac"
   JDTLS_CONFIG_OS_FOLDER_NAME = "config_win",
 
   JAVA_TEST_FOLDER_NAME = "java-test",
@@ -376,8 +378,6 @@ M.bundles = function()
 
   return bundles
 end
-
-M.fname = vim.api.nvim_buf_get_name(0)
 
 -- How to find the project name for a given root dir.
 M.project_name = function()

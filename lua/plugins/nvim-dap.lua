@@ -69,28 +69,7 @@ return {
             type = "php",
             request = "launch",
             name = "Listen for Xdebug",
-            stopOnEntry = false,
-            port = 9000,
-            log = true,
-            serverSourceRoot = "C:\\laragon\\www\\",
-            localSourceRoot = vim.fn.expand "%:p:h" .. "\\",
-          },
-          {
-            type = "php",
-            request = "launch",
-            name = "Launch current file",
-            program = "${file}",
-            cwd = "${fileDirname}",
             port = 9003,
-          },
-          {
-            type = "php",
-            request = "launch",
-            name = "Launch current file (web)",
-            program = "${file}",
-            cwd = "${fileDirname}",
-            port = 9003,
-            server = "php",
           },
         }
       end
@@ -107,6 +86,7 @@ return {
     end,
     dependencies = {
       {
+        "ibhagwan/fzf-lua",
         "williamboman/mason.nvim",
         opts = { ensure_installed = { "java-debug-adapter", "java-test" } },
       },

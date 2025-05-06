@@ -114,7 +114,7 @@ M.ui = {
   },
   cmp = {
     enabled = true,
-    style = "atom",
+    style = "flat_light",
   },
   statusline = {
     theme = "minimal",

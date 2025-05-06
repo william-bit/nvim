@@ -89,11 +89,6 @@ return {
             auto_show = true,
             auto_show_delay_ms = 200,
           },
-          semantic_token_resolution = {
-            enabled = true,
-            blocked_filetypes = { "java" },
-            timeout_ms = 400,
-          },
           menu = require("nvchad.blink").menu,
         },
       }

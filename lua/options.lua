@@ -9,6 +9,10 @@ g.loaded_python3_provider = 0
 g.loaded_perl_provider = 0
 g.loaded_ruby_provider = 0
 
+-- disable netrw at the very start of your init.lua
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
+
 -- add binaries installed by mason.nvim to path
 local is_windows = vim.fn.has "win32" ~= 0
 local sep = is_windows and "\\" or "/"

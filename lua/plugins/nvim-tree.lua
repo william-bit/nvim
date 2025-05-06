@@ -30,7 +30,8 @@ return {
     },
     opts = function()
       dofile(vim.g.base46_cache .. "nvimtree")
-      return {
+      local utils = require "nvim-tree.utils"
+      local config = {
         filters = { dotfiles = false },
         disable_netrw = true,
         hijack_cursor = true,
@@ -68,6 +69,16 @@ return {
           },
         },
       }
+
+      -- When use windows
+      -- Set the system open to start windows command because it's faster and can open folder
+      if utils.is_windows then
+        config.system_open = {
+          cmd = "cmd",
+          args = { "/c", "start", "" },
+        }
+      end
+      return config
     end,
   },
 }

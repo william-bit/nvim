@@ -115,6 +115,7 @@ M.ui = {
   cmp = {
     enabled = true,
     style = "flat_light",
+    icons_left = true,
   },
   statusline = {
     theme = "minimal",

@@ -251,7 +251,7 @@ M.env = {
   -- I don't know why but this jars always show error in lsp.log when include in bundles
   EXCLUDE_JDTLS_JAR_BUNDLES = { "com.microsoft.java.test.runner-jar-with-dependencies.jar", "jacocoagent.jar" },
 
-  -- It duplicate with jars bundle already included in jdtls default
+  -- It duplicate with jars bundle already included in jdtls by default
   DUPLICATE_JAR_BUNDLES = {
     "junit-platform-commons_1.11.0.jar",
     "junit-platform-engine_1.11.0.jar",
@@ -499,19 +499,15 @@ M.settings = {
   },
 }
 
+-- disable semantics tokens because it crash jdtls
 M.on_init = function(client, _)
   if client.supports_method "textDocument/semanticTokens" then
-    client.server_capabilities.semanticTokensProvider = false
+    client.server_capabilities.semanticTokensProvider = nil
   end
 end
 
-M.memoize = nil
 M.config = function()
-  if M.memoize then
-    vim.notify "Using cached config"
-    return M.memoize
-  end
-  local config = {
+  return {
     flags = {
       allow_incremental_sync = true,
       debounce_text_changes = 1000,
@@ -551,8 +547,6 @@ M.config = function()
       java = M.settings,
     },
   }
-  M.memoize = config
-  return config
 end
 
 return M

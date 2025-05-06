@@ -8,15 +8,16 @@ return {
     config = function()
       local jdtls = require "jdtls"
       local javalsp = require "configs.lsp.java"
-
+      local config = javalsp.config()
       local initOncePerBuffer = {}
+
       vim.api.nvim_create_autocmd("FileType", {
         pattern = { "java" },
         callback = function(data)
           local bufnr = data.buf
           if not initOncePerBuffer[bufnr] then
             initOncePerBuffer[bufnr] = true
-            jdtls.start_or_attach(javalsp.config())
+            jdtls.start_or_attach(config)
             vim.notify "Attached jdtls to java buffer"
           end
         end,

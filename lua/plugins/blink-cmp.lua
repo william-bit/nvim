@@ -16,12 +16,6 @@ return {
         sources = {
           default = { "supermaven", "lsp", "cmdline", "path", "snippets", "buffer", "omni" },
           providers = {
-            lsp = {
-              name = "LSP",
-              module = "blink.cmp.sources.lsp",
-              enabled = true,
-              timeout_ms = 1000,
-            },
             supermaven = {
               name = "supermaven",
               module = "blink.compat.source",

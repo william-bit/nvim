@@ -6,12 +6,8 @@ return {
       {
         "rafamadriz/friendly-snippets",
         config = function()
-          require("luasnip.loaders.from_vscode").lazy_load()
           require("luasnip.loaders.from_vscode").lazy_load {
-            paths = {
-              "~/AppData/Local/nvim/snippet/phpstorm-snippets-for-vscode",
-              vim.fn.stdpath "config" .. "/snippets",
-            },
+            paths = vim.split(vim.fn.glob(vim.fn.stdpath "data" .. "/snippet/*"), "\n"),
           }
           local list_snips = function()
             local ft_list = require("luasnip").available()[vim.o.filetype]

@@ -19,4 +19,17 @@ return {
       }
     end,
   },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {
+      automatic_enable = {
+        exclude = {
+          "jdtls",
+          "gradle_ls",
+          "lua_ls"
+        },
+      },
+    },
+  },
 }

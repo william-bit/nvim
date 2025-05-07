@@ -26,9 +26,7 @@ M.on_attach = function(client, bufnr)
 end
 
 M.on_init = function(client, _)
-  if client.supports_method "textDocument/semanticTokens" then
-    client.server_capabilities.semanticTokensProvider = true
-  end
+  client.server_capabilities.semanticTokensProvider = true
 end
 
 -- require('blink.cmp').get_lsp_capabilities()
@@ -68,32 +66,12 @@ end
 M.defaults = function()
   M.diagnostic_config()
 
-  require("lspconfig").lua_ls.setup {
+  vim.lsp.config("*", {
     on_attach = M.on_attach,
     capabilities = M.capabilities,
     on_init = M.on_init,
+  })
 
-    settings = {
-      Lua = {
-        runtime = {
-          -- Tell the language server which version of Lua you're using
-          -- (most likely LuaJIT in the case of Neovim)
-          version = "LuaJIT",
-        },
-        diagnostics = {
-          globals = { "vim" },
-        },
-        workspace = {
-          maxPreload = 100000,
-          preloadFileSize = 10000,
-          -- Do not send telemetry data containing a randomized but unique identifier
-          telemetry = {
-            enable = false,
-          },
-        },
-      },
-    },
-  }
 end
 
 return M

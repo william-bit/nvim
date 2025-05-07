@@ -25,7 +25,6 @@ return {
       require "configs.lspconfig"
     end,
   },
-  { "williamboman/mason-lspconfig.nvim", lazy = true },
   {
     "nvim-treesitter/nvim-treesitter",
     event = { "BufReadPost", "BufNewFile" },

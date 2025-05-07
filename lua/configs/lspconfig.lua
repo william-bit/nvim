@@ -1,25 +1,35 @@
-local lspconfig = require "lspconfig"
 local lsp = require "configs.lsp.default"
 
 lsp.defaults()
 
--- lsps with default config
-require("mason-lspconfig").setup_handlers {
-  -- The first entry (without a key) will be the default handler
-  -- and will be called for each installed server that doesn't have
-  -- a dedicated handler.
-  function(server_name) -- default handler (optional)
-    if server_name ~= "lua_ls" and server_name ~= "jdtls" and server_name ~= "gradle_ls" then
-      lspconfig[server_name].setup {
-        on_attach = lsp.on_attach,
-        on_init = lsp.on_init,
-        capabilities = lsp.capabilities,
-      }
-    end
-  end,
+vim.lsp.config.lua_ls = {
+  on_attach = lsp.on_attach,
+  capabilities = lsp.capabilities,
+  on_init = lsp.on_init,
+
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using
+        -- (most likely LuaJIT in the case of Neovim)
+        version = "LuaJIT",
+      },
+      diagnostics = {
+        globals = { "vim" },
+      },
+      workspace = {
+        maxPreload = 100000,
+        preloadFileSize = 10000,
+        -- Do not send telemetry data containing a randomized but unique identifier
+        telemetry = {
+          enable = false,
+        },
+      },
+    },
+  },
 }
 
-lspconfig.gradle_ls.setup {
+vim.lsp.config.gradle_ls = {
   on_attach = lsp.on_attach,
   on_init = lsp.on_init,
   capabilities = lsp.capabilities,
@@ -36,3 +46,5 @@ lspconfig.gradle_ls.setup {
     },
   },
 }
+
+vim.lsp.enable { "gradle_ls", "lua_ls" }

@@ -501,9 +501,7 @@ M.settings = {
 
 -- disable semantics tokens because it crash jdtls
 M.on_init = function(client, _)
-  if client.supports_method "textDocument/semanticTokens" then
-    client.server_capabilities.semanticTokensProvider = nil
-  end
+  client.server_capabilities.semanticTokensProvider = nil
 end
 
 M.config = function()

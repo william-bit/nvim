@@ -10,13 +10,13 @@ return {
       { "<c-i>", "<cmd>FzfLua oldfiles<CR>" },
       { "gD", "<cmd>FzfLua lsp_declarations<CR>", desc = "Lsp Go to declaration", mode = { "n" } },
       { "gd", "<cmd>FzfLua lsp_definitions<CR>", desc = "Lsp Go to definition", mode = { "n" } },
-      { "gy", "<cmd>FzfLua lsp_definitions<CR>", desc = "Lsp Document Symbol", mode = { "n" } },
       { "gi", "<cmd>FzfLua lsp_implementations<CR>", desc = "Lsp Go to implementation", mode = { "n" } },
       { "gr", "<cmd>FzfLua lsp_references<CR>", desc = "Lsp Go to references", mode = { "n" } },
       { "g.", "<cmd>FzfLua lsp_code_actions<CR>", desc = "Lsp code action", mode = { "n" } },
       { "<leader>D", "<cmd>FzfLua lsp_typedefs<CR>", desc = "Lsp Go to type definition", mode = { "n" } },
       { "<leader>fh", "<cmd>FzfLua help_tags<CR>", mode = { "n" } },
     },
+
     opts = function()
       -- use `fzf-lua` for replace vim.ui.select
       require("fzf-lua").register_ui_select()

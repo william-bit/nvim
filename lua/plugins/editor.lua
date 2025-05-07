@@ -8,7 +8,7 @@ return {
     "vim-scripts/ReplaceWithRegister",
     keys = {
       { "gl", "<Plug>ReplaceWithRegisterOperator", desc = "ReplaceWithRegister Operator" },
-      { "glr", "<Plug>ReplaceWithRegisterLine", desc = "ReplaceWithRegister Line" },
+      { "gk", "<Plug>ReplaceWithRegisterLine", desc = "ReplaceWithRegister Line" },
     },
   },
   {

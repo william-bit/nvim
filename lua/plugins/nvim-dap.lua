@@ -57,8 +57,7 @@ return {
       -- Taken directly from https://github.com/mfussenegger/nvim-dap/wiki/Java
       local mason_registry = require "mason-registry"
       if mason_registry.is_installed "php-debug-adapter" then
-        local php_dbg_pkg = mason_registry.get_package "php-debug-adapter"
-        local php_dbg_path = php_dbg_pkg:get_install_path()
+        local php_dbg_path = vim.fn.stdpath "data" .. "\\mason\\packages\\php-debug-adapter"
         dap.adapters.php = {
           type = "executable",
           command = "node",

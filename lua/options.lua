@@ -37,8 +37,36 @@ vim.cmd [[
   if argc() == 1 && isdirectory(argv(0)) | cd `=argv(0)` | endif
 ]]
 
+-------------------------------------- Fold Setting ------------------------------------------
+-- statusColumn config get from https://github.com/neovim/neovim/pull/17446
+-- example (https://neovim.io/doc/user/options.html#'statuscolumn'):
+-- example2 (https://www.reddit.com/r/neovim/comments/1djjc6q/statuscolumn_a_beginers_guide/)
+
+--- @type "minimal" | "separator"
+local statusColumnStyle = "separator"
+
+opt.fillchars = {
+  foldopen = "┮",
+  foldclose = "╾",
+  fold = " ",
+  foldsep = "│",
+  diff = "╱",
+  eob = " ",
+}
+opt.foldcolumn = "1"
+opt.foldlevel = 99
+opt.foldlevelstart = 99
+opt.foldenable = true
+
+if statusColumnStyle == "minimal" then
+  opt.statuscolumn =
+    '%s%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "" : "") : " " } %l %='
+else
+  opt.statuscolumn =
+    '%s%{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "▾" : "▸") : (foldlevel(v:lnum) > foldlevel(v:lnum + 1) ? "└" : "│" )) : " " } %l %='
+end
+
 -------------------------------------- user options ------------------------------------------
----
 -- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line
 opt.whichwrap:append "<>[]hl"
@@ -54,32 +82,7 @@ opt.confirm = true -- Confirm to save changes before exiting modified buffer
 -- Enable highlighting of the current line
 opt.cursorline = true
 opt.cursorlineopt = "both"
-
 opt.expandtab = true -- Use spaces instead of tabs
-
--- Fold settings
-opt.fillchars = {
-  foldopen = "┮",
-  foldclose = "╾",
-  fold = " ",
-  foldsep = "│",
-  diff = "╱",
-  eob = " ",
-}
-opt.foldcolumn = '1'
-opt.foldlevel = 99
-opt.foldlevelstart = 99
-opt.foldenable = true
-
--- statusColumn config get from https://github.com/neovim/neovim/pull/17446
--- example (https://neovim.io/doc/user/options.html#'statuscolumn'):
-
--- without separators
-opt.statuscolumn = '%s%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "" : "") : " " } %l %='
-
--- with separators
--- opt.statuscolumn = '%s%{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "┮" : "╾") : "│") : " " } %l%='
-
 opt.formatexpr = "v:lua.require'conform'.formatexpr()"
 opt.grepformat = "%f:%l:%c:%m"
 opt.grepprg = "rg --vimgrep"
@@ -100,7 +103,7 @@ opt.ruler = false -- Disable the default ruler
 opt.scrolloff = 4 -- Lines of context
 opt.shiftround = true -- Round indent
 opt.shiftwidth = 2 -- Size of an indent
-opt.shortmess:append { s= true,W = true, I = true, c = true, C = true } -- disable nvim intro
+opt.shortmess:append { s = true, W = true, I = true, c = true, C = true } -- disable nvim intro
 opt.showmode = false -- Dont show mode since we have a statusline
 opt.sidescrolloff = 8 -- Columns of context
 opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time

@@ -90,6 +90,7 @@ return {
       return {
         history = true,
         delete_check_events = "TextChanged",
+        updateevents = "TextChanged,TextChangedI",
       }
     end,
   },

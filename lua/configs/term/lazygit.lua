@@ -4,15 +4,26 @@ local Terminal = require("toggleterm.terminal").Terminal
 
 local M = {}
 
+M.isOpen = false
+
 M.lazygit = Terminal:new { cmd = "lazygit", hidden = true, display_name = "LazyGit" }
 
 M.toggle = function()
   M.lazygit:toggle(10, "float")
+  if M.isOpen then
+    M.isOpen = false
+    M.delCloseMap()
+  else
+    M.isOpen = true
+    M.setCloseMap()
+  end
 end
 
 M.setCloseMap = function()
   map("t", "q", function()
+    M.isOpen = false
     M.lazygit:close()
+    M.delCloseMap()
   end)
 end
 
@@ -21,7 +32,6 @@ M.delCloseMap = function()
 end
 
 M.hide = function()
-  M.setCloseMap()
   local message_box = false
   vim.on_key(function(_, key)
     if key and #key > 0 then

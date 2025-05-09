@@ -21,14 +21,20 @@ return {
   },
   {
     "mason-org/mason-lspconfig.nvim",
-    event = { "BufReadPost", "BufNewFile" },
+    event = "User FilePost",
     opts = {
       automatic_enable = {
         exclude = {
           "jdtls",
-          "gradle_ls",
-          "lua_ls"
         },
+      },
+    },
+    dependencies = {
+      {
+        "neovim/nvim-lspconfig",
+        config = function()
+          require "configs.lspconfig"
+        end,
       },
     },
   },

@@ -37,5 +37,3 @@ vim.lsp.config.gradle_ls = {
     },
   },
 }
-
-vim.lsp.enable { "gradle_ls", "lua_ls" }

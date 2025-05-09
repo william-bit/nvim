@@ -43,7 +43,7 @@ vim.cmd [[
 -- example2 (https://www.reddit.com/r/neovim/comments/1djjc6q/statuscolumn_a_beginers_guide/)
 
 --- @type "minimal" | "separator"
-local statusColumnStyle = "separator"
+local statusColumnStyle = "minimal"
 
 opt.fillchars = {
   foldopen = "┮",
@@ -63,7 +63,7 @@ if statusColumnStyle == "minimal" then
     '%s%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "" : "") : " " } %l %='
 else
   opt.statuscolumn =
-    '%s%{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "▾" : "▸") : (foldlevel(v:lnum) > foldlevel(v:lnum + 1) ? "└" : "│" )) : " " } %l %='
+    '%s%{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "▾" : "▸") : (foldlevel(v:lnum) > foldlevel(v:lnum + 1) ? (foldlevel(v:lnum + 1) == 0 ? "└" : "├") : "│" )) : " " } %l %='
 end
 
 -------------------------------------- user options ------------------------------------------

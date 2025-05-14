@@ -5,13 +5,17 @@ local g = vim.g
 
 -- disable some default providers
 g.loaded_node_provider = 0
+g.loaded_python_provider = 0
 g.loaded_python3_provider = 0
 g.loaded_perl_provider = 0
 g.loaded_ruby_provider = 0
 
 -- disable netrw at the very start of your init.lua
+g.loaded = 1
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
+g.loaded_2html_plugin = 1
+g.loaded_tutor_mode_plugin = 1
 
 -- add binaries installed by mason.nvim to path
 local is_windows = vim.fn.has "win32" ~= 0
@@ -79,7 +83,14 @@ opt.completeopt = "menu,menuone,noselect"
 opt.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with substitutions
 opt.confirm = true -- Confirm to save changes before exiting modified buffer
 
+-- wait time
+opt.timeoutlen = vim.g.vscode and 1000 or 300 -- Lower than default (1000) to quickly trigger which-key
+opt.ttimeout = true
+opt.ttimeoutlen = 100
+
+
 -- Enable highlighting of the current line
+opt.synmaxcol = 300 -- stop syntax highlight after x lines for performance
 opt.cursorline = true
 opt.cursorlineopt = "both"
 opt.expandtab = true -- Use spaces instead of tabs
@@ -115,7 +126,6 @@ opt.splitkeep = "screen"
 opt.splitright = true -- Put new windows right of current
 opt.tabstop = 2 -- Number of spaces tabs count for
 opt.termguicolors = true -- True color support
-opt.timeoutlen = vim.g.vscode and 1000 or 300 -- Lower than default (1000) to quickly trigger which-key
 opt.undofile = true
 opt.undolevels = 10000
 opt.updatetime = 1000 -- Save swap file and trigger CursorHold and interval for writing swap file to disk, also used by gitsigns

@@ -508,7 +508,7 @@ M.config = function()
   return {
     flags = {
       allow_incremental_sync = true,
-      debounce_text_changes = 1000,
+      debounce_text_changes = 80,
       exit_timeout = false,
     },
     cmd = {
@@ -518,7 +518,7 @@ M.config = function()
       "-Dosgi.bundles.defaultStartLevel=4",
       "-Declipse.product=org.eclipse.jdt.ls.core.product",
       "-Dlog.protocol=true",
-      "-Xmx2G",
+      '-Xmx4g',
       "-Xms512M",
       "-Dlog.level=ALL",
       "-jar",

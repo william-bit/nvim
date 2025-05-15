@@ -24,6 +24,9 @@ return {
       dofile(vim.g.base46_cache .. "lsp")
       dofile(vim.g.base46_cache .. "syntax")
       return {
+        health = {
+          checker = false, -- Disable if you don't want health checks to run
+        },
         lsp = {
           override = {
             ["vim.lsp.util.convert_input_to_markdown_lines"] = true,

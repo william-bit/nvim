@@ -63,6 +63,11 @@ M.diagnostic_config = function()
   }
 end
 
+M.debug = function()
+  vim.lsp.set_log_level "debug"
+  require("vim.lsp.log").set_format_func(vim.inspect)
+end
+
 M.defaults = function()
   M.diagnostic_config()
 
@@ -71,7 +76,6 @@ M.defaults = function()
     capabilities = M.capabilities,
     on_init = M.on_init,
   })
-
 end
 
 return M

@@ -11,7 +11,6 @@
 ---@field errors ErrorsOptions?
 ---@field executeCommand EnabledOption?
 ---@field foldingRange EnabledOption?
----@field progressReports EnabledOption
 ---@field format FormatOption?
 ---@field home string?
 ---@field implementationsCodeLens EnabledOption?
@@ -474,9 +473,6 @@ M.settings = {
         enabled = true,
       },
     },
-  },
-  progressReports = {
-    enabled = true,
   },
   sources = {
     organizeImports = {

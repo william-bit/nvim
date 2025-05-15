@@ -229,6 +229,7 @@ M.env = {
     {
       name = "JavaSE-21",
       path = "C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.7.6-hotspot",
+      default = true,
     },
   },
   dap_main = {},

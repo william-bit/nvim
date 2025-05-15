@@ -395,6 +395,7 @@ M.jdtls_workspace_dir = function()
 end
 
 M.root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew" }
+M.handlers = require("lspconfig.configs.jdtls").default_config.handlers
 
 M.init_options = {
   bundles = M.bundles(),
@@ -523,6 +524,7 @@ M.config = function()
     root_dir = M.root_dir,
     single_file_support = true,
     init_options = M.init_options,
+    handlers = M.handlers,
 
     capabilities = M.capabilities,
     on_attach = M.on_attach,

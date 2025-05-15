@@ -266,46 +266,40 @@ M.java_debug_path = M.env.JDTLS_EXT_DIR .. M.env.JAVA_DEBUG_FOLDER_NAME .. "/ext
 M.lombok_jar = M.env.JDTLS_EXT_DIR .. "lombok.jar"
 M.equinox_path = vim.split(vim.fn.glob(M.env.JDTLS_EXT_DIR .. M.env.JDTLS_FOLDER_NAME .. "\\plugins\\*jar"), "\n")
 
+M.mapper = function(mode, bufnr, maps)
+  for _, map in pairs(maps) do
+    vim.keymap.set(mode, map[1], map[2], { buffer = bufnr, desc = map.desc, group = map.group })
+  end
+end
+
 M.on_attach = function(client, bufnr)
   require("configs.lsp.default").on_attach(client, bufnr)
   if client and client.name == "jdtls" then
-    local wk = require "which-key"
-    wk.add {
+    M.mapper("n", bufnr, {
+      { "<leader>cxv", require("jdtls").extract_variable_all, desc = "Extract Variable" },
+      { "<leader>cxc", require("jdtls").extract_constant, desc = "Extract Constant" },
+      { "<leader>cgs", require("jdtls").super_implementation, desc = "Goto Super" },
+      { "<leader>coi", require("jdtls").organize_imports, desc = "Organize Imports" },
+      { "<leader>cgS", require("jdtls.tests").goto_subjects, desc = "Goto Subjects" },
+      { "<leader>cr", [[<ESC><CMD>JdtRestart<CR>]], desc = "JdtRestart" },
+    })
+    M.mapper("v", bufnr, {
       {
-        mode = "n",
-        buffer = bufnr,
-        { "<leader>cx", group = "extract" },
-        { "<leader>cxv", require("jdtls").extract_variable_all, desc = "Extract Variable" },
-        { "<leader>cxc", require("jdtls").extract_constant, desc = "Extract Constant" },
-        { "<leader>cgs", require("jdtls").super_implementation, desc = "Goto Super" },
-        { "<leader>coi", require("jdtls").organize_imports, desc = "Organize Imports" },
-        { "<leader>cgS", require("jdtls.tests").goto_subjects, desc = "Goto Subjects" },
-        { "<leader>cr", [[<ESC><CMD>JdtRestart<CR>]], desc = "JdtRestart" },
+        "<leader>cxm",
+        [[<ESC><CMD>lua require('jdtls').extract_method(true)<CR>]],
+        desc = "Extract Method",
       },
-    }
-    wk.add {
       {
-        mode = "v",
-        buffer = bufnr,
-        { "<leader>cx", group = "extract" },
-        {
-          "<leader>cxm",
-          [[<ESC><CMD>lua require('jdtls').extract_method(true)<CR>]],
-          desc = "Extract Method",
-        },
-        {
-          "<leader>cxv",
-          [[<ESC><CMD>lua require('jdtls').extract_variable_all(true)<CR>]],
-          desc = "Extract Variable",
-        },
-        {
-          "<leader>cxc",
-          [[<ESC><CMD>lua require('jdtls').extract_constant(true)<CR>]],
-          desc = "Extract Constant",
-        },
+        "<leader>cxv",
+        [[<ESC><CMD>lua require('jdtls').extract_variable_all(true)<CR>]],
+        desc = "Extract Variable",
       },
-    }
-
+      {
+        "<leader>cxc",
+        [[<ESC><CMD>lua require('jdtls').extract_constant(true)<CR>]],
+        desc = "Extract Constant",
+      },
+    })
     -- custom init for Java debugger
     require("jdtls").setup_dap(M.env.dap)
     if M.env.dap_main then
@@ -314,32 +308,27 @@ M.on_attach = function(client, bufnr)
 
     -- Java Test require Java debugger to work
     -- custom keymaps for Java test runner (not yet compatible with neotest)
-    wk.add {
+    M.mapper("n", bufnr, {
       {
-        mode = "n",
-        buffer = bufnr,
-        { "<leader>t", group = "test" },
-        {
-          "<leader>tt",
-          function()
-            require("jdtls.dap").test_class {
-              config_overrides = type(M.env.dap) ~= "boolean" and M.env.dap.config_overrides or nil,
-            }
-          end,
-          desc = "Run All Test",
-        },
-        {
-          "<leader>tr",
-          function()
-            require("jdtls.dap").test_nearest_method {
-              config_overrides = type(M.env.dap) ~= "boolean" and M.env.dap.config_overrides or nil,
-            }
-          end,
-          desc = "Run Nearest Test",
-        },
-        { "<leader>tT", require("jdtls.dap").pick_test, desc = "Run Test" },
+        "<leader>tt",
+        function()
+          require("jdtls.dap").test_class {
+            config_overrides = type(M.env.dap) ~= "boolean" and M.env.dap.config_overrides or nil,
+          }
+        end,
+        desc = "Run All Test",
       },
-    }
+      {
+        "<leader>tr",
+        function()
+          require("jdtls.dap").test_nearest_method {
+            config_overrides = type(M.env.dap) ~= "boolean" and M.env.dap.config_overrides or nil,
+          }
+        end,
+        desc = "Run Nearest Test",
+      },
+      { "<leader>tT", require("jdtls.dap").pick_test, desc = "Run Test" },
+    })
   end
 end
 
@@ -406,7 +395,6 @@ M.jdtls_workspace_dir = function()
 end
 
 M.root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew" }
-M.handlers = require("lspconfig.configs.jdtls").default_config.handlers
 
 M.init_options = {
   bundles = M.bundles(),
@@ -518,7 +506,7 @@ M.config = function()
       "-Dosgi.bundles.defaultStartLevel=4",
       "-Declipse.product=org.eclipse.jdt.ls.core.product",
       "-Dlog.protocol=true",
-      '-Xmx4g',
+      "-Xmx4g",
       "-Xms512M",
       "-Dlog.level=ALL",
       "-jar",
@@ -535,7 +523,6 @@ M.config = function()
     root_dir = M.root_dir,
     single_file_support = true,
     init_options = M.init_options,
-    handlers = M.handlers,
 
     capabilities = M.capabilities,
     on_attach = M.on_attach,

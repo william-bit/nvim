@@ -363,7 +363,6 @@ M.bundles = function()
   if M.jar_patterns == {} then
     return {}
   end
-  local notify = vim.notify "Searching for jar bundles..."
   for _, jar_pattern in ipairs(M.jar_patterns) do
     for _, bundle in ipairs(vim.split(vim.fn.glob(jar_pattern), "\n")) do
       local file_name = vim.fn.fnamemodify(bundle, ":t")
@@ -371,8 +370,6 @@ M.bundles = function()
         not vim.tbl_contains(M.env.EXCLUDE_JDTLS_JAR_BUNDLES, file_name)
         and not vim.tbl_contains(M.env.DUPLICATE_JAR_BUNDLES, file_name)
       then
-        -- notify loading bundles but only filename not full path
-        notify = vim.notify("Loading jar : " .. vim.fn.fnamemodify(bundle, ":t"), "info", { replace = notify })
         table.insert(bundles, bundle)
       end
     end

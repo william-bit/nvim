@@ -3,12 +3,14 @@ local o = vim.o
 local g = vim.g
 
 -------------------------------------- general options ------------------------------------------
----
+
 -- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line
 opt.whichwrap:append "<>[]hl"
 opt.shortmess:append { s = true, W = true, I = true, c = true, C = true } -- disable nvim intro
-opt.spelllang = { "en_us" }
+opt.spelllang = { "en_us" } -- setup spell check
+
+-- set fillchars
 opt.fillchars = {
   foldopen = "┮",
   foldclose = "╾",

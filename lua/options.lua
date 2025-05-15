@@ -1,7 +1,22 @@
 local opt = vim.opt
+local o = vim.o
 local g = vim.g
 
 -------------------------------------- general options ------------------------------------------
+---
+-- go to previous/next line with h,l,left arrow and right arrow
+-- when cursor reaches end/beginning of line
+opt.whichwrap:append "<>[]hl"
+opt.shortmess:append { s = true, W = true, I = true, c = true, C = true } -- disable nvim intro
+opt.spelllang = { "en_us" }
+opt.fillchars = {
+  foldopen = "┮",
+  foldclose = "╾",
+  fold = " ",
+  foldsep = "│",
+  diff = "╱",
+  eob = " ",
+}
 
 -- disable some default providers
 g.loaded_node_provider = 0
@@ -49,87 +64,74 @@ vim.cmd [[
 --- @type "minimal" | "separator"
 local statusColumnStyle = "minimal"
 
-opt.fillchars = {
-  foldopen = "┮",
-  foldclose = "╾",
-  fold = " ",
-  foldsep = "│",
-  diff = "╱",
-  eob = " ",
-}
-opt.foldcolumn = "1"
-opt.foldlevel = 99
-opt.foldlevelstart = 99
-opt.foldenable = true
+o.foldcolumn = "1"
+o.foldlevel = 99
+o.foldlevelstart = 99
+o.foldenable = true
 
 if statusColumnStyle == "minimal" then
-  opt.statuscolumn =
+  o.statuscolumn =
     '%s%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "" : "") : " " } %l %='
 else
-  opt.statuscolumn =
+  o.statuscolumn =
     '%s%{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "▾" : "▸") : (foldlevel(v:lnum) > foldlevel(v:lnum + 1) ? (foldlevel(v:lnum + 1) == 0 ? "└" : "├") : "│" )) : " " } %l %='
 end
 
 -------------------------------------- user options ------------------------------------------
--- go to previous/next line with h,l,left arrow and right arrow
--- when cursor reaches end/beginning of line
-opt.whichwrap:append "<>[]hl"
 
-opt.autowrite = true -- Enable auto write
+o.autowrite = true -- Enable auto write
 -- only set clipboard if not in ssh, to make sure the OSC 52
 -- integration works automatically. Requires Neovim >= 0.10.0
-opt.clipboard = vim.env.SSH_TTY and "" or "unnamedplus" -- Sync with system clipboard
-opt.completeopt = "menu,menuone,noselect"
-opt.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with substitutions
-opt.confirm = true -- Confirm to save changes before exiting modified buffer
+o.clipboard = vim.env.SSH_TTY and "" or "unnamedplus" -- Sync with system clipboard
+o.completeopt = "menu,menuone,noselect"
+o.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with substitutions
+o.confirm = true -- Confirm to save changes before exiting modified buffer
 
 -- wait time
-opt.timeoutlen = vim.g.vscode and 1000 or 300 -- Lower than default (1000) to quickly trigger which-key
-opt.ttimeout = true
-opt.ttimeoutlen = 100
+o.timeoutlen = vim.g.vscode and 1000 or 300 -- Lower than default (1000) to quickly trigger which-key
+o.ttimeout = true
+o.ttimeoutlen = 100
 
 
 -- Enable highlighting of the current line
-opt.synmaxcol = 300 -- stop syntax highlight after x lines for performance
-opt.cursorline = true
-opt.cursorlineopt = "both"
-opt.expandtab = true -- Use spaces instead of tabs
-opt.formatexpr = "v:lua.require'conform'.formatexpr()"
-opt.grepformat = "%f:%l:%c:%m"
-opt.grepprg = "rg --vimgrep"
-opt.ignorecase = true -- Ignore case
-opt.inccommand = "nosplit" -- preview incremental substitute
-opt.jumpoptions = "view"
-opt.laststatus = 3 -- global statusline
-opt.linebreak = true -- Wrap lines at convenient points
-opt.list = true -- Show some invisible characters (tabs...
-opt.mouse = "a" -- Enable mouse mode
-opt.number = true -- Print line number
-opt.softtabstop = 2 -- Indenting
-opt.numberwidth = 2 -- Numbers
-opt.pumblend = 10 -- Popup blend
-opt.pumheight = 10 -- Maximum number of entries in a popup
-opt.relativenumber = true -- Relative line numbers
-opt.ruler = false -- Disable the default ruler
-opt.scrolloff = 4 -- Lines of context
-opt.shiftround = true -- Round indent
-opt.shiftwidth = 2 -- Size of an indent
-opt.shortmess:append { s = true, W = true, I = true, c = true, C = true } -- disable nvim intro
-opt.showmode = false -- Dont show mode since we have a statusline
-opt.sidescrolloff = 8 -- Columns of context
-opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
-opt.smartcase = true -- Don't ignore case with capitals
-opt.smartindent = true -- Insert indents automatically
-opt.spelllang = { "en" }
-opt.splitbelow = true -- Put new windows below current
-opt.splitkeep = "screen"
-opt.splitright = true -- Put new windows right of current
-opt.tabstop = 2 -- Number of spaces tabs count for
-opt.termguicolors = true -- True color support
-opt.undofile = true
-opt.undolevels = 10000
-opt.updatetime = 1000 -- Save swap file and trigger CursorHold and interval for writing swap file to disk, also used by gitsigns
-opt.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
-opt.wildmode = "longest:full,full" -- Command-line completion mode
-opt.winminwidth = 5 -- Minimum window width
-opt.wrap = false -- Disable line wrap
+o.synmaxcol = 300 -- stop syntax highlight after x lines for performance
+o.cursorline = true
+o.cursorlineopt = "both"
+o.expandtab = true -- Use spaces instead of tabs
+o.formatexpr = "v:lua.require'conform'.formatexpr()"
+o.grepformat = "%f:%l:%c:%m"
+o.grepprg = "rg --vimgrep"
+o.ignorecase = true -- Ignore case
+o.inccommand = "nosplit" -- preview incremental substitute
+o.jumpoptions = "view"
+o.laststatus = 3 -- global statusline
+o.linebreak = true -- Wrap lines at convenient points
+o.list = true -- Show some invisible characters (tabs...
+o.mouse = "a" -- Enable mouse mode
+o.number = true -- Print line number
+o.softtabstop = 2 -- Indenting
+o.numberwidth = 2 -- Numbers
+o.pumblend = 10 -- Popup blend
+o.pumheight = 10 -- Maximum number of entries in a popup
+o.relativenumber = true -- Relative line numbers
+o.ruler = false -- Disable the default ruler
+o.scrolloff = 4 -- Lines of context
+o.shiftround = true -- Round indent
+o.shiftwidth = 2 -- Size of an indent
+o.showmode = false -- Dont show mode since we have a statusline
+o.sidescrolloff = 8 -- Columns of context
+o.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
+o.smartcase = true -- Don't ignore case with capitals
+o.smartindent = true -- Insert indents automatically
+o.splitbelow = true -- Put new windows below current
+o.splitkeep = "screen"
+o.splitright = true -- Put new windows right of current
+o.tabstop = 2 -- Number of spaces tabs count for
+o.termguicolors = true -- True color support
+o.undofile = true
+o.undolevels = 10000
+o.updatetime = 1000 -- Save swap file and trigger CursorHold and interval for writing swap file to disk, also used by gitsigns
+o.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
+o.wildmode = "longest:full,full" -- Command-line completion mode
+o.winminwidth = 5 -- Minimum window width
+o.wrap = false -- Disable line wrap

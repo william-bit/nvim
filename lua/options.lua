@@ -12,10 +12,10 @@ opt.spelllang = { "en_us" } -- setup spell check
 
 -- set fillchars
 opt.fillchars = {
-  foldopen = "┮",
-  foldclose = "╾",
+  foldopen = "",
+  foldclose = "",
   fold = " ",
-  foldsep = "│",
+  foldsep = " ",
   diff = "╱",
   eob = " ",
 }
@@ -63,14 +63,13 @@ vim.cmd [[
 -- example (https://neovim.io/doc/user/options.html#'statuscolumn'):
 -- example2 (https://www.reddit.com/r/neovim/comments/1djjc6q/statuscolumn_a_beginers_guide/)
 
---- @type "minimal" | "separator"
-local statusColumnStyle = "minimal"
-
 o.foldcolumn = "1"
 o.foldlevel = 99
-o.foldlevelstart = 99
+o.foldlevelstart = 20
 o.foldenable = true
+o.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
 
+local statusColumnStyle = 'minimal'
 if statusColumnStyle == "minimal" then
   o.statuscolumn =
     '%s%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "" : "") : " " } %l %='
@@ -79,6 +78,7 @@ else
     '%s%{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "▾" : "▸") : (foldlevel(v:lnum) > foldlevel(v:lnum + 1) ? (foldlevel(v:lnum + 1) == 0 ? "└" : "├") : "│" )) : " " } %l %='
 end
 
+
 -------------------------------------- user options ------------------------------------------
 
 o.autowrite = true -- Enable auto write
@@ -86,7 +86,8 @@ o.autowrite = true -- Enable auto write
 -- integration works automatically. Requires Neovim >= 0.10.0
 o.clipboard = vim.env.SSH_TTY and "" or "unnamedplus" -- Sync with system clipboard
 o.completeopt = "menu,menuone,noselect"
-o.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with substitutions
+o.omnifunc = "v:lua.vim.lsp.omnifunc"
+o.conceallevel = 0 -- Hide * markup for bold and italic, but not markers with substitutions
 o.confirm = true -- Confirm to save changes before exiting modified buffer
 
 -- wait time
@@ -96,10 +97,10 @@ o.ttimeoutlen = 100
 
 
 -- Enable highlighting of the current line
+o.list = true -- Show some invisible characters (tabs...
 o.synmaxcol = 300 -- stop syntax highlight after x lines for performance
 o.cursorline = true
 o.cursorlineopt = "both"
-o.expandtab = true -- Use spaces instead of tabs
 o.formatexpr = "v:lua.require'conform'.formatexpr()"
 o.grepformat = "%f:%l:%c:%m"
 o.grepprg = "rg --vimgrep"
@@ -108,32 +109,35 @@ o.inccommand = "nosplit" -- preview incremental substitute
 o.jumpoptions = "view"
 o.laststatus = 3 -- global statusline
 o.linebreak = true -- Wrap lines at convenient points
-o.list = true -- Show some invisible characters (tabs...
 o.mouse = "a" -- Enable mouse mode
 o.number = true -- Print line number
-o.softtabstop = 2 -- Indenting
-o.numberwidth = 2 -- Numbers
 o.pumblend = 10 -- Popup blend
 o.pumheight = 10 -- Maximum number of entries in a popup
 o.relativenumber = true -- Relative line numbers
 o.ruler = false -- Disable the default ruler
 o.scrolloff = 4 -- Lines of context
 o.shiftround = true -- Round indent
-o.shiftwidth = 2 -- Size of an indent
 o.showmode = false -- Dont show mode since we have a statusline
 o.sidescrolloff = 8 -- Columns of context
-o.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
 o.smartcase = true -- Don't ignore case with capitals
-o.smartindent = true -- Insert indents automatically
 o.splitbelow = true -- Put new windows below current
 o.splitkeep = "screen"
 o.splitright = true -- Put new windows right of current
-o.tabstop = 2 -- Number of spaces tabs count for
 o.termguicolors = true -- True color support
 o.undofile = true
 o.undolevels = 10000
-o.updatetime = 1000 -- Save swap file and trigger CursorHold and interval for writing swap file to disk, also used by gitsigns
+o.updatetime = 500 -- Save swap file and trigger CursorHold and interval for writing swap file to disk, also used by gitsigns
 o.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
 o.wildmode = "longest:full,full" -- Command-line completion mode
 o.winminwidth = 5 -- Minimum window width
 o.wrap = false -- Disable line wrap
+
+-------------------------------------- indentation options ------------------------------------------
+-- o.tabstop = 2 -- Number of spaces tabs count for
+-- o.shiftwidth = 2 -- Size of an indent
+-- o.softtabstop = 2 -- Indenting
+-- o.numberwidth = 2 -- Numbers
+o.expandtab = true -- Use spaces instead of tabs
+o.smartindent = false -- Insert indents automatically
+o.autoindent = false -- Copy indent from current line
+

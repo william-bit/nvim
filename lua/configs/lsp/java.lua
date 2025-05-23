@@ -11,6 +11,7 @@
 ---@field errors ErrorsOptions?
 ---@field executeCommand EnabledOption?
 ---@field foldingRange EnabledOption?
+---@field progressReports EnabledOption
 ---@field format FormatOption?
 ---@field home string?
 ---@field implementationsCodeLens EnabledOption?
@@ -228,7 +229,6 @@ M.env = {
     {
       name = "JavaSE-21",
       path = "C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.7.6-hotspot",
-      default = true,
     },
   },
   dap_main = {},
@@ -236,7 +236,7 @@ M.env = {
   dap = { hotcodereplace = "auto", config_overrides = {} },
 
   JDTLS_EXT_DIR = vim.fn.stdpath "data" .. "\\lsp\\java\\",
-  JDTLS_FOLDER_NAME = "jdtls",
+  JDTLS_FOLDER_NAME = "jdtls-1.47.0",
 
   --- @type "config_win" | "config_linux" | "config_mac"
   JDTLS_CONFIG_OS_FOLDER_NAME = "config_win",
@@ -253,11 +253,11 @@ M.env = {
 
   -- It duplicate with jars bundle already included in jdtls by default
   DUPLICATE_JAR_BUNDLES = {
-    "junit-platform-commons_1.11.0.jar",
-    "junit-platform-engine_1.11.0.jar",
-    "junit-platform-launcher_1.11.0.jar",
-    "org.apiguardian.api_1.1.2.jar",
-    "org.opentest4j_1.3.0.jar",
+    -- "junit-platform-commons_1.11.0.jar",
+    -- "junit-platform-engine_1.11.0.jar",
+    -- "junit-platform-launcher_1.11.0.jar",
+    -- "org.apiguardian.api_1.1.2.jar",
+    -- "org.opentest4j_1.3.0.jar",
   },
 }
 
@@ -362,6 +362,7 @@ M.bundles = function()
   if M.jar_patterns == {} then
     return {}
   end
+  local notify = vim.notify "Searching for jar bundles..."
   for _, jar_pattern in ipairs(M.jar_patterns) do
     for _, bundle in ipairs(vim.split(vim.fn.glob(jar_pattern), "\n")) do
       local file_name = vim.fn.fnamemodify(bundle, ":t")
@@ -369,6 +370,8 @@ M.bundles = function()
         not vim.tbl_contains(M.env.EXCLUDE_JDTLS_JAR_BUNDLES, file_name)
         and not vim.tbl_contains(M.env.DUPLICATE_JAR_BUNDLES, file_name)
       then
+        -- notify loading bundles but only filename not full path
+        notify = vim.notify("Loading jar : " .. vim.fn.fnamemodify(bundle, ":t"), "info", { replace = notify })
         table.insert(bundles, bundle)
       end
     end
@@ -474,10 +477,13 @@ M.settings = {
       },
     },
   },
+  progressReports = {
+    enabled = true,
+  },
   sources = {
     organizeImports = {
-      starThreshold = 9999,
-      staticStarThreshold = 9999,
+      starThreshold = 5,
+      staticStarThreshold = 5,
     },
   },
 }
@@ -504,15 +510,15 @@ M.config = function()
       "-Xmx4g",
       "-Xms512M",
       "-Dlog.level=ALL",
+      '--add-modules=ALL-SYSTEM',
+      '--add-opens', 'java.base/java.util=ALL-UNNAMED',
+      '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
       "-jar",
       M.equinox_jar(),
       "-configuration",
       M.jdtls_config_dir(),
       "-data",
       M.jdtls_workspace_dir(),
-      M.add_modules(),
-      "--add-opens java.base/java.util=ALL-UNNAMED",
-      "--add-opens java.base/java.lang=ALL-UNNAMED",
     },
 
     root_dir = M.root_dir,

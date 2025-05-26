@@ -406,29 +406,6 @@ M.capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities.workspace.configuration = true
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-M.add_modules = function()
-  local list_module = {}
-  local handle = io.popen "java --list-modules"
-
-  if not handle then
-    error "Failed to open handle"
-  end
-
-  local result = handle:read "*a"
-
-  for line in result:gmatch "[^\r\n]+" do
-    -- extract the module name
-    local module = line:match "([^@]+)@"
-    -- exclude jdk.incubator.vector module
-    if not vim.tbl_contains(M.env.EXClUDE_JAVA_MODULES, module) then
-      -- add the module to the list
-      table.insert(list_module, module)
-    end
-  end
-
-  return "--add-modules=" .. table.concat(list_module, ",")
-end
-
 ---@type JavaConfig
 M.settings = {
   -- disable formatting,saveActions,and inlayHints because it crash jdtls
